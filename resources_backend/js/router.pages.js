@@ -10,3 +10,7 @@
 
 //pages
 exports.index = require("./pages/Index.vue").default;
+
+exports.project_list_delete = require("./pages/project_list_delete.vue").default;
+exports.project_create = require("./pages/project_create.vue").default;
+exports.project_update = require("./pages/project_update.vue").default;

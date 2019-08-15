@@ -11,4 +11,5 @@
 */
 
 Route::middleware(['auth'])->group(function () {
+    Route::resource('/trident/resource/project', 'ProjectController');
 });

@@ -1,0 +1,17 @@
+{
+    "type": "json",
+    "data": {
+        "id": {
+            "resource": true
+        },
+        "name": {
+            "resource": true
+        },
+        "root_folder": {
+            "resource": true
+        },
+        "relative_schemas_folder": {
+            "resource": true
+        }
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "ajax": {
+        "get": {
+            "GET": "\/trident\/resource\/definition"
+        },
+        "create": {
+            "POST": "\/trident\/resource\/definition"
+        },
+        "update": {
+            "POST": "\/trident\/resource\/definition"
+        },
+        "delete": {
+            "DELETE": "\/trident\/resource\/definition"
+        }
+    },
+    "presentation": {
+        "type": "form",
+        "schema": [
+            {
+                "column_name": "namespace",
+                "column_type": "string",
+                "type": "fillable",
+                "validation_rules": {
+                    "required": true,
+                    "type": "string",
+                    "trigger": "blur"
+                },
+                "attributes": {
+                    "type": {
+                        "string": true
+                    },
+                    "default_value": "''",
+                    "element_type": false
+                }
+            }
+        ]
+    }
+}

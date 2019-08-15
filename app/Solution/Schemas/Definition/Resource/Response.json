@@ -1,0 +1,14 @@
+{
+    "type": "json",
+    "data": {
+        "id": {
+            "resource": true
+        },
+        "project_id": {
+            "resource": true
+        },
+        "namespace": {
+            "resource": true
+        }
+    }
+}

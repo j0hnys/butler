@@ -10,3 +10,7 @@
 
 //pages
 exports.index = require("./store/pages/Index.js").default;
+
+exports.project_list_delete = require("./store/pages/project_list_delete.js").default;
+exports.project_create = require("./store/pages/project_create.js").default;
+exports.project_update = require("./store/pages/project_update.js").default;

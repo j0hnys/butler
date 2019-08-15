@@ -13,6 +13,7 @@ class TridentAuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        'App\Trident\Workflows\Repositories\ProjectRepository' => 'App\Policies\Trident\ProjectPolicy',
     ];
 
     /**

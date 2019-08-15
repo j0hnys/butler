@@ -27,6 +27,9 @@ const store = new Vuex.Store({
             namespaced: true,
             modules: {
                 Index: stores.index,
+                project_list_delete: stores.project_list_delete,
+                project_create: stores.project_create,
+                project_update: stores.project_update,
             }
         },
     },
