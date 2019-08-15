@@ -17,6 +17,23 @@
         "type": "form",
         "schema": [
             {
+                "column_name": "project_id",
+                "column_type": "integer",
+                "type": "fillable",
+                "validation_rules": {
+                    "required": true,
+                    "type": "number",
+                    "trigger": "blur"
+                },
+                "attributes": {
+                    "type": {
+                        "number": true
+                    },
+                    "default_value": "''",
+                    "element_type": false
+                }
+            },
+            {
                 "column_name": "namespace",
                 "column_type": "string",
                 "type": "fillable",

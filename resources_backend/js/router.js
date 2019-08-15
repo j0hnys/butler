@@ -41,5 +41,32 @@ const routers = [
             submenu: null,
         }
     },
+    { // add "import definition_list_delete from './pages/definition_list_delete.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/definition_list',
+        title: 'otinanai',
+        name: 'definition_list_delete',
+        component: routes.definition_list_delete,
+        meta: {
+            submenu: null,
+        }
+    },
+    { // add "import definition_create from './pages/definition_create.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/definition_create',
+        title: 'otinanai',
+        name: 'definition_create',
+        component: routes.definition_create,
+        meta: {
+            submenu: null,
+        }
+    },
+    { // add "import definition_update from './pages/definition_update.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/definition_update/:id',
+        title: 'otinanai',
+        name: 'definition_update',
+        component: routes.definition_update,
+        meta: {
+            submenu: null,
+        }
+    },
 ];
 export default routers;

@@ -26,6 +26,15 @@ class TridentServiceProvider extends ServiceProvider
     public function register()
     {
         //EDW THA PREPEI NA KANW GENERATED TOYS PROVIDERS MOY!!!
+        \App::bind('App\Trident\Interfaces\Workflows\Logic\DefinitionInterface',function($app){
+            return new \App\Trident\Workflows\Logic\Definition(
+                new \App\Trident\Business\Logic\Definition, 
+                new \App\Trident\Workflows\Repositories\DefinitionRepository($app)
+            );
+        });
+        \App::bind('App\Trident\Interfaces\Workflows\Repositories\DefinitionRepositoryInterface',function($app){
+            return new \App\Trident\Workflows\Repositories\DefinitionRepository($app);
+        });
         \App::bind('App\Trident\Interfaces\Workflows\Logic\ProjectInterface',function($app){
             return new \App\Trident\Workflows\Logic\Project(
                 new \App\Trident\Business\Logic\Project, 
@@ -34,6 +43,9 @@ class TridentServiceProvider extends ServiceProvider
         });
         \App::bind('App\Trident\Interfaces\Workflows\Repositories\ProjectRepositoryInterface',function($app){
             return new \App\Trident\Workflows\Repositories\ProjectRepository($app);
+        });
+        \App::bind('App\Trident\Interfaces\Business\Logic\DefinitionInterface',function($app){
+            return new \App\Trident\Business\Logic\Definition($app);
         });
         \App::bind('App\Trident\Interfaces\Business\Logic\ProjectInterface',function($app){
             return new \App\Trident\Business\Logic\Project($app);
