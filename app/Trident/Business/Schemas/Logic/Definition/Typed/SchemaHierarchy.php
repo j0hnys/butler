@@ -10,12 +10,14 @@ class SchemaHierarchy extends Definition
     const hierarchy = [
         'trident-vista' => [
             '{{entity_name}}' => [
-                'Presentation',
+                'Presentation' => [
+                    '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Vista\Form',
+                ],
                 'Processes',
                 'Resources' => [
-                    'Functionality.json',
-                    'Request.json',
-                    'Response.json',
+                    '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Functionality',
+                    '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Request',
+                    '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Response',
                 ]
             ],
         ],
