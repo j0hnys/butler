@@ -2037,9 +2037,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       page_title: 'Welcome',
       active_menu_name: 1,
       app_title: {
-        visible: 'Vista',
-        collapsed_menu: 'V',
-        expanded_menu: 'Vista'
+        visible: 'Butler',
+        collapsed_menu: 'B',
+        expanded_menu: 'Butler'
       },
       main_menu_breadcrumb: [],
       sub_menu_breadcrumb: []

@@ -2,9 +2,10 @@
 
 namespace App\Trident\Business\Logic;
 
-use App\Trident\Business\Exceptions\DefinitionException;
 use App\Trident\Interfaces\Business\Logic\DefinitionInterface;
-
+use App\Trident\Business\Schemas\Logic\Definition\Typed\SchemaHierarchy;
+use App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Response;
+use App\Trident\Business\Schemas\Logic\Definition\Typed\Vista\Form;
 
 class Definition implements DefinitionInterface
 {
@@ -21,94 +22,40 @@ class Definition implements DefinitionInterface
     }
 
     /**
-     * Display a listing of the resource.
+     * *description goes here*.
      *
-     * @param  array  $data
-     * @return void
+     * @var array
+     * @return array
      */
-    public function index(array $data): void
+    public function get(): array
     {
-        //
-        // TO DO
-        //
+
+        // $tmp = new SchemaHierarchy();
+        // $tmp->getFilledValues();
+
+        // $tmp1 = new Form();
+        // $tmp1->getFilledValues();
+
+        $response = new Response();
+        $response->check([
+            "type" => 'json',
+            "tmp" => 'a string',
+            "tmp1" => 'EntityName',
+            "data" => [
+                "id" => [
+                    'resource' => true,
+                ]
+            ],
+        ]);
+
+        dump([
+            // '$tmp' => $tmp,
+            // '$tmp1' => $tmp1,
+            '$response' => $response,
+        ]);
+
+        return [];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param  array  $data
-     * @return void
-     */
-    public function create(array $data): void
-    {   
-        //
-        // TO DO
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  array  $data
-     * @return void
-     */
-    public function store(array $data): void
-    {
-        //
-        // TO DO
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  array  $data
-     * @return void
-     */
-    public function show(array $data): void
-    {
-        //
-        // TO DO
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  array  $data
-     * @return void
-     */
-    public function edit(array $data): void
-    {
-        //
-        // TO DO
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  array  $data
-     * @return void
-     */
-    public function update(array $data): void
-    {   
-        //
-        // TO DO
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  array  $data
-     * @return void
-     */
-    public function destroy(array $data): void
-    {
-        //
-        // TO DO
-        //
-    }
 
 }

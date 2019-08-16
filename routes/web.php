@@ -19,4 +19,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/definition_get/{id}', 'Trident\DefinitionController@get');
+
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

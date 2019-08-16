@@ -160,9 +160,9 @@
                 active_menu_name: 1,
 
                 app_title: {
-                    visible: 'Vista',
-                    collapsed_menu: 'V',
-                    expanded_menu: 'Vista',
+                    visible: 'Butler',
+                    collapsed_menu: 'B',
+                    expanded_menu: 'Butler',
                 },
 
                 main_menu_breadcrumb: [],

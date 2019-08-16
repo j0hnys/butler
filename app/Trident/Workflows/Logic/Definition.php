@@ -141,4 +141,19 @@ class Definition implements DefinitionInterface
         $deleted_count = $this->definition_repository->destroy($id);
         return ($deleted_count > 0);
     }
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function get($request, $id)
+    {
+        // $model = $this->definition_repository->find($id);
+        
+        $this->definition_business->get();
+    }
+
+
 }

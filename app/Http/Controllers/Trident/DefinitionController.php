@@ -10,6 +10,7 @@ use App\Trident\Interfaces\Workflows\Logic\DefinitionInterface as DefinitionWork
 use App\Trident\Interfaces\Workflows\Repositories\DefinitionRepositoryInterface as DefinitionRepository;
 // use App\Trident\Workflows\Exceptions\DefinitionException;
 // use App\Trident\Workflows\Events\Triggers\DefinitionTrigger;
+use App\Trident\Workflows\Validations\DefinitiongetRequest;
 use App\Trident\Workflows\Validations\DefinitionStoreRequest;
 use App\Trident\Workflows\Validations\DefinitionUpdateRequest;
 use App\Trident\Workflows\Schemas\Logic\Definition\Typed\StructIndexDefinition;
@@ -141,6 +142,21 @@ class DefinitionController extends Controller
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
-
     
+
+    /**
+     * *enter description here.*
+     *
+     * @param  DefinitiongetRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function get(DefinitiongetRequest $request,$id)
+    {
+        // dd('csdcdsc');
+        // $this->authorize('get', [$this->definition_repository,$id]);
+        return response()->json( $this->definition_workflow->get([''],$id) );
+    }
+
+
+
 }
