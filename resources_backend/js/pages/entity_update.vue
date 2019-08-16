@@ -1,27 +1,6 @@
 <style scoped>
-    .index {
-        width: 100%;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        text-align: center;
-    }
-        .index h1 {
-            height: 150px;
-        }
-            .index h1 img {
-                height: 100%;
-            }
-        .index h2 {
-            color: #666;
-            margin-bottom: 200px;
-        }
-            .index h2 p {
-                margin: 0 0 50px;
-            }
-    .ivu-row-flex {
-        height: 100%;
+    .entity_update {
+        height: 100vh;
     }
 </style>
 <template>
@@ -32,25 +11,47 @@
                     test update
                 </h1>
 
-
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
 
                     <FormItem label="project_id" prop="project_id">
-                        <InputNumber v-model="formValidate.project_id" placeholder="Enter your project_id"></InputNumber>
+                        <InputNumber :disabled="true" v-model="formValidate.project_id" placeholder="Enter your project_id"></InputNumber>
                     </FormItem>
                     <FormItem label="definition_id" prop="definition_id">
-                        <InputNumber v-model="formValidate.definition_id" placeholder="Enter your definition_id"></InputNumber>
+                        <InputNumber :disabled="true" v-model="formValidate.definition_id" placeholder="Enter your definition_id"></InputNumber>
                     </FormItem>
                     <FormItem label="name" prop="name">
                         <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
                     </FormItem>
 
-                    <FormItem>
-                        <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
+                    
+                    <h1>Functionality</h1>
+                    <Divider />
+                    <FormItem label="model" prop="model">
+                        <Select v-model="model" style="width:200px">
+                            <Option v-for="item in database_tables" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                        </Select>
+                        <Button type="primary">Generate Default Values</Button>
                     </FormItem>
+
+                    
+                    <FormItem></FormItem>
+
+                    <h1>Request</h1>
+                    <Divider />
+                    <Table border :columns="request_table.columns" :data="request_table.data"></Table>
+
+                    <FormItem></FormItem>
+
+                    <h1>Response</h1>
+                    <Divider />
+                    <Table border :columns="response_table.columns" :data="response_table.data"></Table>                    
                 </Form>
+            </Col>
 
-
+        </Row>
+        <Row type="flex" justify="end" align="middle" style="margin-top: 25px; margin-bottom: 15px;">
+            <Col>
+                <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
             </Col>
         </Row>
     </div>
@@ -58,11 +59,144 @@
 <script>
     export default {
         data() {
+
+            var local = {
+                model: '',
+                database_tables: [
+                    {
+                        label: 'one',
+                        value: 'one',
+                    },
+                    {
+                        label: 'one1',
+                        value: 'one1',
+                    },
+                    {
+                        label: 'one2',
+                        value: 'one2',
+                    },
+                ],
+                request_table: {
+                    columns: [
+                        {
+                            title: 'project_id',
+                            key: 'project_id',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'definition_id',
+                            key: 'definition_id',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'name',
+                            key: 'name',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Action',
+                            key: 'action',
+                            width: 150,
+                            align: 'center',
+                            render: (h, params) => {
+                                var row = params.row;
+
+                                return h('div', [
+                                    h('Button', {
+                                        props: {
+                                            type: 'primary',
+                                            size: 'small'
+                                        },
+                                        style: {
+                                            marginRight: '5px'
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.$router.push({ name: 'entity_update', params: { id: row.id } });
+                                            }
+                                        }
+                                    }, 'Edit'),
+                                    h('Button', {
+                                        props: {
+                                            type: 'error',
+                                            size: 'small'
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.ajax().delete(row.id);
+                                            }
+                                        }
+                                    }, 'Delete')
+                                ]);
+                            }
+                        }
+                    ],
+                    data: []
+                },
+                response_table: {
+                    columns: [
+                        {
+                            title: 'project_id',
+                            key: 'project_id',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'definition_id',
+                            key: 'definition_id',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'name',
+                            key: 'name',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Action',
+                            key: 'action',
+                            width: 150,
+                            align: 'center',
+                            render: (h, params) => {
+                                var row = params.row;
+
+                                return h('div', [
+                                    h('Button', {
+                                        props: {
+                                            type: 'primary',
+                                            size: 'small'
+                                        },
+                                        style: {
+                                            marginRight: '5px'
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.$router.push({ name: 'entity_update', params: { id: row.id } });
+                                            }
+                                        }
+                                    }, 'Edit'),
+                                    h('Button', {
+                                        props: {
+                                            type: 'error',
+                                            size: 'small'
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.ajax().delete(row.id);
+                                            }
+                                        }
+                                    }, 'Delete')
+                                ]);
+                            }
+                        }
+                    ],
+                    data: []
+                }
+            };
+
             var state = {
                 formValidate: {
                     project_id: '',
                     definition_id: '',
-                    name: '',
+                    name: ''
                 },
             };
             if (this.$store.state.pages.entity_update) 
@@ -73,6 +207,7 @@
             //
             //component state registration
             return {
+                ...local,
                 ...state,
                 ruleValidate: {                   
 

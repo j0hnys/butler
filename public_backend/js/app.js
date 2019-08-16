@@ -3215,8 +3215,130 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
+    var _this = this;
+
+    var local = {
+      model: '',
+      database_tables: [{
+        label: 'one',
+        value: 'one'
+      }, {
+        label: 'one1',
+        value: 'one1'
+      }, {
+        label: 'one2',
+        value: 'one2'
+      }],
+      request_table: {
+        columns: [{
+          title: 'project_id',
+          key: 'project_id',
+          minWidth: 100
+        }, {
+          title: 'definition_id',
+          key: 'definition_id',
+          minWidth: 100
+        }, {
+          title: 'name',
+          key: 'name',
+          minWidth: 100
+        }, {
+          title: 'Action',
+          key: 'action',
+          width: 150,
+          align: 'center',
+          render: function render(h, params) {
+            var row = params.row;
+            return h('div', [h('Button', {
+              props: {
+                type: 'primary',
+                size: 'small'
+              },
+              style: {
+                marginRight: '5px'
+              },
+              on: {
+                click: function click() {
+                  _this.$router.push({
+                    name: 'entity_update',
+                    params: {
+                      id: row.id
+                    }
+                  });
+                }
+              }
+            }, 'Edit'), h('Button', {
+              props: {
+                type: 'error',
+                size: 'small'
+              },
+              on: {
+                click: function click() {
+                  _this.ajax()["delete"](row.id);
+                }
+              }
+            }, 'Delete')]);
+          }
+        }],
+        data: []
+      },
+      response_table: {
+        columns: [{
+          title: 'project_id',
+          key: 'project_id',
+          minWidth: 100
+        }, {
+          title: 'definition_id',
+          key: 'definition_id',
+          minWidth: 100
+        }, {
+          title: 'name',
+          key: 'name',
+          minWidth: 100
+        }, {
+          title: 'Action',
+          key: 'action',
+          width: 150,
+          align: 'center',
+          render: function render(h, params) {
+            var row = params.row;
+            return h('div', [h('Button', {
+              props: {
+                type: 'primary',
+                size: 'small'
+              },
+              style: {
+                marginRight: '5px'
+              },
+              on: {
+                click: function click() {
+                  _this.$router.push({
+                    name: 'entity_update',
+                    params: {
+                      id: row.id
+                    }
+                  });
+                }
+              }
+            }, 'Edit'), h('Button', {
+              props: {
+                type: 'error',
+                size: 'small'
+              },
+              on: {
+                click: function click() {
+                  _this.ajax()["delete"](row.id);
+                }
+              }
+            }, 'Delete')]);
+          }
+        }],
+        data: []
+      }
+    };
     var state = {
       formValidate: {
         project_id: '',
@@ -3231,7 +3353,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     //component state registration
 
 
-    return _objectSpread({}, state, {
+    return _objectSpread({}, local, {}, state, {
       ruleValidate: {
         project_id: [{
           required: true,
@@ -3305,15 +3427,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return false;
     },
     handleSubmit: function handleSubmit(name) {
-      var _this = this;
+      var _this2 = this;
 
       this.$refs[name].validate(function (valid) {
         if (valid) {
-          var formValidate = _this.formValidate;
+          var formValidate = _this2.formValidate;
 
-          _this.ajax().update(_this.$route.params.id, formValidate);
+          _this2.ajax().update(_this2.$route.params.id, formValidate);
         } else {
-          _this.$Message.error('Fail!');
+          _this2.$Message.error('Fail!');
         }
       });
     }
@@ -8512,7 +8634,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.index[data-v-7d549fd2] {\n    width: 100%;\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    text-align: center;\n}\n.index h1[data-v-7d549fd2] {\n        height: 150px;\n}\n.index h1 img[data-v-7d549fd2] {\n            height: 100%;\n}\n.index h2[data-v-7d549fd2] {\n        color: #666;\n        margin-bottom: 200px;\n}\n.index h2 p[data-v-7d549fd2] {\n            margin: 0 0 50px;\n}\n.ivu-row-flex[data-v-7d549fd2] {\n    height: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.entity_update[data-v-7d549fd2] {\n    height: 100vh;\n}\n", ""]);
 
 // exports
 
@@ -85527,14 +85649,16 @@ var render = function() {
                       )
                     : _vm._e(),
                   _vm._v(" "),
-                  _c("Card", [
-                    _c(
-                      "div",
-                      { staticStyle: { height: "600px" } },
-                      [_vm._t("default")],
-                      2
-                    )
-                  ])
+                  _c(
+                    "Card",
+                    {
+                      staticStyle: {
+                        height: "calc(100vh - 150px)",
+                        overflow: "auto"
+                      }
+                    },
+                    [_c("div", [_vm._t("default")], 2)]
+                  )
                 ],
                 1
               )
@@ -86199,7 +86323,10 @@ var render = function() {
                     { attrs: { label: "project_id", prop: "project_id" } },
                     [
                       _c("InputNumber", {
-                        attrs: { placeholder: "Enter your project_id" },
+                        attrs: {
+                          disabled: true,
+                          placeholder: "Enter your project_id"
+                        },
                         model: {
                           value: _vm.formValidate.project_id,
                           callback: function($$v) {
@@ -86219,7 +86346,10 @@ var render = function() {
                     },
                     [
                       _c("InputNumber", {
-                        attrs: { placeholder: "Enter your definition_id" },
+                        attrs: {
+                          disabled: true,
+                          placeholder: "Enter your definition_id"
+                        },
                         model: {
                           value: _vm.formValidate.definition_id,
                           callback: function($$v) {
@@ -86250,26 +86380,101 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
+                  _c("h1", [_vm._v("Functionality")]),
+                  _vm._v(" "),
+                  _c("Divider"),
+                  _vm._v(" "),
                   _c(
                     "FormItem",
+                    { attrs: { label: "model", prop: "model" } },
                     [
                       _c(
-                        "Button",
+                        "Select",
                         {
-                          attrs: { type: "primary" },
-                          on: {
-                            click: function($event) {
-                              return _vm.handleSubmit("formValidate")
-                            }
+                          staticStyle: { width: "200px" },
+                          model: {
+                            value: _vm.model,
+                            callback: function($$v) {
+                              _vm.model = $$v
+                            },
+                            expression: "model"
                           }
                         },
-                        [_vm._v("Submit")]
-                      )
+                        _vm._l(_vm.database_tables, function(item) {
+                          return _c(
+                            "Option",
+                            { key: item.value, attrs: { value: item.value } },
+                            [_vm._v(_vm._s(item.label))]
+                          )
+                        }),
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("Button", { attrs: { type: "primary" } }, [
+                        _vm._v("Generate Default Values")
+                      ])
                     ],
                     1
-                  )
+                  ),
+                  _vm._v(" "),
+                  _c("FormItem"),
+                  _vm._v(" "),
+                  _c("h1", [_vm._v("Request")]),
+                  _vm._v(" "),
+                  _c("Divider"),
+                  _vm._v(" "),
+                  _c("Table", {
+                    attrs: {
+                      border: "",
+                      columns: _vm.request_table.columns,
+                      data: _vm.request_table.data
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("FormItem"),
+                  _vm._v(" "),
+                  _c("h1", [_vm._v("Response")]),
+                  _vm._v(" "),
+                  _c("Divider"),
+                  _vm._v(" "),
+                  _c("Table", {
+                    attrs: {
+                      border: "",
+                      columns: _vm.response_table.columns,
+                      data: _vm.response_table.data
+                    }
+                  })
                 ],
                 1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "Row",
+        {
+          staticStyle: { "margin-top": "25px", "margin-bottom": "15px" },
+          attrs: { type: "flex", justify: "end", align: "middle" }
+        },
+        [
+          _c(
+            "Col",
+            [
+              _c(
+                "Button",
+                {
+                  attrs: { type: "primary" },
+                  on: {
+                    click: function($event) {
+                      return _vm.handleSubmit("formValidate")
+                    }
+                  }
+                },
+                [_vm._v("Submit")]
               )
             ],
             1

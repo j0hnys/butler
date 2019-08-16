@@ -124,8 +124,8 @@
                         </Submenu>
 
                     </Menu>
-                    <Card>
-                        <div style="height: 600px">
+                    <Card style="height: calc(100vh - 150px); overflow: auto;">
+                        <div>
                             <!-- here we will put the content of the page -->
                             <slot></slot>
                             <!--  -->
