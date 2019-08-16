@@ -30,12 +30,8 @@ class Definition implements DefinitionInterface
     public function get(): array
     {
 
-        // $tmp = new SchemaHierarchy();
-        // $tmp->getFilledValues();
-
-        // $tmp1 = new Form();
-        // $tmp1->getFilledValues();
-
+        // $response = new SchemaHierarchy();
+        // $response = new Form();
         $response = new Response();
         $response->check([
             "type" => 'json',
