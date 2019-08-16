@@ -11,5 +11,11 @@ const main_menu = [
         text: 'Definitions',
         redirect_url: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/definition_list',
     },
+    {
+        name: '3',
+        icon_type: 'ios-navigate',
+        text: 'Entities',
+        redirect_url: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_list',
+    },
 ];
 export default main_menu;

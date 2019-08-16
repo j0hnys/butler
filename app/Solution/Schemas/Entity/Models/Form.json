@@ -1,0 +1,72 @@
+{
+    "ajax": {
+        "get": {
+            "GET": "\/trident\/resource\/entity"
+        },
+        "create": {
+            "POST": "\/trident\/resource\/entity"
+        },
+        "update": {
+            "POST": "\/trident\/resource\/entity"
+        },
+        "delete": {
+            "DELETE": "\/trident\/resource\/entity"
+        }
+    },
+    "presentation": {
+        "type": "form",
+        "schema": [
+            {
+                "column_name": "project_id",
+                "column_type": "integer",
+                "type": "fillable",
+                "validation_rules": {
+                    "required": true,
+                    "type": "number",
+                    "trigger": "blur"
+                },
+                "attributes": {
+                    "type": {
+                        "number": true
+                    },
+                    "default_value": "''",
+                    "element_type": false
+                }
+            },
+            {
+                "column_name": "definition_id",
+                "column_type": "integer",
+                "type": "fillable",
+                "validation_rules": {
+                    "required": true,
+                    "type": "number",
+                    "trigger": "blur"
+                },
+                "attributes": {
+                    "type": {
+                        "number": true
+                    },
+                    "default_value": "''",
+                    "element_type": false
+                }
+            },
+            {
+                "column_name": "name",
+                "column_type": "string",
+                "type": "fillable",
+                "validation_rules": {
+                    "required": true,
+                    "type": "string",
+                    "trigger": "blur"
+                },
+                "attributes": {
+                    "type": {
+                        "string": true
+                    },
+                    "default_value": "''",
+                    "element_type": false
+                }
+            }
+        ]
+    }
+}

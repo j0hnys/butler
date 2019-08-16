@@ -33,6 +33,9 @@ const store = new Vuex.Store({
                 definition_list_delete: stores.definition_list_delete,
                 definition_create: stores.definition_create,
                 definition_update: stores.definition_update,
+                entity_list_delete: stores.entity_list_delete,
+                entity_create: stores.entity_create,
+                entity_update: stores.entity_update,
             }
         },
     },

@@ -68,5 +68,32 @@ const routers = [
             submenu: null,
         }
     },
+    { // add "import entity_list_delete from './pages/entity_list_delete.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_list',
+        title: 'otinanai',
+        name: 'entity_list_delete',
+        component: routes.entity_list_delete,
+        meta: {
+            submenu: null,
+        }
+    },
+    { // add "import entity_create from './pages/entity_create.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_create',
+        title: 'otinanai',
+        name: 'entity_create',
+        component: routes.entity_create,
+        meta: {
+            submenu: null,
+        }
+    },
+    { // add "import entity_update from './pages/entity_update.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_update/:id',
+        title: 'otinanai',
+        name: 'entity_update',
+        component: routes.entity_update,
+        meta: {
+            submenu: null,
+        }
+    },
 ];
 export default routers;

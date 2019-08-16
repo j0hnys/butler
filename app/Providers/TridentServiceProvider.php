@@ -35,6 +35,15 @@ class TridentServiceProvider extends ServiceProvider
         \App::bind('App\Trident\Interfaces\Workflows\Repositories\DefinitionRepositoryInterface',function($app){
             return new \App\Trident\Workflows\Repositories\DefinitionRepository($app);
         });
+        \App::bind('App\Trident\Interfaces\Workflows\Logic\EntityInterface',function($app){
+            return new \App\Trident\Workflows\Logic\Entity(
+                new \App\Trident\Business\Logic\Entity, 
+                new \App\Trident\Workflows\Repositories\EntityRepository($app)
+            );
+        });
+        \App::bind('App\Trident\Interfaces\Workflows\Repositories\EntityRepositoryInterface',function($app){
+            return new \App\Trident\Workflows\Repositories\EntityRepository($app);
+        });
         \App::bind('App\Trident\Interfaces\Workflows\Logic\ProjectInterface',function($app){
             return new \App\Trident\Workflows\Logic\Project(
                 new \App\Trident\Business\Logic\Project, 
@@ -46,6 +55,9 @@ class TridentServiceProvider extends ServiceProvider
         });
         \App::bind('App\Trident\Interfaces\Business\Logic\DefinitionInterface',function($app){
             return new \App\Trident\Business\Logic\Definition($app);
+        });
+        \App::bind('App\Trident\Interfaces\Business\Logic\EntityInterface',function($app){
+            return new \App\Trident\Business\Logic\Entity($app);
         });
         \App::bind('App\Trident\Interfaces\Business\Logic\ProjectInterface',function($app){
             return new \App\Trident\Business\Logic\Project($app);

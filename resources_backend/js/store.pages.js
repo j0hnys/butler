@@ -17,3 +17,6 @@ exports.project_update = require("./store/pages/project_update.js").default;
 exports.definition_list_delete = require("./store/pages/definition_list_delete.js").default;
 exports.definition_create = require("./store/pages/definition_create.js").default;
 exports.definition_update = require("./store/pages/definition_update.js").default;
+exports.entity_list_delete = require("./store/pages/entity_list_delete.js").default;
+exports.entity_create = require("./store/pages/entity_create.js").default;
+exports.entity_update = require("./store/pages/entity_update.js").default;

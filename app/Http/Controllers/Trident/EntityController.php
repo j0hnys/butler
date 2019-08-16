@@ -1,0 +1,147 @@
+<?php
+
+namespace App\Http\Controllers\Trident;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+// use Illuminate\Container\Container as App;
+// use Workflow;
+use App\Trident\Interfaces\Workflows\Logic\EntityInterface as EntityWorkflow;
+use App\Trident\Interfaces\Workflows\Repositories\EntityRepositoryInterface as EntityRepository;
+// use App\Trident\Workflows\Exceptions\EntityException;
+// use App\Trident\Workflows\Events\Triggers\EntityTrigger;
+use App\Trident\Workflows\Validations\EntityStoreRequest;
+use App\Trident\Workflows\Validations\EntityUpdateRequest;
+use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructIndexEntity;
+use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructStoreEntity;
+use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructUpdateEntity;
+
+class EntityController extends Controller
+{
+    
+    /**
+     * @var EntityWorkflow
+     */
+    protected $entity_workflow;
+    
+    /**
+     * @var EntityRepository
+     */
+    protected $entity_repository;
+
+    public function __construct(EntityWorkflow $entityWorkflow, EntityRepository $entity_repository)
+    {
+        $this->entity_workflow = $entityWorkflow;
+        $this->entity_repository = $entity_repository;
+    }
+
+
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    // RESTFUL CRUD START
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param Request  $request
+     * @return EntityRepository
+     */
+    public function index(Request $request)
+    {
+        $this->authorize('list',$this->entity_repository);
+        $structIndexEntity = new StructIndexEntity( $request->all() );
+        $entityResourceCollection = $this->entity_workflow->index($structIndexEntity);
+        return response()->json( $entityResourceCollection );
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {   
+        $this->authorize('create',$this->entity_repository);
+        return view('entity_create');  //ayto DEN tha to exw sto restful_crud code generation
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param EntityStoreRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(EntityStoreRequest $request)
+    {
+        $this->authorize('create',$this->entity_repository);
+        $request_all = $request->all();
+        $request_all['project_id'] = (int)$request_all['project_id'];
+        $request_all['definition_id'] = (int)$request_all['definition_id'];
+        $structStoreEntity = new StructStoreEntity( $request_all );
+        $entityResource = $this->entity_workflow->store($structStoreEntity);
+        return response()->json( $entityResource );
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id)
+    {
+        $this->authorize('view', [$this->entity_repository, $id]);
+        return response()->json( $this->entity_workflow->show($id) );
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function edit($id)
+    {
+        $this->authorize('update', [$this->entity_repository, $id]);
+        $entity = $this->entity_workflow->edit($id);
+        return view('entity_edit', compact('entity'));    //ayto DEN tha to exw sto restful_crud code generation
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  EntityUpdateRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(EntityUpdateRequest $request, $id)
+    {   
+        $this->authorize('update', [$this->entity_repository, $id]);
+        $request_all = $request->all();
+        $request_all['project_id'] = (int)$request_all['project_id'];
+        $request_all['definition_id'] = (int)$request_all['definition_id'];
+        $structUpdateEntity = new StructUpdateEntity($request_all);        
+        $entityResource = $this->entity_workflow->update($structUpdateEntity);
+        return response()->json( $entityResource );
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($id)
+    {
+        $this->authorize('delete', [$this->entity_repository, $id]);
+        return response()->json( $this->entity_workflow->destroy($id) );
+    }
+
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    // RESTFUL CRUD END
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+
+    
+}

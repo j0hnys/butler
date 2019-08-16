@@ -17,3 +17,6 @@ exports.project_update = require("./pages/project_update.vue").default;
 exports.definition_list_delete = require("./pages/definition_list_delete.vue").default;
 exports.definition_create = require("./pages/definition_create.vue").default;
 exports.definition_update = require("./pages/definition_update.vue").default;
+exports.entity_list_delete = require("./pages/entity_list_delete.vue").default;
+exports.entity_create = require("./pages/entity_create.vue").default;
+exports.entity_update = require("./pages/entity_update.vue").default;
