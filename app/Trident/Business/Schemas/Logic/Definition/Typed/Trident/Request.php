@@ -24,7 +24,7 @@ class Request extends Definition
     public function __construct($data = [])
     {
         $this->types = [
-            'type' => T::array(),
+            'type' => T::string(),
             'data' => T::array(),
         ];
         

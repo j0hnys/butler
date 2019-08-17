@@ -152,9 +152,10 @@ class DefinitionController extends Controller
      */
     public function get(DefinitiongetRequest $request,$id)
     {
-        // dd('csdcdsc');
-        // $this->authorize('get', [$this->definition_repository,$id]);
-        return response()->json( $this->definition_workflow->get([''],$id) );
+        $this->authorize('get', [$this->definition_repository,$id]);
+        $request_all = $request->all();
+        // $request_all['project_id'] = (int)$request_all['project_id'];
+        return response()->json( $this->definition_workflow->get($request_all,$id) );
     }
 
 

@@ -12,6 +12,8 @@ use App\Trident\Workflows\Schemas\Logic\Definition\Typed\StructStoreDefinition;
 use App\Trident\Workflows\Schemas\Logic\Definition\Typed\StructUpdateDefinition;
 use App\Trident\Workflows\Schemas\Logic\Definition\Resources\DefinitionResource;
 use App\Trident\Workflows\Schemas\Logic\Definition\Resources\DefinitionResourceCollection;
+use App\Trident\Workflows\Schemas\Logic\Definition\Resources\GetDefaultDefinitionValuesResource;
+use App\Trident\Workflows\Schemas\Logic\Definition\Resources\GetDefaultDefinitionValuesResourceCollection;
 
 class Definition implements DefinitionInterface
 {
@@ -151,8 +153,12 @@ class Definition implements DefinitionInterface
     public function get($request, $id)
     {
         // $model = $this->definition_repository->find($id);
+
+        $table_names = \DB::connection('mysql_butler_trident_vista')->getDoctrineSchemaManager()->listTableNames();
         
-        $this->definition_business->get();
+        $result = $this->definition_business->get($table_names[0], \DB::connection('mysql_butler_trident_vista'));
+
+        return new GetDefaultDefinitionValuesResource($result);
     }
 
 

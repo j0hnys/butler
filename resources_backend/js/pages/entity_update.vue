@@ -79,18 +79,23 @@
                 request_table: {
                     columns: [
                         {
-                            title: 'project_id',
-                            key: 'project_id',
-                            minWidth: 100,
-                        },
-                        {
-                            title: 'definition_id',
-                            key: 'definition_id',
-                            minWidth: 100,
-                        },
-                        {
-                            title: 'name',
+                            title: 'Name',
                             key: 'name',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Type',
+                            key: 'type',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Validation',
+                            key: 'validation',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Fillable',
+                            key: 'fillable',
                             minWidth: 100,
                         },
                         {
@@ -136,18 +141,13 @@
                 response_table: {
                     columns: [
                         {
-                            title: 'project_id',
-                            key: 'project_id',
-                            minWidth: 100,
-                        },
-                        {
-                            title: 'definition_id',
-                            key: 'definition_id',
-                            minWidth: 100,
-                        },
-                        {
-                            title: 'name',
+                            title: 'Name',
                             key: 'name',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Resource',
+                            key: 'resource',
                             minWidth: 100,
                         },
                         {
