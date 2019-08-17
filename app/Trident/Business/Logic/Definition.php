@@ -25,38 +25,12 @@ class Definition implements DefinitionInterface
     }
 
     /**
-     * *description goes here*.
+     * gets schema definitions
      *
-     * @var array
-     * @return array
+     * @param string $table_name
+     * @param [type] $db_connection
+     * @return void
      */
-    public function get__(): array
-    {
-        
-        // $response = new SchemaHierarchy();
-        // $response = new Form();
-        $response = new Response();
-        $response->check([
-            "type" => 'json',
-            "tmp" => 'a string',
-            "tmp1" => 'EntityName',
-            "data" => [
-                "id" => [
-                    'resource' => true,
-                ]
-            ],
-        ]);
-
-        dump([
-            // '$tmp' => $tmp,
-            // '$tmp1' => $tmp1,
-            '$response' => $response,
-        ]);
-
-        return [];
-    }
-
-
     public function get($table_name, $db_connection)
     {
         $db_name = $db_connection->getDatabaseName();

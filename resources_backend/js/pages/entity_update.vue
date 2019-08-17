@@ -27,7 +27,7 @@
                     <h1>Functionality</h1>
                     <Divider />
                     <FormItem>
-                        <Select v-model="model" style="width:200px">
+                        <Select v-model="model" style="width:200px" :loading="loading_models" loading-text="loading..." @on-open-change="onModelSelectClicked">
                             <Option v-for="item in database_tables" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                         <Button type="primary" @click="onGenerateDefaultValuesClicked">Generate Default Values</Button>
@@ -62,12 +62,8 @@
 
             var local = {
                 model: '',
-                database_tables: [
-                    {
-                        label: 'kkk',
-                        value: 'kkk',
-                    },
-                ],
+                loading_models: true,
+                database_tables: [],
                 request_table: {
                     columns: [
                         {
@@ -246,20 +242,23 @@
                 var self = this;
                 return {
                     get(id='') {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity/'+id ).then(({ data }) => {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity/'+id ).then(({ data }) => {
                             self.formValidate = data;
                         }).catch(error => {
                             console.log(error);
                         });
                     },
                     getDefaultValues(definition_id, db_table_name) {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/definition_get/'+definition_id, {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/definition_get/'+definition_id, {
                             params: {
                                 db_table_name: db_table_name
                             }
-                        }).then(({ data }) => {
-                            // nothing
                         }).catch(error => {
+                            console.log(error);
+                        });
+                    },
+                    getDatabaseTables(definition_id) {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/definition_get_database_tables/'+definition_id ).catch(error => {
                             console.log(error);
                         });
                     },
@@ -280,7 +279,7 @@
                             }
                         }
 
-                        window.axios.post( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity/'+id,  form_data ).then((response) => {
+                        return window.axios.post( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity/'+id,  form_data ).then((response) => {
                             // Once AJAX resolves we can update the Crud with the new color
                             self.$Message.success('Success!');
                         }).catch(error => {
@@ -307,25 +306,29 @@
                 })
             },
             onGenerateDefaultValuesClicked() {
-
-                console.log({
-                    'this.formValidate.definition_id': this.formValidate.definition_id,
-                });
-
                 this.ajax().getDefaultValues(
                     this.formValidate.definition_id,
                     this.model
-                );
+                ).then(({data}) => {
+                    console.log(data);
+
+                    this.request_table.data = data.request_table_data;
+                    this.response_table.data = data.response_table_data;
+
+                });
+            },
+            onModelSelectClicked() {
+                this.loading_models = true;
+
+                this.ajax().getDatabaseTables(
+                    this.formValidate.definition_id,
+                ).then(({data}) => {
+                    this.database_tables = data.table_names;
+                    this.loading_models = false;
+                });
             },
         },
         mounted() {
-            // console.log('test form mounted');
-            // console.log({
-            //     // 'this.$store': this.$store,
-            //     // 'this.$store.state': this.$store.state,
-            //     // 'this.$store.state.Index': this.$store.state.Index,
-            //     'this.$route': this.$route,
-            // });
 
             this.ajax().get(this.$route.params.id);
 

@@ -19,17 +19,10 @@ class EntityResource extends JsonResource
             'project_id' => $this->project_id,
             'definition_id' => $this->definition_id,
             'name' => $this->name,
+            'functionality_data' => $this->functionality_data,
+            'request_data' => $this->request_data,
+            'response_data' => $this->response_data,
         ];
-
-        // return [
-        //     'id' => $this->id,
-        //     'name' => $this->name,
-        //     'email' => $this->email,
-        //     'posts' => PostResource::collection($this->whenLoaded('posts')),    
-        //     'somekey' => $this->getSomeTransformation(); 
-        //     'created_at' => $this->created_at,
-        //     'updated_at' => $this->updated_at,
-        // ];
 
         return parent::toArray($request);
     }

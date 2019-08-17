@@ -12,6 +12,15 @@
         },
         "name": {
             "resource": true
+        },
+        "functionality_data": {
+            "resource": true
+        },
+        "request_data": {
+            "resource": true
+        },
+        "response_data": {
+            "resource": true
         }
     }
 }

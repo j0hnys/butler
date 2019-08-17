@@ -13,6 +13,7 @@ use App\Trident\Workflows\Schemas\Logic\Definition\Typed\StructUpdateDefinition;
 use App\Trident\Workflows\Schemas\Logic\Definition\Resources\DefinitionResource;
 use App\Trident\Workflows\Schemas\Logic\Definition\Resources\DefinitionResourceCollection;
 use App\Trident\Workflows\Schemas\Logic\Definition\Resources\GetDefaultDefinitionValuesResource;
+use App\Trident\Workflows\Schemas\Logic\Definition\Resources\DefinitionGetDatabaseTablesResource;
 use App\Trident\Workflows\Schemas\Logic\Definition\Resources\GetDefaultDefinitionValuesResourceCollection;
 
 class Definition implements DefinitionInterface
@@ -152,13 +153,33 @@ class Definition implements DefinitionInterface
      */
     public function get($request_data, $id)
     {
-        // $model = $this->definition_repository->find($id);
-
-        // $table_names = \DB::connection('mysql_butler_trident_vista')->getDoctrineSchemaManager()->listTableNames();
-        
         $result = $this->definition_business->get($request_data['db_table_name'], \DB::connection('mysql_butler_trident_vista'));
 
         return new GetDefaultDefinitionValuesResource($result);
+    }
+
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function getDatabaseTables($request_data, $id)
+    {
+        $table_names = \DB::connection('mysql_butler_trident_vista')->getDoctrineSchemaManager()->listTableNames();
+
+        $structured_for_ui = [];
+        foreach ($table_names as $table_name) {
+            $structured_for_ui []= [
+                'label' => $table_name,
+                'value' => $table_name,
+            ];
+        }
+
+        return new DefinitionGetDatabaseTablesResource((object)[
+            'table_names' => $structured_for_ui
+        ]);
     }
 
 

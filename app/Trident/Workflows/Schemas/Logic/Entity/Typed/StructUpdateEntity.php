@@ -15,6 +15,9 @@ class StructupdateEntity extends StructOptionalValues
             'project_id' => T::nullable(T::int()),
             'definition_id' => T::nullable(T::int()),
             'name' => T::nullable(T::string()),
+            'functionality_data' => T::nullable(T::string()),
+            'request_data' => T::nullable(T::string()),
+            'response_data' => T::nullable(T::string()),
         ];
         
         parent::__construct($this->types);

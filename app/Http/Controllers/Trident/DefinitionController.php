@@ -11,6 +11,7 @@ use App\Trident\Interfaces\Workflows\Repositories\DefinitionRepositoryInterface 
 // use App\Trident\Workflows\Exceptions\DefinitionException;
 // use App\Trident\Workflows\Events\Triggers\DefinitionTrigger;
 use App\Trident\Workflows\Validations\DefinitiongetRequest;
+use App\Trident\Workflows\Validations\DefinitiongetDatabaseTablesRequest;
 use App\Trident\Workflows\Validations\DefinitionStoreRequest;
 use App\Trident\Workflows\Validations\DefinitionUpdateRequest;
 use App\Trident\Workflows\Schemas\Logic\Definition\Typed\StructIndexDefinition;
@@ -156,6 +157,22 @@ class DefinitionController extends Controller
         $request_all = $request->all();
         // $request_all['project_id'] = (int)$request_all['project_id'];
         return response()->json( $this->definition_workflow->get($request_all, $id) );
+    }
+
+
+
+
+    /**
+     * *enter description here.*
+     *
+     * @param  DefinitiongetDatabaseTablesRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function getDatabaseTables(DefinitiongetDatabaseTablesRequest $request, $id)
+    {
+        $this->authorize('getDatabaseTables', [$this->definition_repository,$id]);
+        $request_all = $request->all();
+        return response()->json( $this->definition_workflow->getDatabaseTables($request_all, $id) );
     }
 
 
