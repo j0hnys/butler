@@ -45,6 +45,9 @@
                     <FormItem label="relative_schemas_folder" prop="relative_schemas_folder">
                         <Input v-model="formValidate.relative_schemas_folder" placeholder="Enter your relative_schemas_folder"></Input>
                     </FormItem>
+                    <FormItem label="db_connection_name" prop="db_connection_name">
+                        <Input v-model="formValidate.db_connection_name" placeholder="Enter your db_connection_name"></Input>
+                    </FormItem>
                     
                     
                     <FormItem>
@@ -65,6 +68,7 @@
                     name: '',
                     root_folder: '',
                     relative_schemas_folder: '',
+                    db_connection_name: '',
                 },
             };
             if (this.$store.state.pages.project_create) 

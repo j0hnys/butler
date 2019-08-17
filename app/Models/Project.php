@@ -32,6 +32,6 @@ class Project extends Model
     /**
      * @var array
      */
-    protected $fillable = ['user_id', 'name', 'root_folder', 'relative_schemas_folder', 'created_at', 'updated_at'];
+    protected $fillable = ['user_id', 'name', 'root_folder', 'relative_schemas_folder', 'db_connection_name', 'created_at', 'updated_at'];
 
 }

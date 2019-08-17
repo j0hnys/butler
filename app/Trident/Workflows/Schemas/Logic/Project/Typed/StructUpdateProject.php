@@ -15,6 +15,7 @@ class StructupdateProject extends StructOptionalValues
             'name' => T::nullable(T::string()),
             'root_folder' => T::nullable(T::string()),
             'relative_schemas_folder' => T::nullable(T::string()),
+            'db_connection_name' => T::nullable(T::string()),
         ];
         
         parent::__construct($this->types);

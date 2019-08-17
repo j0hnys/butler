@@ -44,6 +44,9 @@
                     <FormItem label="relative_schemas_folder" prop="relative_schemas_folder">
                         <Input v-model="formValidate.relative_schemas_folder" placeholder="Enter your relative_schemas_folder"></Input>
                     </FormItem>
+                    <FormItem label="db_connection_name" prop="db_connection_name">
+                        <Input v-model="formValidate.db_connection_name" placeholder="Enter your db_connection_name"></Input>
+                    </FormItem>
 
                     <FormItem>
                         <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
@@ -63,6 +66,7 @@
                     name: '',
                     root_folder: '',
                     relative_schemas_folder: '',
+                    db_connection_name: '',
                 },
             };
             if (this.$store.state.pages.project_update) 
@@ -100,6 +104,14 @@
                             message: 'The relative_schemas_folder cannot be empty', 
                         }
                     ],
+                    db_connection_name: [
+                        { 
+                            required: true, 
+                            type: 'string', 
+                            trigger: 'blur',
+                            message: 'The db_connection_name cannot be empty', 
+                        }
+                    ]
 
                 },
 

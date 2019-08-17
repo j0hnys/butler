@@ -12,6 +12,9 @@
         },
         "relative_schemas_folder": {
             "resource": true
+        },
+        "db_connection_name": {
+            "resource": true
         }
     }
 }

@@ -36,6 +36,14 @@
                 "message": "relative_schemas_folder is required"
             },
             "fillable": true
+        },
+        "db_connection_name": {
+            "type": "T::nullable(T::string())",
+            "validation": {
+                "rule": "required | string",
+                "message": "db_connection_name is required"
+            },
+            "fillable": true
         }
     }
 }

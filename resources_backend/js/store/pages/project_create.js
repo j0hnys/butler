@@ -3,6 +3,7 @@ var state = {
         name: '',
         root_folder: '',
         relative_schemas_folder: '',
+        db_connection_name: '',
     },
 };
 

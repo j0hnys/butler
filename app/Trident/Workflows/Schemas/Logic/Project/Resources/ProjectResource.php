@@ -19,6 +19,7 @@ class ProjectResource extends JsonResource
             'name' => $this->name,
             'root_folder' => $this->root_folder,
             'relative_schemas_folder' => $this->relative_schemas_folder,
+            'db_connection_name' => $this->db_connection_name,
         ];
 
         // return [

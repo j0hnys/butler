@@ -79,6 +79,11 @@
                         minWidth: 100,
                     },
                     {
+                        title: 'db_connection_name',
+                        key: 'db_connection_name',
+                        minWidth: 100,
+                    },
+                    {
                         title: 'Action',
                         key: 'action',
                         width: 150,

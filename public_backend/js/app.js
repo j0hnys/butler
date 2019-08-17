@@ -3547,13 +3547,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var state = {
       formValidate: {
         name: '',
         root_folder: '',
-        relative_schemas_folder: ''
+        relative_schemas_folder: '',
+        db_connection_name: ''
       }
     };
 
@@ -3742,6 +3746,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         key: 'relative_schemas_folder',
         minWidth: 100
       }, {
+        title: 'db_connection_name',
+        key: 'db_connection_name',
+        minWidth: 100
+      }, {
         title: 'Action',
         key: 'action',
         width: 150,
@@ -3907,13 +3915,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var state = {
       formValidate: {
         name: '',
         root_folder: '',
-        relative_schemas_folder: ''
+        relative_schemas_folder: '',
+        db_connection_name: ''
       }
     };
 
@@ -3942,6 +3954,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           type: 'string',
           trigger: 'blur',
           message: 'The relative_schemas_folder cannot be empty'
+        }],
+        db_connection_name: [{
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: 'The db_connection_name cannot be empty'
         }]
       }
     });
@@ -86507,6 +86525,33 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "FormItem",
+                    {
+                      attrs: {
+                        label: "db_connection_name",
+                        prop: "db_connection_name"
+                      }
+                    },
+                    [
+                      _c("Input", {
+                        attrs: { placeholder: "Enter your db_connection_name" },
+                        model: {
+                          value: _vm.formValidate.db_connection_name,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.formValidate,
+                              "db_connection_name",
+                              $$v
+                            )
+                          },
+                          expression: "formValidate.db_connection_name"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
                     [
                       _c(
                         "Button",
@@ -86730,6 +86775,33 @@ var render = function() {
                             )
                           },
                           expression: "formValidate.relative_schemas_folder"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    {
+                      attrs: {
+                        label: "db_connection_name",
+                        prop: "db_connection_name"
+                      }
+                    },
+                    [
+                      _c("Input", {
+                        attrs: { placeholder: "Enter your db_connection_name" },
+                        model: {
+                          value: _vm.formValidate.db_connection_name,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.formValidate,
+                              "db_connection_name",
+                              $$v
+                            )
+                          },
+                          expression: "formValidate.db_connection_name"
                         }
                       })
                     ],
@@ -104405,7 +104477,8 @@ var state = {
   formValidate: {
     name: '',
     root_folder: '',
-    relative_schemas_folder: ''
+    relative_schemas_folder: '',
+    db_connection_name: ''
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -104467,7 +104540,8 @@ var state = {
   formValidate: {
     name: '',
     root_folder: '',
-    relative_schemas_folder: ''
+    relative_schemas_folder: '',
+    db_connection_name: ''
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
