@@ -150,13 +150,13 @@ class Definition implements DefinitionInterface
      * @var array
      * @return array
      */
-    public function get($request, $id)
+    public function get($request_data, $id)
     {
         // $model = $this->definition_repository->find($id);
 
-        $table_names = \DB::connection('mysql_butler_trident_vista')->getDoctrineSchemaManager()->listTableNames();
+        // $table_names = \DB::connection('mysql_butler_trident_vista')->getDoctrineSchemaManager()->listTableNames();
         
-        $result = $this->definition_business->get($table_names[0], \DB::connection('mysql_butler_trident_vista'));
+        $result = $this->definition_business->get($request_data['db_table_name'], \DB::connection('mysql_butler_trident_vista'));
 
         return new GetDefaultDefinitionValuesResource($result);
     }

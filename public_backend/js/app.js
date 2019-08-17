@@ -3223,14 +3223,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var local = {
       model: '',
       database_tables: [{
-        label: 'one',
-        value: 'one'
-      }, {
-        label: 'one1',
-        value: 'one1'
-      }, {
-        label: 'one2',
-        value: 'one2'
+        label: 'kkk',
+        value: 'kkk'
       }],
       request_table: {
         columns: [{
@@ -3397,6 +3391,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             console.log(error);
           });
         },
+        getDefaultValues: function getDefaultValues(definition_id, db_table_name) {
+          window.axios.get("/butler/public_backend" + '/definition_get/' + definition_id, {
+            params: {
+              db_table_name: db_table_name
+            }
+          }).then(function (_ref2) {// nothing
+
+            var data = _ref2.data;
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        },
         update: function update(id, data) {
           var form_data = new FormData();
           form_data.append('_method', 'PATCH');
@@ -3438,6 +3444,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this2.$Message.error('Fail!');
         }
       });
+    },
+    onGenerateDefaultValuesClicked: function onGenerateDefaultValuesClicked() {
+      console.log({
+        'this.formValidate.definition_id': this.formValidate.definition_id
+      });
+      this.ajax().getDefaultValues(this.formValidate.definition_id, this.model);
     }
   },
   mounted: function mounted() {
@@ -8501,7 +8513,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.layout-con[data-v-74256b72]{\n    height: 100%;\n    width: 100%;\n}\n.menu-item span[data-v-74256b72]{\n    display: inline-block;\n    overflow: hidden;\n    width: 69px;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    vertical-align: bottom;\n    transition: width .2s ease .2s;\n}\n.menu-item i[data-v-74256b72]{\n    transform: translateX(0px);\n    transition: font-size .2s ease, transform .2s ease;\n    vertical-align: middle;\n    font-size: 16px;\n}\n.collapsed-menu span[data-v-74256b72]{\n    width: 0px;\n    transition: width .2s ease;\n}\n.collapsed-menu i[data-v-74256b72]{\n    transform: translateX(5px);\n    transition: font-size .2s ease .2s, transform .2s ease .2s;\n    vertical-align: middle;\n    font-size: 22px;\n}\n.router-link-exact-active[data-v-74256b72] {\n    color: white;\n}\n.router-link-exact-active[data-v-74256b72]:hover {\n        text-decoration: none;\n}\n.router-link-active[data-v-74256b72] {\n    color: white;\n}\n.router-link-active[data-v-74256b72]:hover {\n        text-decoration: none;\n}\n.link-style-black[data-v-74256b72] {\n    color: black;\n}\n", ""]);
+exports.push([module.i, "\n/* .layout-con{\n    height: 100%;\n    width: 100%;\n}\n.menu-item span{\n    display: inline-block;\n    overflow: hidden;\n    width: 69px;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    vertical-align: bottom;\n    transition: width .2s ease .2s;\n}\n.menu-item i{\n    transform: translateX(0px);\n    transition: font-size .2s ease, transform .2s ease;\n    vertical-align: middle;\n    font-size: 16px;\n}\n.collapsed-menu span{\n    width: 0px;\n    transition: width .2s ease;\n}\n.collapsed-menu i{\n    transform: translateX(5px);\n    transition: font-size .2s ease .2s, transform .2s ease .2s;\n    vertical-align: middle;\n    font-size: 22px;\n}\n\n.router-link-exact-active {\n    color: white;\n}\n    .router-link-exact-active:hover {\n        text-decoration: none;\n    }\n.router-link-active {\n    color: white;\n}\n    .router-link-active:hover {\n        text-decoration: none;\n    }\n.link-style-black {\n    color: black;\n} */\n", ""]);
 
 // exports
 
@@ -86386,7 +86398,6 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "FormItem",
-                    { attrs: { label: "model", prop: "model" } },
                     [
                       _c(
                         "Select",
@@ -86410,9 +86421,14 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("Button", { attrs: { type: "primary" } }, [
-                        _vm._v("Generate Default Values")
-                      ])
+                      _c(
+                        "Button",
+                        {
+                          attrs: { type: "primary" },
+                          on: { click: _vm.onGenerateDefaultValuesClicked }
+                        },
+                        [_vm._v("Generate Default Values")]
+                      )
                     ],
                     1
                   ),

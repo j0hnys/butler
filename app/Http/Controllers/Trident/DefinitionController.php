@@ -150,12 +150,12 @@ class DefinitionController extends Controller
      * @param  DefinitiongetRequest
      * @return \Illuminate\Http\Response
      */
-    public function get(DefinitiongetRequest $request,$id)
+    public function get(DefinitiongetRequest $request, $id)
     {
         $this->authorize('get', [$this->definition_repository,$id]);
         $request_all = $request->all();
         // $request_all['project_id'] = (int)$request_all['project_id'];
-        return response()->json( $this->definition_workflow->get($request_all,$id) );
+        return response()->json( $this->definition_workflow->get($request_all, $id) );
     }
 
 

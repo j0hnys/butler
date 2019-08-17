@@ -26,11 +26,11 @@
                     
                     <h1>Functionality</h1>
                     <Divider />
-                    <FormItem label="model" prop="model">
+                    <FormItem>
                         <Select v-model="model" style="width:200px">
                             <Option v-for="item in database_tables" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
-                        <Button type="primary">Generate Default Values</Button>
+                        <Button type="primary" @click="onGenerateDefaultValuesClicked">Generate Default Values</Button>
                     </FormItem>
 
                     
@@ -64,16 +64,8 @@
                 model: '',
                 database_tables: [
                     {
-                        label: 'one',
-                        value: 'one',
-                    },
-                    {
-                        label: 'one1',
-                        value: 'one1',
-                    },
-                    {
-                        label: 'one2',
-                        value: 'one2',
+                        label: 'kkk',
+                        value: 'kkk',
                     },
                 ],
                 request_table: {
@@ -260,6 +252,17 @@
                             console.log(error);
                         });
                     },
+                    getDefaultValues(definition_id, db_table_name) {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/definition_get/'+definition_id, {
+                            params: {
+                                db_table_name: db_table_name
+                            }
+                        }).then(({ data }) => {
+                            // nothing
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    },
                     update(id,data) {
 
                         var form_data = new FormData();
@@ -302,7 +305,18 @@
                         this.$Message.error('Fail!');
                     }
                 })
-            }
+            },
+            onGenerateDefaultValuesClicked() {
+
+                console.log({
+                    'this.formValidate.definition_id': this.formValidate.definition_id,
+                });
+
+                this.ajax().getDefaultValues(
+                    this.formValidate.definition_id,
+                    this.model
+                );
+            },
         },
         mounted() {
             // console.log('test form mounted');

@@ -1,5 +1,5 @@
 <style scoped>
-    .layout-con{
+    /* .layout-con{
         height: 100%;
         width: 100%;
     }
@@ -43,7 +43,7 @@
         }
     .link-style-black {
         color: black;
-    }
+    } */
 </style>
 <template>
     <div class="layout">
