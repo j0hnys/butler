@@ -141,4 +141,23 @@ class Entity implements EntityInterface
         $deleted_count = $this->entity_repository->destroy($id);
         return ($deleted_count > 0);
     }
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function generate($request_data, $id)
+    {
+        $model = $this->entity_repository->find($id);
+        
+        dd([
+            '$model' => $model,
+        ]);
+
+        return $model;
+    }
+
+
 }

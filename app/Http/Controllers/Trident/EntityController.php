@@ -10,6 +10,7 @@ use App\Trident\Interfaces\Workflows\Logic\EntityInterface as EntityWorkflow;
 use App\Trident\Interfaces\Workflows\Repositories\EntityRepositoryInterface as EntityRepository;
 // use App\Trident\Workflows\Exceptions\EntityException;
 // use App\Trident\Workflows\Events\Triggers\EntityTrigger;
+use App\Trident\Workflows\Validations\EntitygenerateRequest;
 use App\Trident\Workflows\Validations\EntityStoreRequest;
 use App\Trident\Workflows\Validations\EntityUpdateRequest;
 use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructIndexEntity;
@@ -144,4 +145,20 @@ class EntityController extends Controller
 
 
     
+
+    /**
+     * *enter description here.*
+     *
+     * @param  EntitygenerateRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function generate(EntitygenerateRequest $request,$id)
+    {
+        $this->authorize('generate', [$this->entity_repository,$id]);
+        $request_all = $request->all();
+        return response()->json( $this->entity_workflow->generate($request_all, $id) );
+    }
+
+
+
 }

@@ -111,4 +111,21 @@ class Entity implements EntityInterface
         //
     }
 
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function generate(Array $data): array
+    {
+        //
+        // TO DO
+        //
+
+        return $data;
+    }
+
+
 }

@@ -91,4 +91,19 @@ class EntityPolicy
     {
         return $user->id == $Entity->findOrFail($id)->user_id;
     }
+
+    /**
+     * Determine whether the user can permanently generate the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\EntityRepository $Entity
+     * @return mixed
+     */
+    public function generate(User $user, Entity $entity, int $id)
+    {
+        return $user->id == $entity->findOrFail($id)->user_id;
+    }
+
+
+
 }

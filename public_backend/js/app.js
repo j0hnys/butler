@@ -3080,7 +3080,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         title: 'Action',
         key: 'action',
-        width: 150,
+        maxWidth: 200,
         align: 'center',
         render: function render(h, params) {
           var row = params.row;
@@ -3107,12 +3107,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               type: 'error',
               size: 'small'
             },
+            style: {
+              marginRight: '5px'
+            },
             on: {
               click: function click() {
                 _this.ajax()["delete"](row.id);
               }
             }
-          }, 'Delete')]);
+          }, 'Delete'), h('Button', {
+            props: {
+              type: 'success',
+              size: 'small'
+            },
+            on: {
+              click: function click() {
+                _this.ajax().generate(row.id);
+              }
+            }
+          }, 'Generate')]);
         }
       }],
       data: []
@@ -3145,6 +3158,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             var data = _ref2.data;
             // console.log(data);
             window.location.reload();
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        },
+        generate: function generate(id) {
+          window.axios.get("/butler/public_backend" + '/entity_generate/' + id).then(function (_ref3) {// window.location.reload();
+
+            var data = _ref3.data;
           })["catch"](function (error) {
             console.log(error);
           });

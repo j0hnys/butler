@@ -60,6 +60,8 @@ class Definition implements DefinitionInterface
                 $tmp_type = 'T::string()';
             }
 
+            $tmp_type = 'T::nullable('.$tmp_type.')';
+
             $request_table_data []= [
                 'name' => $column->getName(),
                 'type' => $tmp_type,
@@ -72,7 +74,7 @@ class Definition implements DefinitionInterface
         $response_table_data = [];
         foreach ($columns as $column) {
             $tmp_type = $response_schema['data']['{{entity_property}}']['resource'];
-            
+
             $response_table_data []= [
                 'name' => $column->getName(),
                 'resource' => $tmp_type,
