@@ -22,6 +22,7 @@ class EntityResource extends JsonResource
             'functionality_data' => $this->functionality_data,
             'request_data' => $this->request_data,
             'response_data' => $this->response_data,
+            'db_table_name' => $this->db_table_name,
         ];
 
         return parent::toArray($request);

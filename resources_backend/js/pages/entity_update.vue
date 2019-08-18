@@ -26,8 +26,8 @@
                     
                     <h1>Functionality</h1>
                     <Divider />
-                    <FormItem>
-                        <Select v-model="model" style="width:200px" :loading="loading_models" loading-text="loading..." @on-open-change="onModelSelectClicked">
+                    <FormItem label="db_table_name" prop="db_table_name">
+                        <Select v-model="formValidate.db_table_name" style="width:200px" :loading="loading_models" loading-text="loading..." @on-open-change="onModelSelectClicked">
                             <Option v-for="item in database_tables" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                         <Button type="primary" @click="onGenerateDefaultValuesClicked">Generate Default Values</Button>
@@ -39,12 +39,16 @@
                     <h1>Request</h1>
                     <Divider />
                     <Table border :columns="request_table.columns" :data="request_table.data"></Table>
-
-                    <FormItem></FormItem>
+                    <FormItem>
+                        <Input hidden v-model="formValidate.request_data" placeholder=""></Input>
+                    </FormItem>
 
                     <h1>Response</h1>
                     <Divider />
-                    <Table border :columns="response_table.columns" :data="response_table.data"></Table>                    
+                    <Table border :columns="response_table.columns" :data="response_table.data"></Table>    
+                    <FormItem>
+                        <Input hidden v-model="formValidate.response_data" placeholder=""></Input>                
+                    </FormItem>
                 </Form>
             </Col>
 
@@ -184,7 +188,11 @@
                 formValidate: {
                     project_id: '',
                     definition_id: '',
-                    name: ''
+                    name: '',
+                    functionality_data: '',
+                    request_data: '',
+                    response_data: '',
+                    db_table_name: '',
                 },
             };
             if (this.$store.state.pages.entity_update) 
@@ -223,6 +231,38 @@
                             message: 'The name cannot be empty', 
                         }
                     ],
+                    functionality_data: [
+                        { 
+                            required: true, 
+                            type: 'string', 
+                            trigger: 'blur',
+                            message: 'The functionality_data cannot be empty', 
+                        }
+                    ],
+                    request_data: [
+                        { 
+                            required: true, 
+                            type: 'string', 
+                            trigger: 'blur',
+                            message: 'The request_data cannot be empty', 
+                        }
+                    ],
+                    response_data: [
+                        { 
+                            required: true, 
+                            type: 'string', 
+                            trigger: 'blur',
+                            message: 'The response_data cannot be empty', 
+                        }
+                    ],
+                    db_table_name: [
+                        { 
+                            required: true, 
+                            type: 'string', 
+                            trigger: 'blur',
+                            message: 'The db_table_name cannot be empty', 
+                        }
+                    ],
 
                 },
 
@@ -244,6 +284,16 @@
                     get(id='') {
                         return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity/'+id ).then(({ data }) => {
                             self.formValidate = data;
+
+                            self.database_tables = [
+                                {
+                                    label: data.db_table_name,
+                                    value: data.db_table_name,
+                                }
+                            ];
+
+                            self.request_table.data = JSON.parse(data.request_data);
+                            self.response_table.data = JSON.parse(data.response_data);
                         }).catch(error => {
                             console.log(error);
                         });
@@ -297,6 +347,8 @@
                     if (valid) {
 
                         var formValidate = this.formValidate;
+                        formValidate.request_data = JSON.stringify(this.request_table.data);
+                        formValidate.response_data = JSON.stringify(this.response_table.data);
 
                         this.ajax().update(this.$route.params.id, formValidate);
 
@@ -308,7 +360,7 @@
             onGenerateDefaultValuesClicked() {
                 this.ajax().getDefaultValues(
                     this.formValidate.definition_id,
-                    this.model
+                    this.formValidate.db_table_name
                 ).then(({data}) => {
                     console.log(data);
 

@@ -2861,7 +2861,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       formValidate: {
         project_id: '',
         definition_id: '',
-        name: ''
+        name: '',
+        functionality_data: '',
+        request_data: '',
+        response_data: '',
+        db_table_name: ''
       }
     };
 
@@ -2890,6 +2894,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           type: 'string',
           trigger: 'blur',
           message: 'The name cannot be empty'
+        }],
+        functionality_data: [{
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: 'The functionality_data cannot be empty'
+        }],
+        request_data: [{
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: 'The request_data cannot be empty'
+        }],
+        response_data: [{
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: 'The response_data cannot be empty'
+        }],
+        db_table_name: [{
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: 'The db_table_name cannot be empty'
         }]
       }
     });
@@ -3216,6 +3244,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _this = this;
@@ -3335,7 +3367,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       formValidate: {
         project_id: '',
         definition_id: '',
-        name: ''
+        name: '',
+        functionality_data: '',
+        request_data: '',
+        response_data: '',
+        db_table_name: ''
       }
     };
 
@@ -3364,6 +3400,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           type: 'string',
           trigger: 'blur',
           message: 'The name cannot be empty'
+        }],
+        functionality_data: [{
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: 'The functionality_data cannot be empty'
+        }],
+        request_data: [{
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: 'The request_data cannot be empty'
+        }],
+        response_data: [{
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: 'The response_data cannot be empty'
+        }],
+        db_table_name: [{
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: 'The db_table_name cannot be empty'
         }]
       }
     });
@@ -3385,6 +3445,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           return window.axios.get("/butler/public_backend" + '/trident/resource/entity/' + id).then(function (_ref) {
             var data = _ref.data;
             self.formValidate = data;
+            self.database_tables = [{
+              label: data.db_table_name,
+              value: data.db_table_name
+            }];
+            self.request_table.data = JSON.parse(data.request_data);
+            self.response_table.data = JSON.parse(data.response_data);
           })["catch"](function (error) {
             console.log(error);
           });
@@ -3438,6 +3504,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$refs[name].validate(function (valid) {
         if (valid) {
           var formValidate = _this2.formValidate;
+          formValidate.request_data = JSON.stringify(_this2.request_table.data);
+          formValidate.response_data = JSON.stringify(_this2.response_table.data);
 
           _this2.ajax().update(_this2.$route.params.id, formValidate);
         } else {
@@ -3448,7 +3516,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     onGenerateDefaultValuesClicked: function onGenerateDefaultValuesClicked() {
       var _this3 = this;
 
-      this.ajax().getDefaultValues(this.formValidate.definition_id, this.model).then(function (_ref2) {
+      this.ajax().getDefaultValues(this.formValidate.definition_id, this.formValidate.db_table_name).then(function (_ref2) {
         var data = _ref2.data;
         console.log(data);
         _this3.request_table.data = data.request_table_data;
@@ -86302,6 +86370,9 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "FormItem",
+                    {
+                      attrs: { label: "db_table_name", prop: "db_table_name" }
+                    },
                     [
                       _c(
                         "Select",
@@ -86313,11 +86384,11 @@ var render = function() {
                           },
                           on: { "on-open-change": _vm.onModelSelectClicked },
                           model: {
-                            value: _vm.model,
+                            value: _vm.formValidate.db_table_name,
                             callback: function($$v) {
-                              _vm.model = $$v
+                              _vm.$set(_vm.formValidate, "db_table_name", $$v)
                             },
-                            expression: "model"
+                            expression: "formValidate.db_table_name"
                           }
                         },
                         _vm._l(_vm.database_tables, function(item) {
@@ -86356,7 +86427,22 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("FormItem"),
+                  _c(
+                    "FormItem",
+                    [
+                      _c("Input", {
+                        attrs: { hidden: "", placeholder: "" },
+                        model: {
+                          value: _vm.formValidate.request_data,
+                          callback: function($$v) {
+                            _vm.$set(_vm.formValidate, "request_data", $$v)
+                          },
+                          expression: "formValidate.request_data"
+                        }
+                      })
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("h1", [_vm._v("Response")]),
                   _vm._v(" "),
@@ -86368,7 +86454,24 @@ var render = function() {
                       columns: _vm.response_table.columns,
                       data: _vm.response_table.data
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    [
+                      _c("Input", {
+                        attrs: { hidden: "", placeholder: "" },
+                        model: {
+                          value: _vm.formValidate.response_data,
+                          callback: function($$v) {
+                            _vm.$set(_vm.formValidate, "response_data", $$v)
+                          },
+                          expression: "formValidate.response_data"
+                        }
+                      })
+                    ],
+                    1
+                  )
                 ],
                 1
               )
@@ -104382,7 +104485,11 @@ var state = {
   formValidate: {
     project_id: '',
     definition_id: '',
-    name: ''
+    name: '',
+    functionality_data: '',
+    request_data: '',
+    response_data: '',
+    db_table_name: ''
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -104444,7 +104551,11 @@ var state = {
   formValidate: {
     project_id: '',
     definition_id: '',
-    name: ''
+    name: '',
+    functionality_data: '',
+    request_data: '',
+    response_data: '',
+    db_table_name: ''
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

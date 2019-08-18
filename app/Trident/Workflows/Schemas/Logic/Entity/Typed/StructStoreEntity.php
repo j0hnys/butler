@@ -18,6 +18,7 @@ class StructstoreEntity extends StructOptionalValues
             'functionality_data' => T::nullable(T::string()),
             'request_data' => T::nullable(T::string()),
             'response_data' => T::nullable(T::string()),
+            'db_table_name' => T::nullable(T::string()),
         ];
         
         parent::__construct($this->types);

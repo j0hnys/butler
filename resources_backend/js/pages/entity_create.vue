@@ -65,6 +65,10 @@
                     project_id: '',
                     definition_id: '',
                     name: '',
+                    functionality_data: '',
+                    request_data: '',
+                    response_data: '',
+                    db_table_name: '',
                 },
             };
             if (this.$store.state.pages.entity_create) 
@@ -100,6 +104,38 @@
                             type: 'string', 
                             trigger: 'blur',
                             message: 'The name cannot be empty', 
+                        }
+                    ],
+                    functionality_data: [
+                        { 
+                            required: true, 
+                            type: 'string', 
+                            trigger: 'blur',
+                            message: 'The functionality_data cannot be empty', 
+                        }
+                    ],
+                    request_data: [
+                        { 
+                            required: true, 
+                            type: 'string', 
+                            trigger: 'blur',
+                            message: 'The request_data cannot be empty', 
+                        }
+                    ],
+                    response_data: [
+                        { 
+                            required: true, 
+                            type: 'string', 
+                            trigger: 'blur',
+                            message: 'The response_data cannot be empty', 
+                        }
+                    ],
+                    db_table_name: [
+                        { 
+                            required: true, 
+                            type: 'string', 
+                            trigger: 'blur',
+                            message: 'The db_table_name cannot be empty', 
                         }
                     ],
 

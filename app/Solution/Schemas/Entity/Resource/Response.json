@@ -21,6 +21,9 @@
         },
         "response_data": {
             "resource": true
+        },
+        "db_table_name": {
+            "resource": true
         }
     }
 }

@@ -3,6 +3,10 @@ var state = {
         project_id: '',
         definition_id: '',
         name: '',
+        functionality_data: '',
+        request_data: '',
+        response_data: '',
+        db_table_name: '',
     },
 };
 
