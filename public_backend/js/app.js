@@ -3248,117 +3248,115 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    var _this = this;
-
     var local = {
       model: '',
       loading_models: true,
       database_tables: [],
       request_table: {
+        edit: {
+          index: -1,
+          name: '',
+          type: '',
+          validation: '',
+          fillable: ''
+        },
         columns: [{
           title: 'Name',
-          key: 'name',
+          slot: 'name',
           minWidth: 100
         }, {
           title: 'Type',
-          key: 'type',
+          slot: 'type',
           minWidth: 100
         }, {
           title: 'Validation',
-          key: 'validation',
+          slot: 'validation',
           minWidth: 100
         }, {
           title: 'Fillable',
-          key: 'fillable',
+          slot: 'fillable',
           minWidth: 100
         }, {
           title: 'Action',
-          key: 'action',
+          slot: 'action',
           width: 150,
-          align: 'center',
-          render: function render(h, params) {
-            var row = params.row;
-            return h('div', [h('Button', {
-              props: {
-                type: 'primary',
-                size: 'small'
-              },
-              style: {
-                marginRight: '5px'
-              },
-              on: {
-                click: function click() {
-                  _this.$router.push({
-                    name: 'entity_update',
-                    params: {
-                      id: row.id
-                    }
-                  });
-                }
-              }
-            }, 'Edit'), h('Button', {
-              props: {
-                type: 'error',
-                size: 'small'
-              },
-              on: {
-                click: function click() {
-                  _this.ajax()["delete"](row.id);
-                }
-              }
-            }, 'Delete')]);
-          }
+          align: 'center'
         }],
         data: []
       },
       response_table: {
+        edit: {
+          index: -1,
+          name: '',
+          resource: ''
+        },
         columns: [{
           title: 'Name',
-          key: 'name',
+          slot: 'name',
           minWidth: 100
         }, {
           title: 'Resource',
-          key: 'resource',
+          slot: 'resource',
           minWidth: 100
         }, {
           title: 'Action',
-          key: 'action',
+          slot: 'action',
           width: 150,
-          align: 'center',
-          render: function render(h, params) {
-            var row = params.row;
-            return h('div', [h('Button', {
-              props: {
-                type: 'primary',
-                size: 'small'
-              },
-              style: {
-                marginRight: '5px'
-              },
-              on: {
-                click: function click() {
-                  _this.$router.push({
-                    name: 'entity_update',
-                    params: {
-                      id: row.id
-                    }
-                  });
-                }
-              }
-            }, 'Edit'), h('Button', {
-              props: {
-                type: 'error',
-                size: 'small'
-              },
-              on: {
-                click: function click() {
-                  _this.ajax()["delete"](row.id);
-                }
-              }
-            }, 'Delete')]);
-          }
+          align: 'center'
         }],
         data: []
       }
@@ -3499,39 +3497,69 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return false;
     },
     handleSubmit: function handleSubmit(name) {
-      var _this2 = this;
+      var _this = this;
 
       this.$refs[name].validate(function (valid) {
         if (valid) {
-          var formValidate = _this2.formValidate;
-          formValidate.request_data = JSON.stringify(_this2.request_table.data);
-          formValidate.response_data = JSON.stringify(_this2.response_table.data);
+          var formValidate = _this.formValidate;
+          formValidate.request_data = JSON.stringify(_this.request_table.data);
+          formValidate.response_data = JSON.stringify(_this.response_table.data);
 
-          _this2.ajax().update(_this2.$route.params.id, formValidate);
+          _this.ajax().update(_this.$route.params.id, formValidate);
         } else {
-          _this2.$Message.error('Fail!');
+          _this.$Message.error('Fail!');
         }
       });
     },
     onGenerateDefaultValuesClicked: function onGenerateDefaultValuesClicked() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.ajax().getDefaultValues(this.formValidate.definition_id, this.formValidate.db_table_name).then(function (_ref2) {
         var data = _ref2.data;
         console.log(data);
-        _this3.request_table.data = data.request_table_data;
-        _this3.response_table.data = data.response_table_data;
+        _this2.request_table.data = data.request_table_data;
+        _this2.response_table.data = data.response_table_data;
       });
     },
     onModelSelectClicked: function onModelSelectClicked() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.loading_models = true;
       this.ajax().getDatabaseTables(this.formValidate.definition_id).then(function (_ref3) {
         var data = _ref3.data;
-        _this4.database_tables = data.table_names;
-        _this4.loading_models = false;
+        _this3.database_tables = data.table_names;
+        _this3.loading_models = false;
       });
+    },
+    requestTableHandleEdit: function requestTableHandleEdit(row, index) {
+      this.request_table.edit.name = row.name;
+      this.request_table.edit.type = row.type;
+      this.request_table.edit.validation = row.validation;
+      this.request_table.edit.fillable = row.fillable;
+      this.request_table.edit.index = index;
+    },
+    requestTableHandleSave: function requestTableHandleSave(index) {
+      this.request_table.data[index].name = this.request_table.edit.name;
+      this.request_table.data[index].type = this.request_table.edit.type;
+      this.request_table.data[index].validation = this.request_table.edit.validation;
+      this.request_table.data[index].fillable = this.request_table.edit.fillable;
+      this.request_table.edit.index = -1;
+    },
+    requestTableHandleDelete: function requestTableHandleDelete(index) {
+      this.request_table.data.splice(index, 1);
+    },
+    responseTableHandleEdit: function responseTableHandleEdit(row, index) {
+      this.response_table.edit.name = row.name;
+      this.response_table.edit.resource = row.resource;
+      this.response_table.edit.index = index;
+    },
+    responseTableHandleSave: function responseTableHandleSave(index) {
+      this.response_table.data[index].name = this.response_table.edit.name;
+      this.response_table.data[index].resource = this.response_table.edit.resource;
+      this.response_table.edit.index = -1;
+    },
+    responseTableHandleDelete: function responseTableHandleDelete(index) {
+      this.response_table.data.splice(index, 1);
     }
   },
   mounted: function mounted() {
@@ -86424,7 +86452,197 @@ var render = function() {
                       border: "",
                       columns: _vm.request_table.columns,
                       data: _vm.request_table.data
-                    }
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "name",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.request_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value: _vm.request_table.edit.name,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.request_table.edit,
+                                        "name",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "request_table.edit.name"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.name))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "type",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.request_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value: _vm.request_table.edit.type,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.request_table.edit,
+                                        "type",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "request_table.edit.type"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.type))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "validation",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.request_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value: _vm.request_table.edit.validation,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.request_table.edit,
+                                        "validation",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "request_table.edit.validation"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.validation))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "fillable",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.request_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value: _vm.request_table.edit.fillable,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.request_table.edit,
+                                        "fillable",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "request_table.edit.fillable"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.fillable))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "action",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.request_table.edit.index === index
+                              ? _c(
+                                  "div",
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "success",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.requestTableHandleSave(
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Save")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "warning",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.request_table.edit.index = -1
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Cancel")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _c(
+                                  "div",
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "primary",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.requestTableHandleEdit(
+                                              row,
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Edit")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: { type: "error", size: "small" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.requestTableHandleDelete(
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Delete")]
+                                    )
+                                  ],
+                                  1
+                                )
+                          ]
+                        }
+                      }
+                    ])
                   }),
                   _vm._v(" "),
                   _c(
@@ -86453,7 +86671,147 @@ var render = function() {
                       border: "",
                       columns: _vm.response_table.columns,
                       data: _vm.response_table.data
-                    }
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "name",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.response_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value: _vm.response_table.edit.name,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.response_table.edit,
+                                        "name",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "response_table.edit.name"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.name))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "resource",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.response_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value: _vm.response_table.edit.resource,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.response_table.edit,
+                                        "resource",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "response_table.edit.resource"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.resource))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "action",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.response_table.edit.index === index
+                              ? _c(
+                                  "div",
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "success",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.responseTableHandleSave(
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Save")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "warning",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.response_table.edit.index = -1
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Cancel")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _c(
+                                  "div",
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "primary",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.responseTableHandleEdit(
+                                              row,
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Edit")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: { type: "error", size: "small" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.responseTableHandleDelete(
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Delete")]
+                                    )
+                                  ],
+                                  1
+                                )
+                          ]
+                        }
+                      }
+                    ])
                   }),
                   _vm._v(" "),
                   _c(

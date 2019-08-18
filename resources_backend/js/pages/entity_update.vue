@@ -38,14 +38,66 @@
 
                     <h1>Request</h1>
                     <Divider />
-                    <Table border :columns="request_table.columns" :data="request_table.data"></Table>
+                    <Table border :columns="request_table.columns" :data="request_table.data">
+                        <template slot-scope="{ row, index }" slot="name">
+                            <Input type="text" v-model="request_table.edit.name" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.name }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="type">
+                            <Input type="text" v-model="request_table.edit.type" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.type }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="validation">
+                            <Input type="text" v-model="request_table.edit.validation" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.validation }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="fillable">
+                            <Input type="text" v-model="request_table.edit.fillable" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.fillable }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="action">
+                            <div v-if="request_table.edit.index === index">
+                                <Button type="success" size="small" @click="requestTableHandleSave(index)">Save</Button>
+                                <Button type="warning" size="small" @click="request_table.edit.index = -1">Cancel</Button>
+                            </div>
+                            <div v-else>
+                                <Button type="primary" size="small" @click="requestTableHandleEdit(row, index)">Edit</Button>
+                                <Button type="error" size="small" @click="requestTableHandleDelete(index)">Delete</Button>
+                            </div>
+                        </template>
+                    </Table>
                     <FormItem>
                         <Input hidden v-model="formValidate.request_data" placeholder=""></Input>
                     </FormItem>
 
                     <h1>Response</h1>
                     <Divider />
-                    <Table border :columns="response_table.columns" :data="response_table.data"></Table>    
+                    <Table border :columns="response_table.columns" :data="response_table.data">
+                        <template slot-scope="{ row, index }" slot="name">
+                            <Input type="text" v-model="response_table.edit.name" v-if="response_table.edit.index === index" />
+                            <span v-else>{{ row.name }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="resource">
+                            <Input type="text" v-model="response_table.edit.resource" v-if="response_table.edit.index === index" />
+                            <span v-else>{{ row.resource }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="action">
+                            <div v-if="response_table.edit.index === index">
+                                <Button type="success" size="small" @click="responseTableHandleSave(index)">Save</Button>
+                                <Button type="warning" size="small" @click="response_table.edit.index = -1">Cancel</Button>
+                            </div>
+                            <div v-else>
+                                <Button type="primary" size="small" @click="responseTableHandleEdit(row, index)">Edit</Button>
+                                <Button type="error" size="small" @click="responseTableHandleDelete(index)">Delete</Button>
+                            </div>
+                        </template>    
+                    </Table>    
                     <FormItem>
                         <Input hidden v-model="formValidate.response_data" placeholder=""></Input>                
                     </FormItem>
@@ -69,115 +121,65 @@
                 loading_models: true,
                 database_tables: [],
                 request_table: {
+                    edit: {
+                        index: -1,
+                        name: '',
+                        type: '',
+                        validation: '',
+                        fillable: '',
+                    },
                     columns: [
                         {
                             title: 'Name',
-                            key: 'name',
+                            slot: 'name',
                             minWidth: 100,
                         },
                         {
                             title: 'Type',
-                            key: 'type',
+                            slot: 'type',
                             minWidth: 100,
                         },
                         {
                             title: 'Validation',
-                            key: 'validation',
+                            slot: 'validation',
                             minWidth: 100,
                         },
                         {
                             title: 'Fillable',
-                            key: 'fillable',
+                            slot: 'fillable',
                             minWidth: 100,
                         },
                         {
                             title: 'Action',
-                            key: 'action',
+                            slot: 'action',
                             width: 150,
                             align: 'center',
-                            render: (h, params) => {
-                                var row = params.row;
-
-                                return h('div', [
-                                    h('Button', {
-                                        props: {
-                                            type: 'primary',
-                                            size: 'small'
-                                        },
-                                        style: {
-                                            marginRight: '5px'
-                                        },
-                                        on: {
-                                            click: () => {
-                                                this.$router.push({ name: 'entity_update', params: { id: row.id } });
-                                            }
-                                        }
-                                    }, 'Edit'),
-                                    h('Button', {
-                                        props: {
-                                            type: 'error',
-                                            size: 'small'
-                                        },
-                                        on: {
-                                            click: () => {
-                                                this.ajax().delete(row.id);
-                                            }
-                                        }
-                                    }, 'Delete')
-                                ]);
-                            }
                         }
                     ],
                     data: []
                 },
                 response_table: {
+                    edit: {
+                        index: -1,
+                        name: '',
+                        resource: '',
+                    },
                     columns: [
                         {
                             title: 'Name',
-                            key: 'name',
+                            slot: 'name',
                             minWidth: 100,
                         },
                         {
                             title: 'Resource',
-                            key: 'resource',
+                            slot: 'resource',
                             minWidth: 100,
                         },
                         {
                             title: 'Action',
-                            key: 'action',
+                            slot: 'action',
                             width: 150,
                             align: 'center',
-                            render: (h, params) => {
-                                var row = params.row;
-
-                                return h('div', [
-                                    h('Button', {
-                                        props: {
-                                            type: 'primary',
-                                            size: 'small'
-                                        },
-                                        style: {
-                                            marginRight: '5px'
-                                        },
-                                        on: {
-                                            click: () => {
-                                                this.$router.push({ name: 'entity_update', params: { id: row.id } });
-                                            }
-                                        }
-                                    }, 'Edit'),
-                                    h('Button', {
-                                        props: {
-                                            type: 'error',
-                                            size: 'small'
-                                        },
-                                        on: {
-                                            click: () => {
-                                                this.ajax().delete(row.id);
-                                            }
-                                        }
-                                    }, 'Delete')
-                                ]);
-                            }
                         }
                     ],
                     data: []
@@ -379,6 +381,36 @@
                     this.loading_models = false;
                 });
             },
+            requestTableHandleEdit (row, index) {
+                this.request_table.edit.name = row.name;
+                this.request_table.edit.type = row.type;
+                this.request_table.edit.validation = row.validation;
+                this.request_table.edit.fillable = row.fillable;
+                this.request_table.edit.index = index;
+            },
+            requestTableHandleSave (index) {
+                this.request_table.data[index].name = this.request_table.edit.name;
+                this.request_table.data[index].type = this.request_table.edit.type;
+                this.request_table.data[index].validation = this.request_table.edit.validation;
+                this.request_table.data[index].fillable = this.request_table.edit.fillable;
+                this.request_table.edit.index = -1;
+            },
+            requestTableHandleDelete (index) {
+                this.request_table.data.splice(index, 1);
+            },
+            responseTableHandleEdit (row, index) {
+                this.response_table.edit.name = row.name;
+                this.response_table.edit.resource = row.resource;
+                this.response_table.edit.index = index;
+            },
+            responseTableHandleSave (index) {
+                this.response_table.data[index].name = this.response_table.edit.name;
+                this.response_table.data[index].resource = this.response_table.edit.resource;
+                this.response_table.edit.index = -1;
+            },
+            responseTableHandleDelete (index) {
+                this.response_table.data.splice(index, 1);
+            }
         },
         mounted() {
 
