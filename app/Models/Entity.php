@@ -34,4 +34,16 @@ class Entity extends Model
      */
     protected $fillable = ['user_id', 'project_id', 'definition_id', 'name', 'functionality_data', 'request_data', 'response_data', 'db_table_name', 'created_at', 'updated_at'];
 
+
+    public function project()
+    {
+        return $this->belongsTo(\App\Models\Project::class, 'project_id', 'id');
+    }
+
+    
+    public function definition()
+    {
+        return $this->belongsTo(\App\Models\Definition::class, 'definition_id', 'id');
+    }
+
 }

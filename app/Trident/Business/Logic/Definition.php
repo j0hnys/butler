@@ -40,11 +40,11 @@ class Definition implements DefinitionInterface
         );
 
         $schema_hierarchy = (new SchemaHierarchy())->get();
-        $request_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Resources'][1]);
+        $request_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Resource'][1]);
         $request_schema_definition = app()->make($request_schema_namespace);
         $request_schema = $request_schema_definition->getFilledValues();
 
-        $response_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Resources'][2]);
+        $response_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Resource'][2]);
         $response_schema_definition = app()->make($response_schema_namespace);
         $response_schema = $response_schema_definition->getFilledValues();
 

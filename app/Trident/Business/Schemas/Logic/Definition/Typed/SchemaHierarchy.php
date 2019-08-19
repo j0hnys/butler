@@ -14,7 +14,7 @@ class SchemaHierarchy extends Definition
                     '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Vista\Form',
                 ],
                 'Processes',
-                'Resources' => [
+                'Resource' => [
                     '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Functionality',
                     '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Request',
                     '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Response',

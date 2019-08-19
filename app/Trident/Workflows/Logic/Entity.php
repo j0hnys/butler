@@ -150,13 +150,15 @@ class Entity implements EntityInterface
      */
     public function generate($request_data, $id)
     {
-        $model = $this->entity_repository->find($id);
-        
-        dd([
-            '$model' => $model,
-        ]);
+        $model = $this->entity_repository->with(['project','definition'])->find($id);
 
-        return $model;
+        $this->entity_business->generate(
+            $model->getAttributes(),
+            $model->getRelations()['project']->getAttributes(),
+            $model->getRelations()['definition']->getAttributes(),
+        );
+
+        return true;
     }
 
 
