@@ -48,6 +48,11 @@ class Definition implements DefinitionInterface
         $response_schema_definition = app()->make($response_schema_namespace);
         $response_schema = $response_schema_definition->getFilledValues();
 
+        $presentation_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Presentation'][0]);
+        $presentation_schema_definition = app()->make($presentation_schema_namespace);
+        $presentation_schema = $presentation_schema_definition->getFilledValues();
+
+
         //request schema
         $request_table_data = [];
         foreach ($columns as $column) {
@@ -81,12 +86,79 @@ class Definition implements DefinitionInterface
             ];
         }
 
+
+        //presentation schema
+        $presentation_table_data = [
+            "ajax" => [
+                "get" => [
+                    "GET" => "T::string()"
+                ],
+                "create" => [
+                    "POST" => "T::string()"
+                ],
+                "update" => [
+                    "POST" => "T::string()"
+                ],
+                "delete" => [
+                    "DELETE" => "T::string()"
+                ]
+            ],
+            "presentation" => [
+                "type" => "form",
+                "schema" => []
+            ],
+        ];
+        foreach ($columns as $column) {
+            $tmp_type = 'string';
+            $validation_rules = [
+                "required" =>true,
+                "type" =>"string",
+                "trigger" =>"blur"
+            ];
+            $attributes = [
+                "type" => [
+                    "string" => true
+                ],
+                "default_value" => "''",
+                "element_type" => false
+            ];
+            if ($column->getType() instanceof IntegerType) {
+                $tmp_type = 'integer';
+                $validation_rules = [
+                    "required" =>true,
+                    "type" =>"number",
+                    "trigger" =>"blur"
+                ];
+                $attributes = [
+                    "type" => [
+                        "number" => true
+                    ],
+                    "default_value" => "''",
+                    "element_type" => false
+                ];
+            } else if ($column->getType() instanceof TextType) {
+                $tmp_type = 'string';
+            } else if ($column->getType() instanceof StringType) {
+                $tmp_type = 'string';
+            }
+
+            $presentation_table_data['presentation']['schema'] []= [
+                'column_name' => $column->getName(),
+                "column_type" => $tmp_type,
+                "type" => "fillable",
+                'validation_rules' => json_encode($validation_rules),
+                'attributes' => json_encode($attributes),
+            ];
+        }
+
         // dd([
         //     '$schema_hierarchy' => $schema_hierarchy,
         //     '$request_schema' => $request_schema,
         //     '$request_table_data' => $request_table_data,
         //     '$response_schema' => $response_schema,
         //     '$response_table_data' => $response_table_data,
+        //     '$presentation_schema' => $presentation_schema,
+        //     '$presentation_table_data' => $presentation_table_data,
         //     '$db_name' => $db_name,
         //     '$columns' => $columns,
         // ]);
@@ -94,6 +166,7 @@ class Definition implements DefinitionInterface
         return (object)[
             'request_table_data' => $request_table_data,
             'response_table_data' => $response_table_data,
+            'presentation_table_data' => $presentation_table_data,
         ];
     }
 
@@ -116,6 +189,23 @@ class Definition implements DefinitionInterface
         $columns = $schema->listTableColumns($table_name, $database);
 
         return $columns;
+    }
+
+
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function getByEntityId(Array $data): array
+    {
+        //
+        // TO DO
+        //
+
+        return $data;
     }
 
 

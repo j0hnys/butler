@@ -4694,9 +4694,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var local = {
+      presentation_ajax: {
+        get: {
+          GET: ''
+        },
+        create: {
+          POST: ''
+        },
+        update: {
+          POST: ''
+        },
+        "delete": {
+          DELETE: ''
+        }
+      },
       presentation_table: {
         edit: {
           index: -1,
@@ -4810,6 +4845,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           window.axios.get("/butler/public_backend" + '/trident/resource/view/' + id).then(function (_ref) {
             var data = _ref.data;
             self.formValidate = data;
+            var presentation_data = JSON.parse(data.presentation_data);
+            self.presentation_ajax = presentation_data.ajax;
+            self.presentation_table.data = presentation_data.presentation.schema;
           })["catch"](function (error) {
             console.log(error);
           });
@@ -4837,10 +4875,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             console.log(error);
           });
         },
-        getDefaultValues: function getDefaultValues(entity_id) {
-          return window.axios.get("/butler/public_backend" + '/view_definition_get/' + entity_id, {
+        getDefaultValues: function getDefaultValues(definition_id) {
+          return window.axios.get("/butler/public_backend" + '/definition_get_by_entity_id/' + definition_id, {
             params: {
-              entity_id: entity_id
+              entity_id: self.formValidate.entity_id
             }
           })["catch"](function (error) {
             console.log(error);
@@ -4858,7 +4896,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$refs[name].validate(function (valid) {
         if (valid) {
           var formValidate = _this.formValidate;
-          formValidate.presentation_data = JSON.stringify(_this.presentation_table.data);
+          formValidate.presentation_data = JSON.stringify({
+            ajax: _this.presentation_ajax,
+            presentation: {
+              type: 'form',
+              schema: _this.presentation_table.data
+            }
+          });
 
           _this.ajax().update(_this.$route.params.id, formValidate);
         } else {
@@ -4869,10 +4913,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     onGenerateDefaultValuesClicked: function onGenerateDefaultValuesClicked() {
       var _this2 = this;
 
-      this.ajax().getDefaultValues(this.formValidate.entity_id).then(function (_ref2) {
+      this.ajax().getDefaultValues(this.formValidate.definition_id).then(function (_ref2) {
         var data = _ref2.data;
         console.log(data);
-        _this2.presentation_table.data = data.presentation_table_data;
+        _this2.presentation_table.data = data.presentation_table_data.presentation.schema;
+        _this2.presentation_ajax = data.presentation_table_data.ajax;
       });
     },
     presentationTableHandleEdit: function presentationTableHandleEdit(row, index) {
@@ -88618,6 +88663,103 @@ var render = function() {
                             _vm.$set(_vm.formValidate, "type", $$v)
                           },
                           expression: "formValidate.type"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    [
+                      _c(
+                        "Button",
+                        {
+                          attrs: { type: "primary" },
+                          on: { click: _vm.onGenerateDefaultValuesClicked }
+                        },
+                        [_vm._v("Generate Default Values")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("FormItem"),
+                  _vm._v(" "),
+                  _c("h1", [_vm._v("Ajax")]),
+                  _vm._v(" "),
+                  _c("Divider"),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    { attrs: { label: "get" } },
+                    [
+                      _c("Input", {
+                        attrs: { placeholder: "Enter your uri" },
+                        model: {
+                          value: _vm.presentation_ajax.get.GET,
+                          callback: function($$v) {
+                            _vm.$set(_vm.presentation_ajax.get, "GET", $$v)
+                          },
+                          expression: "presentation_ajax.get.GET"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    { attrs: { label: "create" } },
+                    [
+                      _c("Input", {
+                        attrs: { placeholder: "Enter your uri" },
+                        model: {
+                          value: _vm.presentation_ajax.create.POST,
+                          callback: function($$v) {
+                            _vm.$set(_vm.presentation_ajax.create, "POST", $$v)
+                          },
+                          expression: "presentation_ajax.create.POST"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    { attrs: { label: "update" } },
+                    [
+                      _c("Input", {
+                        attrs: { placeholder: "Enter your uri" },
+                        model: {
+                          value: _vm.presentation_ajax.update.POST,
+                          callback: function($$v) {
+                            _vm.$set(_vm.presentation_ajax.update, "POST", $$v)
+                          },
+                          expression: "presentation_ajax.update.POST"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    { attrs: { label: "delete" } },
+                    [
+                      _c("Input", {
+                        attrs: { placeholder: "Enter your uri" },
+                        model: {
+                          value: _vm.presentation_ajax.delete.DELETE,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.presentation_ajax.delete,
+                              "DELETE",
+                              $$v
+                            )
+                          },
+                          expression: "presentation_ajax.delete.DELETE"
                         }
                       })
                     ],

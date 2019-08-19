@@ -121,4 +121,19 @@ class DefinitionPolicy
 
 
 
+
+    /**
+     * Determine whether the user can permanently getByEntityId the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\DefinitionRepository $Definition
+     * @return mixed
+     */
+    public function getByEntityId(User $user, Definition $definition, int $id)
+    {
+        return $user->id == $definition->findOrFail($id)->user_id;
+    }
+
+
+
 }

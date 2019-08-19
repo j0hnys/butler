@@ -17,6 +17,7 @@ class GetDefaultDefinitionValuesResource extends JsonResource
         return [
             'request_table_data' => $this->request_table_data,
             'response_table_data' => $this->response_table_data,
+            'presentation_table_data' => $this->presentation_table_data,
         ];
 
         return parent::toArray($request);

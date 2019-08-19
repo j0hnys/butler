@@ -52,6 +52,14 @@
                 "message": "type is required"
             },
             "fillable": true
+        },
+        "presentation_data": {
+            "type": "T::nullable(T::string())",
+            "validation": {
+                "rule": "required | string",
+                "message": "presentation_data is required"
+            },
+            "fillable": true
         }
     }
 }

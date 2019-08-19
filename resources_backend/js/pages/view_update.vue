@@ -51,6 +51,27 @@
                         <Input v-model="formValidate.type" placeholder="Enter your type"></Input>
                     </FormItem>
 
+                    <FormItem>
+                        <Button type="primary" @click="onGenerateDefaultValuesClicked">Generate Default Values</Button>
+                    </FormItem>
+
+                    <FormItem></FormItem>
+
+                    <h1>Ajax</h1>
+                    <Divider />
+                    <FormItem label="get">
+                        <Input v-model="presentation_ajax.get.GET" placeholder="Enter your uri"></Input>
+                    </FormItem>
+                    <FormItem label="create">
+                        <Input v-model="presentation_ajax.create.POST" placeholder="Enter your uri"></Input>
+                    </FormItem>
+                    <FormItem label="update">
+                        <Input v-model="presentation_ajax.update.POST" placeholder="Enter your uri"></Input>
+                    </FormItem>
+                    <FormItem label="delete">
+                        <Input v-model="presentation_ajax.delete.DELETE" placeholder="Enter your uri"></Input>
+                    </FormItem>
+
                     <FormItem></FormItem>
 
                     <h1>Presentation</h1>
@@ -112,7 +133,20 @@
         data() {
 
             var local = {
-
+                presentation_ajax: {
+                    get: {
+                        GET: ''
+                    },
+                    create: {
+                        POST: ''
+                    },
+                    update: {
+                        POST: ''
+                    },
+                    delete: {
+                        DELETE: ''
+                    },
+                },
                 presentation_table: {
                     edit: {
                         index: -1,
@@ -156,8 +190,7 @@
                         }
                     ],
                     data: []
-                },
-                
+                },                
             }
 
             var state = {
@@ -251,6 +284,11 @@
                     get(id='') {
                         window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/view/'+id ).then(({ data }) => {
                             self.formValidate = data;
+
+                            let presentation_data = JSON.parse(data.presentation_data);
+
+                            self.presentation_ajax = presentation_data.ajax;
+                            self.presentation_table.data = presentation_data.presentation.schema;
                         }).catch(error => {
                             console.log(error);
                         });
@@ -279,10 +317,10 @@
                             console.log(error);
                         });
                     },
-                    getDefaultValues(entity_id) {
-                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/view_definition_get/'+entity_id, {
+                    getDefaultValues(definition_id) {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/definition_get_by_entity_id/'+definition_id, {
                             params: {
-                                entity_id: entity_id
+                                entity_id: self.formValidate.entity_id
                             }
                         }).catch(error => {
                             console.log(error);
@@ -299,7 +337,13 @@
                     if (valid) {
 
                         var formValidate = this.formValidate;
-                        formValidate.presentation_data = JSON.stringify(this.presentation_table.data);
+                        formValidate.presentation_data = JSON.stringify({
+                            ajax: this.presentation_ajax,
+                            presentation: {
+                                type: 'form',
+                                schema: this.presentation_table.data
+                            }
+                        });
 
                         this.ajax().update(this.$route.params.id, formValidate);
 
@@ -310,11 +354,12 @@
             },
             onGenerateDefaultValuesClicked() {
                 this.ajax().getDefaultValues(
-                    this.formValidate.entity_id
+                    this.formValidate.definition_id
                 ).then(({data}) => {
                     console.log(data);
 
-                    this.presentation_table.data = data.presentation_table_data;
+                    this.presentation_table.data = data.presentation_table_data.presentation.schema;
+                    this.presentation_ajax = data.presentation_table_data.ajax;
 
                 });
             },

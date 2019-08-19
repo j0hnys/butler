@@ -34,7 +34,7 @@ class View extends Model
     /**
      * @var array
      */
-    protected $fillable = ['user_id', 'project_id', 'entity_id', 'definition_id', 'name', 'type', 'created_at', 'updated_at'];
+    protected $fillable = ['user_id', 'project_id', 'entity_id', 'definition_id', 'name', 'type', 'presentation_data', 'created_at', 'updated_at'];
 
 
     public function project()

@@ -44,6 +44,7 @@ class Definition implements DefinitionInterface
     {
         $this->definition_business = $definitionBusiness;
         $this->definition_repository = $definitionRepository;
+        $this->entity_repository = app()->make('App\Trident\Workflows\Repositories\EntityRepository');
     }
 
 
@@ -180,6 +181,25 @@ class Definition implements DefinitionInterface
         return new DefinitionGetDatabaseTablesResource((object)[
             'table_names' => $structured_for_ui
         ]);
+    }
+
+
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function getByEntityId($request_data, $id)
+    {
+        $model = $this->entity_repository->with(['project','definition'])->find($request_data['entity_id']);
+        
+        $model_data = $model->getAttributes();
+        
+        $result = $this->definition_business->get($model_data['db_table_name'], \DB::connection('mysql_butler_trident_vista'));
+
+        return new GetDefaultDefinitionValuesResource($result);
     }
 
 

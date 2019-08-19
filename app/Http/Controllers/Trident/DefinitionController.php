@@ -11,6 +11,7 @@ use App\Trident\Interfaces\Workflows\Repositories\DefinitionRepositoryInterface 
 // use App\Trident\Workflows\Exceptions\DefinitionException;
 // use App\Trident\Workflows\Events\Triggers\DefinitionTrigger;
 use App\Trident\Workflows\Validations\DefinitiongetRequest;
+use App\Trident\Workflows\Validations\DefinitiongetByEntityIdRequest;
 use App\Trident\Workflows\Validations\DefinitiongetDatabaseTablesRequest;
 use App\Trident\Workflows\Validations\DefinitionStoreRequest;
 use App\Trident\Workflows\Validations\DefinitionUpdateRequest;
@@ -173,6 +174,22 @@ class DefinitionController extends Controller
         $this->authorize('getDatabaseTables', [$this->definition_repository,$id]);
         $request_all = $request->all();
         return response()->json( $this->definition_workflow->getDatabaseTables($request_all, $id) );
+    }
+
+
+
+
+    /**
+     * *enter description here.*
+     *
+     * @param  DefinitiongetByEntityIdRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function getByEntityId(DefinitiongetByEntityIdRequest $request,$id)
+    {
+        $this->authorize('getByEntityId', [$this->definition_repository, $id]);
+        $request_all = $request->all();
+        return response()->json( $this->definition_workflow->getByEntityId($request_all, $id) );
     }
 
 

@@ -17,6 +17,7 @@ class StructindexView extends StructOptionalValues
             'entity_id' => T::nullable(T::int()),
             'name' => T::nullable(T::string()),
             'type' => T::nullable(T::string()),
+            'presentation_data' => T::nullable(T::string()),
         ];
         
         parent::__construct($this->types);

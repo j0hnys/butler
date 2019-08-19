@@ -21,6 +21,7 @@ class ViewResource extends JsonResource
             'entity_id' => $this->entity_id,
             'name' => $this->name,
             'type' => $this->type,
+            'presentation_data' => $this->presentation_data,
         ];
 
         // return [

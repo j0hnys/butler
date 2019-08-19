@@ -18,6 +18,9 @@
         },
         "type": {
             "resource": true
+        },
+        "presentation_data": {
+            "resource": true
         }
     }
 }
