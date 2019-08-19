@@ -10,7 +10,9 @@ Vue.use(Vuex);
 window.Vuex = require('vuex');
 
 const store = new Vuex.Store({
-    plugins: [createPersistedState()],
+    plugins: [createPersistedState({
+        key: 'butler'
+    })],
     state: {
         base_url: process.env.MIX_BASE_URL+'/',
         base_relative_url: process.env.MIX_BASE_RELATIVE_URL+'/',
@@ -36,6 +38,9 @@ const store = new Vuex.Store({
                 entity_list_delete: stores.entity_list_delete,
                 entity_create: stores.entity_create,
                 entity_update: stores.entity_update,
+                view_list_delete: stores.view_list_delete,
+                view_create: stores.view_create,
+                view_update: stores.view_update,
             }
         },
     },

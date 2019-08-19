@@ -95,5 +95,32 @@ const routers = [
             submenu: null,
         }
     },
+    { // add "import view_list_delete from './pages/view_list_delete.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/view_list',
+        title: 'otinanai',
+        name: 'view_list_delete',
+        component: routes.view_list_delete,
+        meta: {
+            submenu: null,
+        }
+    },
+    { // add "import view_create from './pages/view_create.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/view_create',
+        title: 'otinanai',
+        name: 'view_create',
+        component: routes.view_create,
+        meta: {
+            submenu: null,
+        }
+    },
+    { // add "import view_update from './pages/view_update.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/view_update/:id',
+        title: 'otinanai',
+        name: 'view_update',
+        component: routes.view_update,
+        meta: {
+            submenu: null,
+        }
+    },
 ];
 export default routers;

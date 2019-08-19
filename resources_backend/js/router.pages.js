@@ -20,3 +20,6 @@ exports.definition_update = require("./pages/definition_update.vue").default;
 exports.entity_list_delete = require("./pages/entity_list_delete.vue").default;
 exports.entity_create = require("./pages/entity_create.vue").default;
 exports.entity_update = require("./pages/entity_update.vue").default;
+exports.view_list_delete = require("./pages/view_list_delete.vue").default;
+exports.view_create = require("./pages/view_create.vue").default;
+exports.view_update = require("./pages/view_update.vue").default;

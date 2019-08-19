@@ -95,6 +95,7 @@ class Entity implements EntityInterface
         $command .= '--functionality_schema_path="'.$project['relative_schemas_folder'].'/'.$model['name'].'/Resource/'.'Functionality.json'.'" ';
         $command .= '--resource_schema_path="'.$project['relative_schemas_folder'].'/'.$model['name'].'/Resource/'.'Response.json'.'" ';
         $command .= '--validation_schema_path="'.$project['relative_schemas_folder'].'/'.$model['name'].'/Resource/'.'Request.json'.'" ';
+        $command .= '--strict_type_schema_path="'.$project['relative_schemas_folder'].'/'.$model['name'].'/Resource/'.'Request.json'.'" ';
 
         shell_exec( $command );
     }

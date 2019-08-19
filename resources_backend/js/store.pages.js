@@ -20,3 +20,6 @@ exports.definition_update = require("./store/pages/definition_update.js").defaul
 exports.entity_list_delete = require("./store/pages/entity_list_delete.js").default;
 exports.entity_create = require("./store/pages/entity_create.js").default;
 exports.entity_update = require("./store/pages/entity_update.js").default;
+exports.view_list_delete = require("./store/pages/view_list_delete.js").default;
+exports.view_create = require("./store/pages/view_create.js").default;
+exports.view_update = require("./store/pages/view_update.js").default;

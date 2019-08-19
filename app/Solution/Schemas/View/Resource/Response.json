@@ -1,0 +1,23 @@
+{
+    "type": "json",
+    "data": {
+        "id": {
+            "resource": true
+        },
+        "project_id": {
+            "resource": true
+        },
+        "definition_id": {
+            "resource": true
+        },
+        "entity_id": {
+            "resource": true
+        },
+        "name": {
+            "resource": true
+        },
+        "type": {
+            "resource": true
+        }
+    }
+}

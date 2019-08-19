@@ -25,7 +25,7 @@
     }
 </style>
 <template>
-    <div class="entity_list_delete">
+    <div class="view_list_delete">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
 
@@ -52,9 +52,9 @@
                 formValidate: {
                 },
             };
-            if (this.$store.state.pages.entity_list_delete) 
+            if (this.$store.state.pages.view_list_delete) 
             {
-                state = this.$store.state.pages.entity_list_delete;
+                state = this.$store.state.pages.view_list_delete;
             }
 
 
@@ -74,14 +74,24 @@
                         minWidth: 100,
                     },
                     {
+                        title: 'entity_id',
+                        key: 'entity_id',
+                        minWidth: 100,
+                    },
+                    {
                         title: 'name',
                         key: 'name',
                         minWidth: 100,
                     },
                     {
+                        title: 'type',
+                        key: 'type',
+                        minWidth: 100,
+                    },
+                    {
                         title: 'Action',
                         key: 'action',
-                        maxWidth: 200,
+                        width: 150,
                         align: 'center',
                         render: (h, params) => {
                             var row = params.row;
@@ -97,7 +107,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.$router.push({ name: 'entity_update', params: { id: row.id } });
+                                            this.$router.push({ name: 'view_update', params: { id: row.id } });
                                         }
                                     }
                                 }, 'Edit'),
@@ -106,26 +116,12 @@
                                         type: 'error',
                                         size: 'small'
                                     },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
                                     on: {
                                         click: () => {
                                             this.ajax().delete(row.id);
                                         }
                                     }
-                                }, 'Delete'),
-                                h('Button', {
-                                    props: {
-                                        type: 'success',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.ajax().generate(row.id);
-                                        }
-                                    }
-                                }, 'Generate')
+                                }, 'Delete')
                             ]);
                         }
                     }
@@ -140,7 +136,7 @@
                 deep: true,
                 handler(value) 
                 {
-                    this.$store.commit('pages/entity_list_delete/setFormValidate', value);
+                    this.$store.commit('pages/view_list_delete/setFormValidate', value);
                 }
             }
         },
@@ -149,7 +145,7 @@
                 var self = this;
                 return {
                     get(id='') {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity'+id ).then(({ data }) => {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/view'+id ).then(({ data }) => {
                             // console.log(data);
                             self.data = data;
                         }).catch(error => {
@@ -157,17 +153,9 @@
                         });
                     },
                     delete(id) {
-                        window.axios.delete( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity/'+id ).then(({ data }) => {
+                        window.axios.delete( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/view/'+id ).then(({ data }) => {
                             // console.log(data);
                             window.location.reload();
-                        }).catch(error => {
-                            console.log(error);
-                        });
-                    },
-                    generate(id) {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_generate/'+id ).then(({ data }) => {
-                            self.$Message.success('Success!');
-                            // window.location.reload();
                         }).catch(error => {
                             console.log(error);
                         });
@@ -175,7 +163,7 @@
                 }
             },
             on_create_button_clicked() {
-                this.$router.push({ name: 'entity_create' });
+                this.$router.push({ name: 'view_create' });
             },
         },
         mounted() {
