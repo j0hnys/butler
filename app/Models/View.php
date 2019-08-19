@@ -36,4 +36,22 @@ class View extends Model
      */
     protected $fillable = ['user_id', 'project_id', 'entity_id', 'definition_id', 'name', 'type', 'created_at', 'updated_at'];
 
+
+    public function project()
+    {
+        return $this->belongsTo(\App\Models\Project::class, 'project_id', 'id');
+    }
+
+    
+    public function definition()
+    {
+        return $this->belongsTo(\App\Models\Definition::class, 'definition_id', 'id');
+    }
+
+
+    public function entity()
+    {
+        return $this->belongsTo(\App\Models\Entity::class, 'entity_id', 'id');
+    }
+
 }

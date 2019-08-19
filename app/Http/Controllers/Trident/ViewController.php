@@ -10,6 +10,7 @@ use App\Trident\Interfaces\Workflows\Logic\ViewInterface as ViewWorkflow;
 use App\Trident\Interfaces\Workflows\Repositories\ViewRepositoryInterface as ViewRepository;
 // use App\Trident\Workflows\Exceptions\ViewException;
 // use App\Trident\Workflows\Events\Triggers\ViewTrigger;
+use App\Trident\Workflows\Validations\ViewgenerateRequest;
 use App\Trident\Workflows\Validations\ViewStoreRequest;
 use App\Trident\Workflows\Validations\ViewUpdateRequest;
 use App\Trident\Workflows\Schemas\Logic\View\Typed\StructIndexView;
@@ -146,4 +147,21 @@ class ViewController extends Controller
 
 
     
+
+    /**
+     * *enter description here.*
+     *
+     * @param  ViewgenerateRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function generate(ViewgenerateRequest $request,$id)
+    {
+        $this->authorize('generate', [$this->view_repository,$id]);
+        $request_all = $request->all();
+        return response()->json( $this->view_workflow->generate($request_all, $id) );
+    }
+
+
+
+
 }

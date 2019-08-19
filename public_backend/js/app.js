@@ -4438,15 +4438,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       columns: [{
         title: 'project_id',
         key: 'project_id',
-        minWidth: 100
+        maxWidth: 120
       }, {
         title: 'definition_id',
         key: 'definition_id',
-        minWidth: 100
+        maxWidth: 120
       }, {
         title: 'entity_id',
         key: 'entity_id',
-        minWidth: 100
+        maxWidth: 120
       }, {
         title: 'name',
         key: 'name',
@@ -4458,7 +4458,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         title: 'Action',
         key: 'action',
-        width: 150,
+        maxWidth: 300,
         align: 'center',
         render: function render(h, params) {
           var row = params.row;
@@ -4485,12 +4485,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               type: 'error',
               size: 'small'
             },
+            style: {
+              marginRight: '5px'
+            },
             on: {
               click: function click() {
                 _this.ajax()["delete"](row.id);
               }
             }
-          }, 'Delete')]);
+          }, 'Delete'), h('Button', {
+            props: {
+              type: 'success',
+              size: 'small'
+            },
+            on: {
+              click: function click() {
+                _this.ajax().generate(row.id);
+              }
+            }
+          }, 'Generate')]);
         }
       }],
       data: []
@@ -4523,6 +4536,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             var data = _ref2.data;
             // console.log(data);
             window.location.reload();
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        },
+        generate: function generate(id) {
+          window.axios.get("/butler/public_backend" + '/view_generate/' + id).then(function (_ref3) {
+            var data = _ref3.data;
+            self.$Message.success('Success!'); // window.location.reload();
           })["catch"](function (error) {
             console.log(error);
           });
@@ -4627,15 +4648,101 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
+    var local = {
+      presentation_table: {
+        edit: {
+          index: -1,
+          column_name: '',
+          column_type: '',
+          type: '',
+          validation_rules: '',
+          attributes: ''
+        },
+        columns: [{
+          title: 'column_name',
+          slot: 'column_name',
+          minWidth: 100
+        }, {
+          title: 'column_type',
+          slot: 'column_type',
+          minWidth: 100
+        }, {
+          title: 'type',
+          slot: 'type',
+          minWidth: 100
+        }, {
+          title: 'validation_rules',
+          slot: 'validation_rules',
+          minWidth: 100
+        }, {
+          title: 'attributes',
+          slot: 'attributes',
+          minWidth: 100
+        }, {
+          title: 'Action',
+          slot: 'action',
+          width: 150,
+          align: 'center'
+        }],
+        data: []
+      }
+    };
     var state = {
       formValidate: {
         project_id: '',
         definition_id: '',
         entity_id: '',
         name: '',
-        type: ''
+        type: '',
+        presentation_data: ''
       }
     };
 
@@ -4645,7 +4752,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     //component state registration
 
 
-    return _objectSpread({}, state, {
+    return _objectSpread({}, local, {}, state, {
       ruleValidate: {
         project_id: [{
           required: true,
@@ -4676,6 +4783,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           type: 'string',
           trigger: 'blur',
           message: 'The type cannot be empty'
+        }],
+        presentation_data: [{
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: 'The presentation_data cannot be empty'
         }]
       }
     });
@@ -4723,6 +4836,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           })["catch"](function (error) {
             console.log(error);
           });
+        },
+        getDefaultValues: function getDefaultValues(entity_id) {
+          return window.axios.get("/butler/public_backend" + '/view_definition_get/' + entity_id, {
+            params: {
+              entity_id: entity_id
+            }
+          })["catch"](function (error) {
+            console.log(error);
+          });
         }
       };
     },
@@ -4736,12 +4858,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$refs[name].validate(function (valid) {
         if (valid) {
           var formValidate = _this.formValidate;
+          formValidate.presentation_data = JSON.stringify(_this.presentation_table.data);
 
           _this.ajax().update(_this.$route.params.id, formValidate);
         } else {
           _this.$Message.error('Fail!');
         }
       });
+    },
+    onGenerateDefaultValuesClicked: function onGenerateDefaultValuesClicked() {
+      var _this2 = this;
+
+      this.ajax().getDefaultValues(this.formValidate.entity_id).then(function (_ref2) {
+        var data = _ref2.data;
+        console.log(data);
+        _this2.presentation_table.data = data.presentation_table_data;
+      });
+    },
+    presentationTableHandleEdit: function presentationTableHandleEdit(row, index) {
+      this.presentation_table.edit.column_name = row.column_name;
+      this.presentation_table.edit.column_type = row.column_type;
+      this.presentation_table.edit.type = row.type;
+      this.presentation_table.edit.validation_rules = row.validation_rules;
+      this.presentation_table.edit.attributes = row.attributes;
+      this.presentation_table.edit.index = index;
+    },
+    presentationTableHandleSave: function presentationTableHandleSave(index) {
+      this.presentation_table.data[index].column_name = this.presentation_table.edit.column_name;
+      this.presentation_table.data[index].column_type = this.presentation_table.edit.column_type;
+      this.presentation_table.data[index].type = this.presentation_table.edit.type;
+      this.presentation_table.data[index].validation_rules = this.presentation_table.edit.validation_rules;
+      this.presentation_table.data[index].attributes = this.presentation_table.edit.attributes;
+      this.presentation_table.edit.index = -1;
+    },
+    presentationTableHandleDelete: function presentationTableHandleDelete(index) {
+      this.presentation_table.data.splice(index, 1);
     }
   },
   mounted: function mounted() {
@@ -88377,7 +88528,10 @@ var render = function() {
                     { attrs: { label: "project_id", prop: "project_id" } },
                     [
                       _c("InputNumber", {
-                        attrs: { placeholder: "Enter your project_id" },
+                        attrs: {
+                          disabled: true,
+                          placeholder: "Enter your project_id"
+                        },
                         model: {
                           value: _vm.formValidate.project_id,
                           callback: function($$v) {
@@ -88397,7 +88551,10 @@ var render = function() {
                     },
                     [
                       _c("InputNumber", {
-                        attrs: { placeholder: "Enter your definition_id" },
+                        attrs: {
+                          disabled: true,
+                          placeholder: "Enter your definition_id"
+                        },
                         model: {
                           value: _vm.formValidate.definition_id,
                           callback: function($$v) {
@@ -88415,7 +88572,10 @@ var render = function() {
                     { attrs: { label: "entity_id", prop: "entity_id" } },
                     [
                       _c("InputNumber", {
-                        attrs: { placeholder: "Enter your entity_id" },
+                        attrs: {
+                          disabled: true,
+                          placeholder: "Enter your entity_id"
+                        },
                         model: {
                           value: _vm.formValidate.entity_id,
                           callback: function($$v) {
@@ -88464,26 +88624,293 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
+                  _c("FormItem"),
+                  _vm._v(" "),
+                  _c("h1", [_vm._v("Presentation")]),
+                  _vm._v(" "),
+                  _c("Divider"),
+                  _vm._v(" "),
+                  _c("Table", {
+                    attrs: {
+                      border: "",
+                      columns: _vm.presentation_table.columns,
+                      data: _vm.presentation_table.data
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "column_name",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.presentation_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value:
+                                      _vm.presentation_table.edit.column_name,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.presentation_table.edit,
+                                        "column_name",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "presentation_table.edit.column_name"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.column_name))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "column_type",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.presentation_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value:
+                                      _vm.presentation_table.edit.column_type,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.presentation_table.edit,
+                                        "column_type",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "presentation_table.edit.column_type"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.column_type))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "type",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.presentation_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value: _vm.presentation_table.edit.type,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.presentation_table.edit,
+                                        "type",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "presentation_table.edit.type"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.type))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "validation_rules",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.presentation_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value:
+                                      _vm.presentation_table.edit
+                                        .validation_rules,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.presentation_table.edit,
+                                        "validation_rules",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "presentation_table.edit.validation_rules"
+                                  }
+                                })
+                              : _c("span", [
+                                  _vm._v(_vm._s(row.validation_rules))
+                                ])
+                          ]
+                        }
+                      },
+                      {
+                        key: "attributes",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.presentation_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value:
+                                      _vm.presentation_table.edit.attributes,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.presentation_table.edit,
+                                        "attributes",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "presentation_table.edit.attributes"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.attributes))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "action",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.presentation_table.edit.index === index
+                              ? _c(
+                                  "div",
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "success",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.presentationTableHandleSave(
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Save")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "warning",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.presentation_table.edit.index = -1
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Cancel")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _c(
+                                  "div",
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "primary",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.presentationTableHandleEdit(
+                                              row,
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Edit")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: { type: "error", size: "small" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.presentationTableHandleDelete(
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Delete")]
+                                    )
+                                  ],
+                                  1
+                                )
+                          ]
+                        }
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
                   _c(
                     "FormItem",
                     [
-                      _c(
-                        "Button",
-                        {
-                          attrs: { type: "primary" },
-                          on: {
-                            click: function($event) {
-                              return _vm.handleSubmit("formValidate")
-                            }
-                          }
-                        },
-                        [_vm._v("Submit")]
-                      )
+                      _c("Input", {
+                        attrs: { hidden: "", placeholder: "" },
+                        model: {
+                          value: _vm.formValidate.presentation_data,
+                          callback: function($$v) {
+                            _vm.$set(_vm.formValidate, "presentation_data", $$v)
+                          },
+                          expression: "formValidate.presentation_data"
+                        }
+                      })
                     ],
                     1
                   )
                 ],
                 1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "Row",
+        {
+          staticStyle: { "margin-top": "25px", "margin-bottom": "15px" },
+          attrs: { type: "flex", justify: "end", align: "middle" }
+        },
+        [
+          _c(
+            "Col",
+            [
+              _c(
+                "Button",
+                {
+                  attrs: { type: "primary" },
+                  on: {
+                    click: function($event) {
+                      return _vm.handleSubmit("formValidate")
+                    }
+                  }
+                },
+                [_vm._v("Submit")]
               )
             ],
             1

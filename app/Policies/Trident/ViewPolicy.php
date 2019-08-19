@@ -91,4 +91,19 @@ class ViewPolicy
     {
         return $user->id == $View->findOrFail($id)->user_id;
     }
+
+    /**
+     * Determine whether the user can permanently generate the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\ViewRepository $View
+     * @return mixed
+     */
+    public function generate(User $user, View $view, int $id)
+    {
+        return $user->id == $view->findOrFail($id)->user_id;
+    }
+
+
+
 }

@@ -141,4 +141,26 @@ class View implements ViewInterface
         $deleted_count = $this->view_repository->destroy($id);
         return ($deleted_count > 0);
     }
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function generate($request, $id)
+    {
+        $model = $this->view_repository->with(['project','definition','entity'])->find($id);
+        
+        $this->view_business->generate(
+            $model->getAttributes(),
+            $model->getRelations()['project']->getAttributes(),
+            $model->getRelations()['definition']->getAttributes(),
+            $model->getRelations()['entity']->getAttributes(),
+        );
+
+        return $model;
+    }
+
+
 }

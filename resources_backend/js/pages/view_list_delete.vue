@@ -66,17 +66,17 @@
                     {
                         title: 'project_id',
                         key: 'project_id',
-                        minWidth: 100,
+                        maxWidth: 120,
                     },
                     {
                         title: 'definition_id',
                         key: 'definition_id',
-                        minWidth: 100,
+                        maxWidth: 120,
                     },
                     {
                         title: 'entity_id',
                         key: 'entity_id',
-                        minWidth: 100,
+                        maxWidth: 120,
                     },
                     {
                         title: 'name',
@@ -91,7 +91,7 @@
                     {
                         title: 'Action',
                         key: 'action',
-                        width: 150,
+                        maxWidth: 300,
                         align: 'center',
                         render: (h, params) => {
                             var row = params.row;
@@ -116,12 +116,26 @@
                                         type: 'error',
                                         size: 'small'
                                     },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
                                     on: {
                                         click: () => {
                                             this.ajax().delete(row.id);
                                         }
                                     }
-                                }, 'Delete')
+                                }, 'Delete'),
+                                h('Button', {
+                                    props: {
+                                        type: 'success',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.ajax().generate(row.id);
+                                        }
+                                    }
+                                }, 'Generate')
                             ]);
                         }
                     }
@@ -156,6 +170,14 @@
                         window.axios.delete( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/view/'+id ).then(({ data }) => {
                             // console.log(data);
                             window.location.reload();
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    },
+                    generate(id) {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/view_generate/'+id ).then(({ data }) => {
+                            self.$Message.success('Success!');
+                            // window.location.reload();
                         }).catch(error => {
                             console.log(error);
                         });
