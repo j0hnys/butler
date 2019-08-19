@@ -66,7 +66,7 @@
                     {
                         title: 'project_id',
                         key: 'project_id',
-                        maxWidth: 120,
+                        maxWidth: 100,
                     },
                     {
                         title: 'definition_id',
@@ -76,7 +76,7 @@
                     {
                         title: 'entity_id',
                         key: 'entity_id',
-                        maxWidth: 120,
+                        maxWidth: 100,
                     },
                     {
                         title: 'name',
@@ -86,6 +86,11 @@
                     {
                         title: 'type',
                         key: 'type',
+                        maxWidth: 100,
+                    },
+                    {
+                        title: 'vista_resource_folder_name',
+                        key: 'vista_resource_folder_name',
                         minWidth: 100,
                     },
                     {

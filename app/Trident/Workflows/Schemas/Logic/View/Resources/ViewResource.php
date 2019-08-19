@@ -22,6 +22,7 @@ class ViewResource extends JsonResource
             'name' => $this->name,
             'type' => $this->type,
             'presentation_data' => $this->presentation_data,
+            'vista_resource_folder_name' => $this->vista_resource_folder_name,
         ];
 
         // return [

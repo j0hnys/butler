@@ -5,6 +5,8 @@ var state = {
         entity_id: '',
         name: '',
         type: '',
+        presentation_data: '',
+        vista_resource_folder_name: '',
     },
 };
 

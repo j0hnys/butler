@@ -51,6 +51,12 @@
                     <FormItem label="type" prop="type">
                         <Input v-model="formValidate.type" placeholder="Enter your type"></Input>
                     </FormItem>
+                    <FormItem>
+                        <Input hidden v-model="formValidate.presentation_data" placeholder=""></Input>
+                    </FormItem>
+                    <FormItem label="vista_resource_folder_name" prop="vista_resource_folder_name">
+                        <Input v-model="formValidate.vista_resource_folder_name" placeholder="Enter your vista_resource_folder_name"></Input>
+                    </FormItem>
                     
                     
                     <FormItem>
@@ -73,6 +79,8 @@
                     entity_id: '',
                     name: '',
                     type: '',
+                    presentation_data: '{}',
+                    vista_resource_folder_name: '',
                 },
             };
             if (this.$store.state.pages.view_create) 
@@ -126,6 +134,22 @@
                             message: 'The type cannot be empty', 
                         }
                     ],
+                    presentation_data: [
+                        { 
+                            required: true, 
+                            type: 'string', 
+                            trigger: 'blur',
+                            message: 'The presentation_data cannot be empty', 
+                        }
+                    ],
+                    vista_resource_folder_name: [
+                        { 
+                            required: true, 
+                            type: 'string', 
+                            trigger: 'blur',
+                            message: 'The vista_resource_folder_name cannot be empty', 
+                        }
+                    ],
 
                 },
 
@@ -154,11 +178,17 @@
                                 
                                 if (key == 'file') {
                                     form_data.append(key, data[key], data[key].name);
+                                } else if (key == 'presentation_data') {
+                                    form_data.append(key, '{}');
                                 } else {
                                     form_data.append(key, data[key]);
                                 }
                             }
                         }
+
+                        console.log({
+                            form_data: form_data,
+                        });
 
                         window.axios.post( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/view',  form_data ).then((response) => {
                             // Once AJAX resolves we can update the Crud with the new color

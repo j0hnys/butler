@@ -32,6 +32,8 @@ class ViewStoreRequest extends FormRequest
             'entity_id' => 'required | integer',
             'name' => 'required | string',
             'type' => 'required | string',
+            'presentation_data' => 'required | string',
+            'vista_resource_folder_name' => 'required | string',
         ];
 
         // return [
@@ -55,6 +57,8 @@ class ViewStoreRequest extends FormRequest
             'entity_id' => 'entity_id is required',
             'name' => 'name is required',
             'type' => 'type is required',
+            'presentation_data' => 'presentation_data is required',
+            'vista_resource_folder_name' => 'vista_resource_folder_name is required',
         ];
 
         // return [

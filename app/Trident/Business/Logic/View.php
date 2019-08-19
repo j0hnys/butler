@@ -69,7 +69,7 @@ class View implements ViewInterface
         $command .= 'php ';
         $command .= 'artisan vista:generate:crud '.$model['name'].' ';
         $command .= '--schema_path="/'.$project['relative_schemas_folder'].'/'.$model['name'].'/Presentation/'.'Form.json'.'" ';
-        $command .= '--resources_relative_path_name="resources_backend" ';
+        $command .= '--resources_relative_path_name="'.$model['vista_resource_folder_name'].'" ';
 
         shell_exec( $command );
     }

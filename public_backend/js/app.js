@@ -4239,6 +4239,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var state = {
@@ -4247,7 +4253,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         definition_id: '',
         entity_id: '',
         name: '',
-        type: ''
+        type: '',
+        presentation_data: '{}',
+        vista_resource_folder_name: ''
       }
     };
 
@@ -4288,6 +4296,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           type: 'string',
           trigger: 'blur',
           message: 'The type cannot be empty'
+        }],
+        presentation_data: [{
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: 'The presentation_data cannot be empty'
+        }],
+        vista_resource_folder_name: [{
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: 'The vista_resource_folder_name cannot be empty'
         }]
       }
     });
@@ -4313,12 +4333,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               if (key == 'file') {
                 form_data.append(key, data[key], data[key].name);
+              } else if (key == 'presentation_data') {
+                form_data.append(key, '{}');
               } else {
                 form_data.append(key, data[key]);
               }
             }
           }
 
+          console.log({
+            form_data: form_data
+          });
           window.axios.post("/butler/public_backend" + '/trident/resource/view', form_data).then(function (response) {
             // Once AJAX resolves we can update the Crud with the new color
             self.$Message.success('Success!');
@@ -4438,7 +4463,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       columns: [{
         title: 'project_id',
         key: 'project_id',
-        maxWidth: 120
+        maxWidth: 100
       }, {
         title: 'definition_id',
         key: 'definition_id',
@@ -4446,7 +4471,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         title: 'entity_id',
         key: 'entity_id',
-        maxWidth: 120
+        maxWidth: 100
       }, {
         title: 'name',
         key: 'name',
@@ -4454,6 +4479,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         title: 'type',
         key: 'type',
+        maxWidth: 100
+      }, {
+        title: 'vista_resource_folder_name',
+        key: 'vista_resource_folder_name',
         minWidth: 100
       }, {
         title: 'Action',
@@ -4715,6 +4744,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var local = {
@@ -4777,7 +4809,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         entity_id: '',
         name: '',
         type: '',
-        presentation_data: ''
+        presentation_data: '',
+        vista_resource_folder_name: ''
       }
     };
 
@@ -4824,6 +4857,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           type: 'string',
           trigger: 'blur',
           message: 'The presentation_data cannot be empty'
+        }],
+        vista_resource_folder_name: [{
+          required: true,
+          type: 'string',
+          trigger: 'blur',
+          message: 'The vista_resource_folder_name cannot be empty'
         }]
       }
     });
@@ -88405,6 +88444,52 @@ var render = function() {
                   _c(
                     "FormItem",
                     [
+                      _c("Input", {
+                        attrs: { hidden: "", placeholder: "" },
+                        model: {
+                          value: _vm.formValidate.presentation_data,
+                          callback: function($$v) {
+                            _vm.$set(_vm.formValidate, "presentation_data", $$v)
+                          },
+                          expression: "formValidate.presentation_data"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    {
+                      attrs: {
+                        label: "vista_resource_folder_name",
+                        prop: "vista_resource_folder_name"
+                      }
+                    },
+                    [
+                      _c("Input", {
+                        attrs: {
+                          placeholder: "Enter your vista_resource_folder_name"
+                        },
+                        model: {
+                          value: _vm.formValidate.vista_resource_folder_name,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.formValidate,
+                              "vista_resource_folder_name",
+                              $$v
+                            )
+                          },
+                          expression: "formValidate.vista_resource_folder_name"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    [
                       _c(
                         "Button",
                         {
@@ -88663,6 +88748,35 @@ var render = function() {
                             _vm.$set(_vm.formValidate, "type", $$v)
                           },
                           expression: "formValidate.type"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    {
+                      attrs: {
+                        label: "vista_resource_folder_name",
+                        prop: "vista_resource_folder_name"
+                      }
+                    },
+                    [
+                      _c("Input", {
+                        attrs: {
+                          placeholder: "Enter your vista_resource_folder_name"
+                        },
+                        model: {
+                          value: _vm.formValidate.vista_resource_folder_name,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.formValidate,
+                              "vista_resource_folder_name",
+                              $$v
+                            )
+                          },
+                          expression: "formValidate.vista_resource_folder_name"
                         }
                       })
                     ],
@@ -107113,7 +107227,9 @@ var state = {
     definition_id: '',
     entity_id: '',
     name: '',
-    type: ''
+    type: '',
+    presentation_data: '',
+    vista_resource_folder_name: ''
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -107177,7 +107293,9 @@ var state = {
     definition_id: '',
     entity_id: '',
     name: '',
-    type: ''
+    type: '',
+    presentation_data: '',
+    vista_resource_folder_name: ''
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

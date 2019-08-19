@@ -50,6 +50,9 @@
                     <FormItem label="type" prop="type">
                         <Input v-model="formValidate.type" placeholder="Enter your type"></Input>
                     </FormItem>
+                    <FormItem label="vista_resource_folder_name" prop="vista_resource_folder_name">
+                        <Input v-model="formValidate.vista_resource_folder_name" placeholder="Enter your vista_resource_folder_name"></Input>
+                    </FormItem>
 
                     <FormItem>
                         <Button type="primary" @click="onGenerateDefaultValuesClicked">Generate Default Values</Button>
@@ -201,6 +204,7 @@
                     name: '',
                     type: '',
                     presentation_data: '',
+                    vista_resource_folder_name: '',
                 },
             };
             if (this.$store.state.pages.view_update) 
@@ -261,6 +265,14 @@
                             type: 'string', 
                             trigger: 'blur',
                             message: 'The presentation_data cannot be empty', 
+                        }
+                    ],
+                    vista_resource_folder_name: [
+                        { 
+                            required: true, 
+                            type: 'string', 
+                            trigger: 'blur',
+                            message: 'The vista_resource_folder_name cannot be empty', 
                         }
                     ],
 

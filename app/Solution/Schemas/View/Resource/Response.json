@@ -21,6 +21,9 @@
         },
         "presentation_data": {
             "resource": true
+        },
+        "vista_resource_folder_name": {
+            "resource": true
         }
     }
 }

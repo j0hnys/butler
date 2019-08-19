@@ -18,6 +18,7 @@ class StructupdateView extends StructOptionalValues
             'name' => T::nullable(T::string()),
             'type' => T::nullable(T::string()),
             'presentation_data' => T::nullable(T::string()),
+            'vista_resource_folder_name' => T::nullable(T::string()),
         ];
         
         parent::__construct($this->types);
