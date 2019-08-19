@@ -35,23 +35,30 @@ class Definition extends StructOptionalValues
                 }
             }
 
+            $key_definition_type = '';
+            $value_definition_type = '';
+
             if (strpos($key, '{{') !== false) {
                 $definition_type_name = str_replace('{{','',$key);
                 $definition_type_name = str_replace('}}','',$definition_type_name);
 
-                $definition_type = $constants[$definition_type_name];
+                // dump([
+                //     '$constants' => $constants,
+                // ]);
+
+                $key_definition_type = $constants[$definition_type_name];
                 
                 $array_keys = array_keys($data);
 
-                if (is_array($definition_type)) {
+                if (is_array($key_definition_type)) {
                     foreach ($array_keys as $array_key) {
-                        if (!in_array($array_key, $definition_type)) {
+                        if (!in_array($array_key, $key_definition_type)) {
                             throw new \Exception("unknown type", 1);
                         }
                     }
-                } else if (strpos($definition_type, 'T::') !== false) {
-                    $definition_type = str_replace('T::', T::class.'::', $definition_type);
-                    $result = eval('return '.$definition_type.';');
+                } else if (strpos($key_definition_type, 'T::') !== false) {
+                    $key_definition_type = str_replace('T::', T::class.'::', $key_definition_type);
+                    $result = eval('return '.$key_definition_type.';');
 
                     $struct_check = new Struct([
                         'value' => $result,
@@ -70,15 +77,15 @@ class Definition extends StructOptionalValues
                     $definition_type_name = str_replace('{{','',$value);
                     $definition_type_name = str_replace('}}','',$definition_type_name);
     
-                    $definition_type = $constants[$definition_type_name];
+                    $value_definition_type = $constants[$definition_type_name];
 
-                    if (is_array($definition_type)) {
-                        if (!in_array($data[$key], $definition_type)) {
+                    if (is_array($value_definition_type)) {
+                        if (!in_array($data[$key], $value_definition_type)) {
                             throw new \Exception("unknown type", 1);
                         }
-                    } else if (strpos($definition_type, 'T::') !== false) {
-                        $definition_type = str_replace('T::', T::class.'::', $definition_type);
-                        $result = eval('return '.$definition_type.';');
+                    } else if (strpos($value_definition_type, 'T::') !== false) {
+                        $value_definition_type = str_replace('T::', T::class.'::', $value_definition_type);
+                        $result = eval('return '.$value_definition_type.';');
 
                         $struct_check = new Struct([
                             'value' => $result,
@@ -96,8 +103,16 @@ class Definition extends StructOptionalValues
                         'value' => $result,
                     ]);
 
+                    $check_key = $key;
+                    if (is_array($key_definition_type)) {
+                        $data_key = array_keys($data)[0];
+                        if (in_array($data_key, $key_definition_type)) {
+                            $check_key = $data_key;            
+                        }
+                    }
+
                     $struct_check->set([
-                        'value' => $data[$key]
+                        'value' => $data[$check_key]
                     ]);
                 }
             }

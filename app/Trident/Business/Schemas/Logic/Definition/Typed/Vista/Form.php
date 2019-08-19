@@ -36,7 +36,7 @@ class Form extends Definition
                     ],
                     "attributes" => [
                         "type" => [
-                            "string" => "T::bool()"
+                            "{{attributes_type_name}}" => "T::bool()"
                         ],
                         "default_value" => "{{attributes_default_value}}",
                         "element_type" => "T::bool()"
@@ -45,6 +45,29 @@ class Form extends Definition
             ]
         ]
     ];
+
+    const column_type = [
+        'string', 'integer'
+    ];
+
+    const element_type = [
+        'fillable'
+    ];
+
+    const validation_rule_type = [
+        'string', 'number'
+    ];
+
+    const validation_rule_trigger = [
+        'blur'
+    ];
+
+    const attributes_default_value = 'T::string()';
+
+    const attributes_type_name = [
+        'string', 'number'
+    ];
+
 
     public function __construct($data = [])
     {
