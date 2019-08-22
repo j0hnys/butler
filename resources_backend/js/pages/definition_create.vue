@@ -35,9 +35,10 @@
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
                     
-
                     <FormItem label="project_id" prop="project_id">
-                        <InputNumber v-model="formValidate.project_id" placeholder="Enter your project_id"></InputNumber>
+                        <Select v-model="formValidate.project_id" style="width:200px">
+                            <Option v-for="item in project_list" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                        </Select>
                     </FormItem>
                     <FormItem label="namespace" prop="namespace">
                         <Input v-model="formValidate.namespace" placeholder="Enter your namespace"></Input>
@@ -57,6 +58,10 @@
 <script>
     export default {
         data() {
+            var local = {
+                project_list: []
+            };
+
             var state = {
                 formValidate: {
                     project_id: '',
@@ -71,6 +76,7 @@
             //
             //component state registration
             return {
+                ...local,
                 ...state,
                 ruleValidate: {
 
@@ -108,6 +114,28 @@
             ajax() {
                 var self = this;
                 return {
+                    getProjects() {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/project/' ).then(({ data }) => {
+                            
+                            let project_list = [];
+
+                            for (const i in data) {
+                                if (data.hasOwnProperty(i)) {
+                                    const element = data[i];
+                                    
+                                    project_list.push({
+                                        label: element.name,
+                                        value: element.id
+                                    });
+
+                                }
+                            }
+
+                            self.project_list = project_list;
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    },
                     create(data) {
 
                         var form_data = new FormData();
@@ -152,13 +180,9 @@
             },
         },
         mounted() {
-            // console.log('test form mounted');
-            // console.log({
-            //     // 'this.$store': this.$store,
-            //     // 'this.$store.state': this.$store.state,
-            //     // 'this.$store.state.Index': this.$store.state.Index,
-            //     'this.$route': this.$route,
-            // });
+
+            this.ajax().getProjects();
+
         },
     }
 </script>

@@ -2325,8 +2325,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
+    var local = {
+      project_list: []
+    };
     var state = {
       formValidate: {
         project_id: '',
@@ -2340,7 +2344,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     //component state registration
 
 
-    return _objectSpread({}, state, {
+    return _objectSpread({}, local, {}, state, {
       ruleValidate: {
         project_id: [{
           required: true,
@@ -2369,6 +2373,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ajax: function ajax() {
       var self = this;
       return {
+        getProjects: function getProjects() {
+          window.axios.get("/butler/public_backend" + '/trident/resource/project/').then(function (_ref) {
+            var data = _ref.data;
+            var project_list = [];
+
+            for (var i in data) {
+              if (data.hasOwnProperty(i)) {
+                var element = data[i];
+                project_list.push({
+                  label: element.name,
+                  value: element.id
+                });
+              }
+            }
+
+            self.project_list = project_list;
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        },
         create: function create(data) {
           var form_data = new FormData();
 
@@ -2411,13 +2435,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   },
-  mounted: function mounted() {// console.log('test form mounted');
-    // console.log({
-    //     // 'this.$store': this.$store,
-    //     // 'this.$store.state': this.$store.state,
-    //     // 'this.$store.state.Index': this.$store.state.Index,
-    //     'this.$route': this.$route,
-    // });
+  mounted: function mounted() {
+    this.ajax().getProjects();
   }
 });
 
@@ -2671,8 +2690,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
+    var local = {
+      project_list: []
+    };
     var state = {
       formValidate: {
         project_id: '',
@@ -2686,7 +2710,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     //component state registration
 
 
-    return _objectSpread({}, state, {
+    return _objectSpread({}, local, {}, state, {
       ruleValidate: {
         project_id: [{
           required: true,
@@ -2715,10 +2739,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ajax: function ajax() {
       var self = this;
       return {
+        getProjects: function getProjects() {
+          window.axios.get("/butler/public_backend" + '/trident/resource/project/').then(function (_ref) {
+            var data = _ref.data;
+            var project_list = [];
+
+            for (var i in data) {
+              if (data.hasOwnProperty(i)) {
+                var element = data[i];
+                project_list.push({
+                  label: element.name,
+                  value: element.id
+                });
+              }
+            }
+
+            self.project_list = project_list;
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        },
         get: function get() {
           var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-          window.axios.get("/butler/public_backend" + '/trident/resource/definition/' + id).then(function (_ref) {
-            var data = _ref.data;
+          window.axios.get("/butler/public_backend" + '/trident/resource/definition/' + id).then(function (_ref2) {
+            var data = _ref2.data;
             self.formValidate = data;
           })["catch"](function (error) {
             console.log(error);
@@ -2768,13 +2812,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    // console.log('test form mounted');
-    // console.log({
-    //     // 'this.$store': this.$store,
-    //     // 'this.$store.state': this.$store.state,
-    //     // 'this.$store.state.Index': this.$store.state.Index,
-    //     'this.$route': this.$route,
-    // });
+    this.ajax().getProjects();
     this.ajax().get(this.$route.params.id);
   }
 });
@@ -86798,16 +86836,27 @@ var render = function() {
                     "FormItem",
                     { attrs: { label: "project_id", prop: "project_id" } },
                     [
-                      _c("InputNumber", {
-                        attrs: { placeholder: "Enter your project_id" },
-                        model: {
-                          value: _vm.formValidate.project_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "project_id", $$v)
-                          },
-                          expression: "formValidate.project_id"
-                        }
-                      })
+                      _c(
+                        "Select",
+                        {
+                          staticStyle: { width: "200px" },
+                          model: {
+                            value: _vm.formValidate.project_id,
+                            callback: function($$v) {
+                              _vm.$set(_vm.formValidate, "project_id", $$v)
+                            },
+                            expression: "formValidate.project_id"
+                          }
+                        },
+                        _vm._l(_vm.project_list, function(item) {
+                          return _c(
+                            "Option",
+                            { key: item.value, attrs: { value: item.value } },
+                            [_vm._v(_vm._s(item.label))]
+                          )
+                        }),
+                        1
+                      )
                     ],
                     1
                   ),
@@ -87000,16 +87049,27 @@ var render = function() {
                     "FormItem",
                     { attrs: { label: "project_id", prop: "project_id" } },
                     [
-                      _c("InputNumber", {
-                        attrs: { placeholder: "Enter your project_id" },
-                        model: {
-                          value: _vm.formValidate.project_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "project_id", $$v)
-                          },
-                          expression: "formValidate.project_id"
-                        }
-                      })
+                      _c(
+                        "Select",
+                        {
+                          staticStyle: { width: "200px" },
+                          model: {
+                            value: _vm.formValidate.project_id,
+                            callback: function($$v) {
+                              _vm.$set(_vm.formValidate, "project_id", $$v)
+                            },
+                            expression: "formValidate.project_id"
+                          }
+                        },
+                        _vm._l(_vm.project_list, function(item) {
+                          return _c(
+                            "Option",
+                            { key: item.value, attrs: { value: item.value } },
+                            [_vm._v(_vm._s(item.label))]
+                          )
+                        }),
+                        1
+                      )
                     ],
                     1
                   ),
