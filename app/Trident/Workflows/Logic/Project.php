@@ -141,4 +141,19 @@ class Project implements ProjectInterface
         $deleted_count = $this->project_repository->destroy($id);
         return ($deleted_count > 0);
     }
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function getWithDefinitions($request_data)
+    {
+        $model = $this->project_repository->with(['definitions'])->get();
+
+        return $model;
+    }
+
+
 }

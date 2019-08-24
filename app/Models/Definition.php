@@ -33,4 +33,10 @@ class Definition extends Model
      */
     protected $fillable = ['user_id', 'project_id', 'namespace', 'created_at', 'updated_at'];
 
+
+    public function project()
+    {
+        return $this->belongsTo(\App\Models\Project::class, 'project_id', 'id');
+    }
+
 }

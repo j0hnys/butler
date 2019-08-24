@@ -203,4 +203,19 @@ class Definition implements DefinitionInterface
     }
 
 
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function getWithProject($request_data)
+    {
+        $model = $this->definition_repository->with(['project'])->get();
+
+        return $model;
+    }
+
+
 }

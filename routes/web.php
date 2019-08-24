@@ -19,8 +19,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/project_get_with_definitions', 'Trident\ProjectController@getWithDefinitions');
 Route::get('/definition_get/{id}', 'Trident\DefinitionController@get');
 Route::get('/definition_get_by_entity_id/{id}', 'Trident\DefinitionController@getByEntityId');
+Route::get('/definition_get_with_project', 'Trident\DefinitionController@getWithProject');
 Route::get('/definition_get_database_tables/{id}', 'Trident\DefinitionController@getDatabaseTables');
 Route::get('/entity_generate/{id}', 'Trident\EntityController@generate');
 Route::get('/view_generate/{id}', 'Trident\ViewController@generate');

@@ -12,6 +12,7 @@ use App\Trident\Interfaces\Workflows\Repositories\DefinitionRepositoryInterface 
 // use App\Trident\Workflows\Events\Triggers\DefinitionTrigger;
 use App\Trident\Workflows\Validations\DefinitiongetRequest;
 use App\Trident\Workflows\Validations\DefinitiongetByEntityIdRequest;
+use App\Trident\Workflows\Validations\DefinitiongetWithProjectRequest;
 use App\Trident\Workflows\Validations\DefinitiongetDatabaseTablesRequest;
 use App\Trident\Workflows\Validations\DefinitionStoreRequest;
 use App\Trident\Workflows\Validations\DefinitionUpdateRequest;
@@ -190,6 +191,21 @@ class DefinitionController extends Controller
         $this->authorize('getByEntityId', [$this->definition_repository, $id]);
         $request_all = $request->all();
         return response()->json( $this->definition_workflow->getByEntityId($request_all, $id) );
+    }
+
+
+
+
+    /**
+     * *enter description here.*
+     *
+     * @param  DefinitiongetWithProjectRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function getWithProject(DefinitiongetWithProjectRequest $request)
+    {
+        $this->authorize('getWithProject', [$this->definition_repository]);
+        return response()->json( $this->definition_workflow->getWithProject($request) );
     }
 
 

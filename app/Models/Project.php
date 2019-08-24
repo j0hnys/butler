@@ -34,4 +34,10 @@ class Project extends Model
      */
     protected $fillable = ['user_id', 'name', 'root_folder', 'relative_schemas_folder', 'db_connection_name', 'created_at', 'updated_at'];
 
+    
+    public function definitions()
+    {
+        return $this->hasMany(\App\Models\Definition::class, 'project_id', 'id');
+    }
+
 }

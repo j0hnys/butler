@@ -91,4 +91,19 @@ class ProjectPolicy
     {
         return $user->id == $Project->findOrFail($id)->user_id;
     }
+
+    /**
+     * Determine whether the user can permanently getWithDefinitions the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\ProjectRepository $Project
+     * @return mixed
+     */
+    public function getWithDefinitions(User $user, Project $project)
+    {
+        return true;
+    }
+
+
+
 }

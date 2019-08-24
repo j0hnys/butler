@@ -209,4 +209,21 @@ class Definition implements DefinitionInterface
     }
 
 
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function getWithProject(Array $data): array
+    {
+        //
+        // TO DO
+        //
+
+        return $data;
+    }
+
+
 }

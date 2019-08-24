@@ -136,4 +136,19 @@ class DefinitionPolicy
 
 
 
+
+    /**
+     * Determine whether the user can permanently getWithProject the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\DefinitionRepository $Definition
+     * @return mixed
+     */
+    public function getWithProject(User $user, Definition $definition)
+    {
+        return true;
+    }
+
+
+
 }
