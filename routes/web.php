@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/project_get_with_definitions', 'Trident\ProjectController@getWithDefinitions');
+Route::get('/project_get_with_definitions_entities', 'Trident\ProjectController@getWithDefinitionsEntities');
 Route::get('/definition_get/{id}', 'Trident\DefinitionController@get');
 Route::get('/definition_get_by_entity_id/{id}', 'Trident\DefinitionController@getByEntityId');
 Route::get('/definition_get_with_project', 'Trident\DefinitionController@getWithProject');

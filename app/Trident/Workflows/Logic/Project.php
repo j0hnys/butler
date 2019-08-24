@@ -156,4 +156,19 @@ class Project implements ProjectInterface
     }
 
 
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function getWithDefinitionsEntities($request_data)
+    {
+        $model = $this->project_repository->with(['definitions','definitions.entities'])->get();
+
+        return $model;
+    }
+
+
 }

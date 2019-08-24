@@ -39,4 +39,9 @@ class Definition extends Model
         return $this->belongsTo(\App\Models\Project::class, 'project_id', 'id');
     }
 
+    public function entities()
+    {
+        return $this->hasMany(\App\Models\Entity::class, 'definition_id', 'id');
+    }
+
 }

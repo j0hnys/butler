@@ -35,7 +35,7 @@
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
 
-                    <FormItem label="project_id" prop="project_id">
+                    <!-- <FormItem label="project_id" prop="project_id">
                         <InputNumber :disabled="true" v-model="formValidate.project_id" placeholder="Enter your project_id"></InputNumber>
                     </FormItem>
                     <FormItem label="definition_id" prop="definition_id">
@@ -43,7 +43,12 @@
                     </FormItem>
                     <FormItem label="entity_id" prop="entity_id">
                         <InputNumber :disabled="true" v-model="formValidate.entity_id" placeholder="Enter your entity_id"></InputNumber>
+                    </FormItem> -->
+
+                    <FormItem label="entity_id" prop="entity_id">
+                        <Cascader :disabled="true" v-model="cascader_entity" :data="project_definitions_entities" placeholder="---NOTHING SELECTED---"></Cascader>
                     </FormItem>
+
                     <FormItem label="name" prop="name">
                         <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
                     </FormItem>
@@ -136,6 +141,8 @@
         data() {
 
             var local = {
+                cascader_entity: [],
+                project_definitions_entities: [],
                 presentation_ajax: {
                     get: {
                         GET: ''
@@ -209,7 +216,7 @@
             };
             if (this.$store.state.pages.view_update) 
             {
-                state = this.$store.state.pages.view_update;
+                // state = this.$store.state.pages.view_update;
             }
 
             //
@@ -219,30 +226,30 @@
                 ...state,
                 ruleValidate: {                   
 
-                    project_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The project_id cannot be empty', 
-                        }
-                    ],
-                    definition_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The definition_id cannot be empty', 
-                        }
-                    ],
-                    entity_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The entity_id cannot be empty', 
-                        }
-                    ],
+                    // project_id: [
+                    //     { 
+                    //         required: true, 
+                    //         type: 'number', 
+                    //         trigger: 'blur',
+                    //         message: 'The project_id cannot be empty', 
+                    //     }
+                    // ],
+                    // definition_id: [
+                    //     { 
+                    //         required: true, 
+                    //         type: 'number', 
+                    //         trigger: 'blur',
+                    //         message: 'The definition_id cannot be empty', 
+                    //     }
+                    // ],
+                    // entity_id: [
+                    //     { 
+                    //         required: true, 
+                    //         type: 'number', 
+                    //         trigger: 'blur',
+                    //         message: 'The entity_id cannot be empty', 
+                    //     }
+                    // ],
                     name: [
                         { 
                             required: true, 
@@ -293,14 +300,77 @@
             ajax() {
                 var self = this;
                 return {
+                    getProjectsWithDefinitionsEntities() {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_get_with_definitions_entities' ).then(({ data }) => {
+                            let tmp_data = [];
+                            for (const i in data) {
+                                if (data.hasOwnProperty(i)) {
+                                    const element = data[i];
+                                    
+                                    let tmp_definitions = [];
+
+                                    if (element.definitions.length > 0) {
+                                        for (const j in element.definitions) {
+                                            if (element.definitions.hasOwnProperty(j)) {
+                                                const element_ = element.definitions[j];
+                                                
+                                                let tmp_entities = [];
+
+                                                if (element_.entities.length > 0) {
+                                                    for (const k in element_.entities) {
+                                                        if (element_.entities.hasOwnProperty(k)) {
+                                                            const element__ = element_.entities[k];
+                                                            
+                                                            tmp_entities.push({
+                                                                value: element__.id,
+                                                                label: element__.name,
+                                                                data: element__
+                                                            });
+                                                        }
+                                                    }
+                                                }
+
+                                                tmp_definitions.push({
+                                                    value: element_.id,
+                                                    label: element_.namespace,
+                                                    data: element_,
+                                                    children: tmp_entities
+                                                });
+                                            }
+                                        }
+                                    }
+
+                                    tmp_data.push({
+                                        value: element.id,
+                                        label: element.name,
+                                        data: element,
+                                        children: tmp_definitions
+                                    });
+
+                                }
+                            }
+                    
+                            self.project_definitions_entities = tmp_data;
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    },
                     get(id='') {
                         window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/view/'+id ).then(({ data }) => {
                             self.formValidate = data;
 
                             let presentation_data = JSON.parse(data.presentation_data);
 
-                            self.presentation_ajax = presentation_data.ajax;
-                            self.presentation_table.data = presentation_data.presentation.schema;
+                            self.cascader_entity = [
+                                data.project_id,
+                                data.definition_id,
+                                data.entity_id,
+                            ];
+
+                            if (Object.keys(presentation_data).length !== 0) {
+                                self.presentation_ajax = presentation_data.ajax;
+                                self.presentation_table.data = presentation_data.presentation.schema;
+                            }
                         }).catch(error => {
                             console.log(error);
                         });
@@ -396,14 +466,8 @@
             },
         },
         mounted() {
-            // console.log('test form mounted');
-            // console.log({
-            //     // 'this.$store': this.$store,
-            //     // 'this.$store.state': this.$store.state,
-            //     // 'this.$store.state.Index': this.$store.state.Index,
-            //     'this.$route': this.$route,
-            // });
-
+            
+            this.ajax().getProjectsWithDefinitionsEntities();
             this.ajax().get(this.$route.params.id);
 
         },

@@ -11,6 +11,7 @@ use App\Trident\Interfaces\Workflows\Repositories\ProjectRepositoryInterface as 
 // use App\Trident\Workflows\Exceptions\ProjectException;
 // use App\Trident\Workflows\Events\Triggers\ProjectTrigger;
 use App\Trident\Workflows\Validations\ProjectgetWithDefinitionsRequest;
+use App\Trident\Workflows\Validations\ProjectgetWithDefinitionsEntitiesRequest;
 use App\Trident\Workflows\Validations\ProjectStoreRequest;
 use App\Trident\Workflows\Validations\ProjectUpdateRequest;
 use App\Trident\Workflows\Schemas\Logic\Project\Typed\StructIndexProject;
@@ -150,6 +151,21 @@ class ProjectController extends Controller
     {
         $this->authorize('getWithDefinitions', [$this->project_repository]);
         return response()->json( $this->project_workflow->getWithDefinitions($request) );
+    }
+
+
+
+
+    /**
+     * *enter description here.*
+     *
+     * @param  ProjectgetWithDefinitionsEntitiesRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function getWithDefinitionsEntities(ProjectgetWithDefinitionsEntitiesRequest $request)
+    {
+        $this->authorize('getWithDefinitionsEntities', [$this->project_repository]);
+        return response()->json( $this->project_workflow->getWithDefinitionsEntities($request) );
     }
 
 

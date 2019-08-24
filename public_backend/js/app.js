@@ -4362,8 +4362,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
+    var local = {
+      cascader_entity: [],
+      project_definitions_entities: []
+    };
     var state = {
       formValidate: {
         project_id: '',
@@ -4376,32 +4385,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
 
-    if (this.$store.state.pages.view_create) {
-      state = this.$store.state.pages.view_create;
-    } //
+    if (this.$store.state.pages.view_create) {} // state = this.$store.state.pages.view_create;
+    //
     //component state registration
 
 
-    return _objectSpread({}, state, {
+    return _objectSpread({}, local, {}, state, {
       ruleValidate: {
-        project_id: [{
-          required: true,
-          type: 'number',
-          trigger: 'blur',
-          message: 'The project_id cannot be empty'
-        }],
-        definition_id: [{
-          required: true,
-          type: 'number',
-          trigger: 'blur',
-          message: 'The definition_id cannot be empty'
-        }],
-        entity_id: [{
-          required: true,
-          type: 'number',
-          trigger: 'blur',
-          message: 'The entity_id cannot be empty'
-        }],
         name: [{
           required: true,
           type: 'string',
@@ -4441,7 +4431,63 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ajax: function ajax() {
       var self = this;
       return {
+        getProjectsWithDefinitionsEntities: function getProjectsWithDefinitionsEntities() {
+          window.axios.get("/butler/public_backend" + '/project_get_with_definitions_entities').then(function (_ref) {
+            var data = _ref.data;
+            var tmp_data = [];
+
+            for (var i in data) {
+              if (data.hasOwnProperty(i)) {
+                var element = data[i];
+                var tmp_definitions = [];
+
+                if (element.definitions.length > 0) {
+                  for (var j in element.definitions) {
+                    if (element.definitions.hasOwnProperty(j)) {
+                      var element_ = element.definitions[j];
+                      var tmp_entities = [];
+
+                      if (element_.entities.length > 0) {
+                        for (var k in element_.entities) {
+                          if (element_.entities.hasOwnProperty(k)) {
+                            var element__ = element_.entities[k];
+                            tmp_entities.push({
+                              value: element__.id,
+                              label: element__.name,
+                              data: element__
+                            });
+                          }
+                        }
+                      }
+
+                      tmp_definitions.push({
+                        value: element_.id,
+                        label: element_.namespace,
+                        data: element_,
+                        children: tmp_entities
+                      });
+                    }
+                  }
+                }
+
+                tmp_data.push({
+                  value: element.id,
+                  label: element.name,
+                  data: element,
+                  children: tmp_definitions
+                });
+              }
+            }
+
+            self.project_definitions_entities = tmp_data;
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        },
         create: function create(data) {
+          data.project_id = self.cascader_entity[0];
+          data.definition_id = self.cascader_entity[1];
+          data.entity_id = self.cascader_entity[2];
           var form_data = new FormData();
 
           for (var key in data) {
@@ -4458,9 +4504,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           }
 
-          console.log({
-            form_data: form_data
-          });
           window.axios.post("/butler/public_backend" + '/trident/resource/view', form_data).then(function (response) {
             // Once AJAX resolves we can update the Crud with the new color
             self.$Message.success('Success!');
@@ -4488,13 +4531,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   },
-  mounted: function mounted() {// console.log('test form mounted');
-    // console.log({
-    //     // 'this.$store': this.$store,
-    //     // 'this.$store.state': this.$store.state,
-    //     // 'this.$store.state.Index': this.$store.state.Index,
-    //     'this.$route': this.$route,
-    // });
+  mounted: function mounted() {
+    this.ajax().getProjectsWithDefinitionsEntities();
   }
 });
 
@@ -4864,9 +4902,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var local = {
+      cascader_entity: [],
+      project_definitions_entities: [],
       presentation_ajax: {
         get: {
           GET: ''
@@ -4931,32 +4976,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
 
-    if (this.$store.state.pages.view_update) {
-      state = this.$store.state.pages.view_update;
-    } //
+    if (this.$store.state.pages.view_update) {} // state = this.$store.state.pages.view_update;
+    //
     //component state registration
 
 
     return _objectSpread({}, local, {}, state, {
       ruleValidate: {
-        project_id: [{
-          required: true,
-          type: 'number',
-          trigger: 'blur',
-          message: 'The project_id cannot be empty'
-        }],
-        definition_id: [{
-          required: true,
-          type: 'number',
-          trigger: 'blur',
-          message: 'The definition_id cannot be empty'
-        }],
-        entity_id: [{
-          required: true,
-          type: 'number',
-          trigger: 'blur',
-          message: 'The entity_id cannot be empty'
-        }],
+        // project_id: [
+        //     { 
+        //         required: true, 
+        //         type: 'number', 
+        //         trigger: 'blur',
+        //         message: 'The project_id cannot be empty', 
+        //     }
+        // ],
+        // definition_id: [
+        //     { 
+        //         required: true, 
+        //         type: 'number', 
+        //         trigger: 'blur',
+        //         message: 'The definition_id cannot be empty', 
+        //     }
+        // ],
+        // entity_id: [
+        //     { 
+        //         required: true, 
+        //         type: 'number', 
+        //         trigger: 'blur',
+        //         message: 'The entity_id cannot be empty', 
+        //     }
+        // ],
         name: [{
           required: true,
           type: 'string',
@@ -4996,14 +5046,71 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ajax: function ajax() {
       var self = this;
       return {
+        getProjectsWithDefinitionsEntities: function getProjectsWithDefinitionsEntities() {
+          window.axios.get("/butler/public_backend" + '/project_get_with_definitions_entities').then(function (_ref) {
+            var data = _ref.data;
+            var tmp_data = [];
+
+            for (var i in data) {
+              if (data.hasOwnProperty(i)) {
+                var element = data[i];
+                var tmp_definitions = [];
+
+                if (element.definitions.length > 0) {
+                  for (var j in element.definitions) {
+                    if (element.definitions.hasOwnProperty(j)) {
+                      var element_ = element.definitions[j];
+                      var tmp_entities = [];
+
+                      if (element_.entities.length > 0) {
+                        for (var k in element_.entities) {
+                          if (element_.entities.hasOwnProperty(k)) {
+                            var element__ = element_.entities[k];
+                            tmp_entities.push({
+                              value: element__.id,
+                              label: element__.name,
+                              data: element__
+                            });
+                          }
+                        }
+                      }
+
+                      tmp_definitions.push({
+                        value: element_.id,
+                        label: element_.namespace,
+                        data: element_,
+                        children: tmp_entities
+                      });
+                    }
+                  }
+                }
+
+                tmp_data.push({
+                  value: element.id,
+                  label: element.name,
+                  data: element,
+                  children: tmp_definitions
+                });
+              }
+            }
+
+            self.project_definitions_entities = tmp_data;
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        },
         get: function get() {
           var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-          window.axios.get("/butler/public_backend" + '/trident/resource/view/' + id).then(function (_ref) {
-            var data = _ref.data;
+          window.axios.get("/butler/public_backend" + '/trident/resource/view/' + id).then(function (_ref2) {
+            var data = _ref2.data;
             self.formValidate = data;
             var presentation_data = JSON.parse(data.presentation_data);
-            self.presentation_ajax = presentation_data.ajax;
-            self.presentation_table.data = presentation_data.presentation.schema;
+            self.cascader_entity = [data.project_id, data.definition_id, data.entity_id];
+
+            if (Object.keys(presentation_data).length !== 0) {
+              self.presentation_ajax = presentation_data.ajax;
+              self.presentation_table.data = presentation_data.presentation.schema;
+            }
           })["catch"](function (error) {
             console.log(error);
           });
@@ -5069,8 +5176,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     onGenerateDefaultValuesClicked: function onGenerateDefaultValuesClicked() {
       var _this2 = this;
 
-      this.ajax().getDefaultValues(this.formValidate.definition_id).then(function (_ref2) {
-        var data = _ref2.data;
+      this.ajax().getDefaultValues(this.formValidate.definition_id).then(function (_ref3) {
+        var data = _ref3.data;
         console.log(data);
         _this2.presentation_table.data = data.presentation_table_data.presentation.schema;
         _this2.presentation_ajax = data.presentation_table_data.ajax;
@@ -5097,13 +5204,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    // console.log('test form mounted');
-    // console.log({
-    //     // 'this.$store': this.$store,
-    //     // 'this.$store.state': this.$store.state,
-    //     // 'this.$store.state.Index': this.$store.state.Index,
-    //     'this.$route': this.$route,
-    // });
+    this.ajax().getProjectsWithDefinitionsEntities();
     this.ajax().get(this.$route.params.id);
   }
 });
@@ -88455,54 +88556,19 @@ var render = function() {
                 [
                   _c(
                     "FormItem",
-                    { attrs: { label: "project_id", prop: "project_id" } },
-                    [
-                      _c("InputNumber", {
-                        attrs: { placeholder: "Enter your project_id" },
-                        model: {
-                          value: _vm.formValidate.project_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "project_id", $$v)
-                          },
-                          expression: "formValidate.project_id"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
-                    {
-                      attrs: { label: "definition_id", prop: "definition_id" }
-                    },
-                    [
-                      _c("InputNumber", {
-                        attrs: { placeholder: "Enter your definition_id" },
-                        model: {
-                          value: _vm.formValidate.definition_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "definition_id", $$v)
-                          },
-                          expression: "formValidate.definition_id"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
                     { attrs: { label: "entity_id", prop: "entity_id" } },
                     [
-                      _c("InputNumber", {
-                        attrs: { placeholder: "Enter your entity_id" },
+                      _c("Cascader", {
+                        attrs: {
+                          data: _vm.project_definitions_entities,
+                          placeholder: "---NOTHING SELECTED---"
+                        },
                         model: {
-                          value: _vm.formValidate.entity_id,
+                          value: _vm.cascader_entity,
                           callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "entity_id", $$v)
+                            _vm.cascader_entity = $$v
                           },
-                          expression: "formValidate.entity_id"
+                          expression: "cascader_entity"
                         }
                       })
                     ],
@@ -88759,63 +88825,20 @@ var render = function() {
                 [
                   _c(
                     "FormItem",
-                    { attrs: { label: "project_id", prop: "project_id" } },
-                    [
-                      _c("InputNumber", {
-                        attrs: {
-                          disabled: true,
-                          placeholder: "Enter your project_id"
-                        },
-                        model: {
-                          value: _vm.formValidate.project_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "project_id", $$v)
-                          },
-                          expression: "formValidate.project_id"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
-                    {
-                      attrs: { label: "definition_id", prop: "definition_id" }
-                    },
-                    [
-                      _c("InputNumber", {
-                        attrs: {
-                          disabled: true,
-                          placeholder: "Enter your definition_id"
-                        },
-                        model: {
-                          value: _vm.formValidate.definition_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "definition_id", $$v)
-                          },
-                          expression: "formValidate.definition_id"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
                     { attrs: { label: "entity_id", prop: "entity_id" } },
                     [
-                      _c("InputNumber", {
+                      _c("Cascader", {
                         attrs: {
                           disabled: true,
-                          placeholder: "Enter your entity_id"
+                          data: _vm.project_definitions_entities,
+                          placeholder: "---NOTHING SELECTED---"
                         },
                         model: {
-                          value: _vm.formValidate.entity_id,
+                          value: _vm.cascader_entity,
                           callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "entity_id", $$v)
+                            _vm.cascader_entity = $$v
                           },
-                          expression: "formValidate.entity_id"
+                          expression: "cascader_entity"
                         }
                       })
                     ],

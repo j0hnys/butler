@@ -128,4 +128,21 @@ class Project implements ProjectInterface
     }
 
 
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function getWithDefinitionsEntities(Array $data): array
+    {
+        //
+        // TO DO
+        //
+
+        return $data;
+    }
+
+
 }
