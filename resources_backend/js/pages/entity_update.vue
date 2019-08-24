@@ -13,12 +13,17 @@
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
 
-                    <FormItem label="project_id" prop="project_id">
+                    <!-- <FormItem label="project_id" prop="project_id">
                         <InputNumber :disabled="true" v-model="formValidate.project_id" placeholder="Enter your project_id"></InputNumber>
                     </FormItem>
                     <FormItem label="definition_id" prop="definition_id">
                         <InputNumber :disabled="true" v-model="formValidate.definition_id" placeholder="Enter your definition_id"></InputNumber>
+                    </FormItem> -->
+
+                    <FormItem label="definition_id" prop="definition_id">
+                        <Cascader :disabled="true" v-model="cascader_definition" :data="project_definitions" placeholder="---NOTHING SELECTED---"></Cascader>
                     </FormItem>
+
                     <FormItem label="name" prop="name">
                         <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
                     </FormItem>
@@ -118,6 +123,8 @@
 
             var local = {
                 model: '',
+                cascader_definition: [],
+                project_definitions: [],
                 loading_models: true,
                 database_tables: [],
                 request_table: {
@@ -283,6 +290,61 @@
             ajax() {
                 var self = this;
                 return {
+                    getProjectsWithDefinitions() {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_get_with_definitions' ).then(({ data }) => {
+                            let tmp_data = [];
+                            for (const i in data) {
+                                if (data.hasOwnProperty(i)) {
+                                    const element = data[i];
+                                    
+                                    let tmp_definitions = [];
+
+                                    if (element.definitions.length > 0) {
+                                        for (const j in element.definitions) {
+                                            if (element.definitions.hasOwnProperty(j)) {
+                                                const element_ = element.definitions[j];
+                                                
+                                                // let tmp_groups = [];
+
+                                                // if (element_.groups.length > 0) {
+                                                //     for (const k in element_.groups) {
+                                                //         if (element_.groups.hasOwnProperty(k)) {
+                                                //             const element__ = element_.groups[k];
+                                                            
+                                                //             tmp_groups.push({
+                                                //                 value: element__.id,
+                                                //                 label: element__.name,
+                                                //                 data: element__
+                                                //             });
+                                                //         }
+                                                //     }
+                                                // }
+
+                                                tmp_definitions.push({
+                                                    value: element_.id,
+                                                    label: element_.namespace,
+                                                    data: element_,
+                                                    // children: tmp_groups
+                                                });
+                                            }
+                                        }
+                                    }
+
+                                    tmp_data.push({
+                                        value: element.id,
+                                        label: element.name,
+                                        data: element,
+                                        children: tmp_definitions
+                                    });
+
+                                }
+                            }
+                    
+                            self.project_definitions = tmp_data;
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    },
                     get(id='') {
                         return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity/'+id ).then(({ data }) => {
                             self.formValidate = data;
@@ -293,6 +355,11 @@
                                     value: data.db_table_name,
                                 }
                             ];
+
+                            self.cascader_definition = [
+                                data.project_id,
+                                data.definition_id
+                            ]
 
                             self.request_table.data = JSON.parse(data.request_data);
                             self.response_table.data = JSON.parse(data.response_data);
@@ -414,6 +481,7 @@
         },
         mounted() {
 
+            this.ajax().getProjectsWithDefinitions();
             this.ajax().get(this.$route.params.id);
 
         },
