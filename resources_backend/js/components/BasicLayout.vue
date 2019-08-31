@@ -89,12 +89,12 @@
                                 </Poptip>
                             </Col>
                             <Col span="12">
-                                <Dropdown>
+                                <Dropdown @on-click="onLogoutButtonClicked">
                                     <Avatar icon="ios-person" size="large" />
                                     <DropdownMenu slot="list">
-                                        <DropdownItem>Account</DropdownItem>
-                                        <DropdownItem>Settings</DropdownItem>
-                                        <DropdownItem>Logout</DropdownItem>
+                                        <!-- <DropdownItem>Account</DropdownItem>
+                                        <DropdownItem>Settings</DropdownItem> -->
+                                        <DropdownItem name="logout">Logout</DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>
                             </Col>
@@ -235,6 +235,12 @@
 
                 this.$store.commit('components/BasicLayout/set_breadcrumbs',this.main_menu_breadcrumb.concat(this.sub_menu_breadcrumb));
 
+            },
+            onLogoutButtonClicked(name) {
+                if (name == 'logout') {
+                    this.$router.push(process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/logout');
+                    window.location.reload();
+                }
             },
         },
         mounted() {

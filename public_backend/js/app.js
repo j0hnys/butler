@@ -2104,6 +2104,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.page_title = current_menu_level[indexes[indexes.length - 1] - 1].text;
       this.$store.commit('components/BasicLayout/set_breadcrumbs', this.main_menu_breadcrumb.concat(this.sub_menu_breadcrumb));
+    },
+    onLogoutButtonClicked: function onLogoutButtonClicked(name) {
+      if (name == 'logout') {
+        this.$router.push("/butler/public_backend" + '/logout');
+        window.location.reload();
+      }
     }
   },
   mounted: function mounted() {
@@ -86691,6 +86697,9 @@ var render = function() {
                             [
                               _c(
                                 "Dropdown",
+                                {
+                                  on: { "on-click": _vm.onLogoutButtonClicked }
+                                },
                                 [
                                   _c("Avatar", {
                                     attrs: { icon: "ios-person", size: "large" }
@@ -86700,11 +86709,11 @@ var render = function() {
                                     "DropdownMenu",
                                     { attrs: { slot: "list" }, slot: "list" },
                                     [
-                                      _c("DropdownItem", [_vm._v("Account")]),
-                                      _vm._v(" "),
-                                      _c("DropdownItem", [_vm._v("Settings")]),
-                                      _vm._v(" "),
-                                      _c("DropdownItem", [_vm._v("Logout")])
+                                      _c(
+                                        "DropdownItem",
+                                        { attrs: { name: "logout" } },
+                                        [_vm._v("Logout")]
+                                      )
                                     ],
                                     1
                                   )
