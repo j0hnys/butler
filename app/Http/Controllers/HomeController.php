@@ -23,6 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $url = url('/');
+        $url = str_replace('public', 'public_backend', $url);
+        return redirect()->to($url);
     }
 }

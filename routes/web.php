@@ -18,6 +18,10 @@ Route::get('/default', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+});
 
 Route::get('/project_get_with_definitions', 'Trident\ProjectController@getWithDefinitions');
 Route::get('/project_get_with_definitions_entities', 'Trident\ProjectController@getWithDefinitionsEntities');
