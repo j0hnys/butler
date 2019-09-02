@@ -1,7 +1,7 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "An Architecture Manager for laravel applications made with Tridend and Vista",
+    "description": "An Architecture Manager for laravel applications made with Trident and Vista",
     "keywords": [
         "framework",
         "laravel"
