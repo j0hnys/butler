@@ -106,4 +106,19 @@ class EntityPolicy
 
 
 
+
+    /**
+     * Determine whether the user can permanently updateResource the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\EntityRepository $Entity
+     * @return mixed
+     */
+    public function updateResource(User $user, Entity $entity, int $id)
+    {
+        return $user->id == $entity->findOrFail($id)->user_id;
+    }
+
+
+
 }

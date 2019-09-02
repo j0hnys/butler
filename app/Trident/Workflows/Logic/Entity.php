@@ -12,6 +12,7 @@ use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructStoreEntity;
 use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructUpdateEntity;
 use App\Trident\Workflows\Schemas\Logic\Entity\Resources\EntityResource;
 use App\Trident\Workflows\Schemas\Logic\Entity\Resources\EntityResourceCollection;
+use App\Trident\Workflows\Schemas\Logic\Entity\Resources\EntityupdateResourceResource;
 
 class Entity implements EntityInterface
 {
@@ -159,6 +160,27 @@ class Entity implements EntityInterface
         );
 
         return true;
+    }
+
+
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function updateResource($request_struct, $id)
+    {   
+        $model = $this->entity_repository->with(['project','definition'])->find($id);
+
+        $this->entity_business->updateResource(
+            $model->getAttributes(),
+            $model->getRelations()['project']->getAttributes(),
+            $model->getRelations()['definition']->getAttributes(),
+        );
+
+        return new EntityupdateResourceResource( $model );
     }
 
 

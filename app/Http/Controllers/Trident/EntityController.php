@@ -13,6 +13,8 @@ use App\Trident\Interfaces\Workflows\Repositories\EntityRepositoryInterface as E
 use App\Trident\Workflows\Validations\EntitygenerateRequest;
 use App\Trident\Workflows\Validations\EntityStoreRequest;
 use App\Trident\Workflows\Validations\EntityUpdateRequest;
+use App\Trident\Workflows\Validations\EntityUpdateResourceRequest;
+use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructUpdateResourceEntity;
 use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructIndexEntity;
 use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructStoreEntity;
 use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructUpdateEntity;
@@ -157,6 +159,23 @@ class EntityController extends Controller
         $this->authorize('generate', [$this->entity_repository,$id]);
         $request_all = $request->all();
         return response()->json( $this->entity_workflow->generate($request_all, $id) );
+    }
+
+
+
+
+    /**
+     * *enter description here.*
+     *
+     * @param  EntityupdateResourceRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function updateResource(EntityUpdateResourceRequest $request,$id)
+    {   
+        $this->authorize('updateResource', [$this->entity_repository,$id]);
+        $structupdateResourceEntity = new StructUpdateResourceEntity($request->all());    
+        $entityupdateResourceResource = $this->entity_workflow->updateResource( $structupdateResourceEntity ,$id);
+        return response()->json( $entityupdateResourceResource );
     }
 
 

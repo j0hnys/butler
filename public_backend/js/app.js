@@ -3143,7 +3143,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         title: 'Action',
         key: 'action',
-        maxWidth: 200,
+        maxWidth: 270,
+        minWidth: 270,
         align: 'center',
         render: function render(h, params) {
           var row = params.row;
@@ -3183,12 +3184,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               type: 'success',
               size: 'small'
             },
+            style: {
+              marginRight: '5px'
+            },
             on: {
               click: function click() {
                 _this.ajax().generate(row.id);
               }
             }
-          }, 'Generate')]);
+          }, 'Generate'), h('Button', {
+            props: {
+              type: 'warning',
+              size: 'small'
+            },
+            on: {
+              click: function click() {
+                _this.ajax().updateResource(row.id);
+              }
+            }
+          }, 'Update')]);
         }
       }],
       data: []
@@ -3228,6 +3242,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         generate: function generate(id) {
           window.axios.get("/butler/public_backend" + '/entity_generate/' + id).then(function (_ref3) {
             var data = _ref3.data;
+            self.$Message.success('Success!'); // window.location.reload();
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        },
+        updateResource: function updateResource(id) {
+          window.axios.get("/butler/public_backend" + '/entity_update/' + id).then(function (_ref4) {
+            var data = _ref4.data;
             self.$Message.success('Success!'); // window.location.reload();
           })["catch"](function (error) {
             console.log(error);

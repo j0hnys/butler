@@ -81,7 +81,8 @@
                     {
                         title: 'Action',
                         key: 'action',
-                        maxWidth: 200,
+                        maxWidth: 270,
+                        minWidth: 270,
                         align: 'center',
                         render: (h, params) => {
                             var row = params.row;
@@ -120,12 +121,26 @@
                                         type: 'success',
                                         size: 'small'
                                     },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
                                     on: {
                                         click: () => {
                                             this.ajax().generate(row.id);
                                         }
                                     }
-                                }, 'Generate')
+                                }, 'Generate'),
+                                h('Button', {
+                                    props: {
+                                        type: 'warning',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.ajax().updateResource(row.id);
+                                        }
+                                    }
+                                }, 'Update')
                             ]);
                         }
                     }
@@ -166,6 +181,14 @@
                     },
                     generate(id) {
                         window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_generate/'+id ).then(({ data }) => {
+                            self.$Message.success('Success!');
+                            // window.location.reload();
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    },
+                    updateResource(id) {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_update/'+id ).then(({ data }) => {
                             self.$Message.success('Success!');
                             // window.location.reload();
                         }).catch(error => {
