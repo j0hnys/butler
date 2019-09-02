@@ -14,6 +14,8 @@ use App\Trident\Workflows\Validations\ProjectgetWithDefinitionsRequest;
 use App\Trident\Workflows\Validations\ProjectgetWithDefinitionsEntitiesRequest;
 use App\Trident\Workflows\Validations\ProjectStoreRequest;
 use App\Trident\Workflows\Validations\ProjectUpdateRequest;
+use App\Trident\Workflows\Validations\ProjectMakeRequest;
+use App\Trident\Workflows\Schemas\Logic\Project\Typed\StructMakeProject;
 use App\Trident\Workflows\Schemas\Logic\Project\Typed\StructIndexProject;
 use App\Trident\Workflows\Schemas\Logic\Project\Typed\StructStoreProject;
 use App\Trident\Workflows\Schemas\Logic\Project\Typed\StructUpdateProject;
@@ -166,6 +168,21 @@ class ProjectController extends Controller
     {
         $this->authorize('getWithDefinitionsEntities', [$this->project_repository]);
         return response()->json( $this->project_workflow->getWithDefinitionsEntities($request) );
+    }
+    
+
+    /**
+     * *enter description here.*
+     *
+     * @param  ProjectmakeRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function make(ProjectMakeRequest $request,$id)
+    {   
+        $this->authorize('make', [$this->project_repository,$id]);
+        $structmakeProject = new StructMakeProject($request->all());    
+        $projectmakeResource = $this->project_workflow->make( $structmakeProject ,$id);
+        return response()->json( $projectmakeResource );
     }
 
 

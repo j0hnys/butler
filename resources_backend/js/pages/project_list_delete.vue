@@ -81,12 +81,14 @@
                     {
                         title: 'db_connection_name',
                         key: 'db_connection_name',
-                        minWidth: 100,
+                        minWidth: 200,
+                        maxWidth: 300,
                     },
                     {
                         title: 'Action',
                         key: 'action',
-                        width: 150,
+                        maxwidth: 250,
+                        minwidth: 250,
                         align: 'center',
                         render: (h, params) => {
                             var row = params.row;
@@ -111,12 +113,26 @@
                                         type: 'error',
                                         size: 'small'
                                     },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
                                     on: {
                                         click: () => {
                                             this.ajax().delete(row.id);
                                         }
                                     }
-                                }, 'Delete')
+                                }, 'Delete'),
+                                h('Button', {
+                                    props: {
+                                        type: 'success',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.ajax().make(row.id);
+                                        }
+                                    }
+                                }, 'Make'),
                             ]);
                         }
                     }
@@ -154,7 +170,28 @@
                         }).catch(error => {
                             console.log(error);
                         });
-                    }
+                    },
+                    make(id) {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_make/'+id ).then(({ data }) => {
+                            // self.$Message.success('Success!');
+                            self.$Notice.success({
+                                render: h => {
+                                    return h('pre', {
+                                        style: {
+                                            overflow: 'hidden'
+                                        },
+                                    }, [
+                                        'go to your new project and run:\n 1. `composer update`\n 2. `npm install`'
+                                    ]);
+                                },
+                                duration: 10000
+                            });
+                            // window.location.reload();
+                        }).catch(error => {
+                            console.log(error);
+                            self.$Message.error('could not make, see network');
+                        });
+                    },
                 }
             },
             on_create_button_clicked() {

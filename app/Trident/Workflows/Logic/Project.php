@@ -12,6 +12,7 @@ use App\Trident\Workflows\Schemas\Logic\Project\Typed\StructStoreProject;
 use App\Trident\Workflows\Schemas\Logic\Project\Typed\StructUpdateProject;
 use App\Trident\Workflows\Schemas\Logic\Project\Resources\ProjectResource;
 use App\Trident\Workflows\Schemas\Logic\Project\Resources\ProjectResourceCollection;
+use App\Trident\Workflows\Schemas\Logic\Project\Resources\ProjectmakeResource;
 
 class Project implements ProjectInterface
 {
@@ -168,6 +169,26 @@ class Project implements ProjectInterface
         $model = $this->project_repository->with(['definitions','definitions.entities'])->get();
 
         return $model;
+    }
+
+
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function make($request_struct, $id)
+    {   
+        $data = $request_struct->getFilledValues();
+        $model = $this->project_repository->find($id);
+        
+        $this->project_business->make(
+            $model->getAttributes()
+        );
+
+        return new ProjectmakeResource( $model );
     }
 
 

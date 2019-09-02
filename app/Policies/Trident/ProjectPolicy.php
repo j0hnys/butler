@@ -121,4 +121,19 @@ class ProjectPolicy
 
 
 
+
+    /**
+     * Determine whether the user can permanently make the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\ProjectRepository $Project
+     * @return mixed
+     */
+    public function make(User $user, Project $project, int $id)
+    {
+        return $user->id == $project->findOrFail($id)->user_id;
+    }
+
+
+
 }

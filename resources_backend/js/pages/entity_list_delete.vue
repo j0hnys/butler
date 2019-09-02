@@ -185,6 +185,7 @@
                             // window.location.reload();
                         }).catch(error => {
                             console.log(error);
+                            self.$Message.error('could not generate, see network');
                         });
                     },
                     updateResource(id) {
@@ -193,6 +194,7 @@
                             // window.location.reload();
                         }).catch(error => {
                             console.log(error);
+                            self.$Message.error('could not update, see network');
                         });
                     }
                 }

@@ -3245,6 +3245,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             self.$Message.success('Success!'); // window.location.reload();
           })["catch"](function (error) {
             console.log(error);
+            self.$Message.error('could not generate, see network');
           });
         },
         updateResource: function updateResource(id) {
@@ -3253,6 +3254,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             self.$Message.success('Success!'); // window.location.reload();
           })["catch"](function (error) {
             console.log(error);
+            self.$Message.error('could not update, see network');
           });
         }
       };
@@ -4010,11 +4012,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         title: 'db_connection_name',
         key: 'db_connection_name',
-        minWidth: 100
+        minWidth: 200,
+        maxWidth: 300
       }, {
         title: 'Action',
         key: 'action',
-        width: 150,
+        maxwidth: 250,
+        minwidth: 250,
         align: 'center',
         render: function render(h, params) {
           var row = params.row;
@@ -4041,12 +4045,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               type: 'error',
               size: 'small'
             },
+            style: {
+              marginRight: '5px'
+            },
             on: {
               click: function click() {
                 _this.ajax()["delete"](row.id);
               }
             }
-          }, 'Delete')]);
+          }, 'Delete'), h('Button', {
+            props: {
+              type: 'success',
+              size: 'small'
+            },
+            on: {
+              click: function click() {
+                _this.ajax().make(row.id);
+              }
+            }
+          }, 'Make')]);
         }
       }],
       data: []
@@ -4081,6 +4098,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             window.location.reload();
           })["catch"](function (error) {
             console.log(error);
+          });
+        },
+        make: function make(id) {
+          window.axios.get("/butler/public_backend" + '/project_make/' + id).then(function (_ref3) {
+            var data = _ref3.data;
+            // self.$Message.success('Success!');
+            self.$Notice.success({
+              render: function render(h) {
+                return h('pre', {
+                  style: {
+                    overflow: 'hidden'
+                  }
+                }, ['go to your new project and run:\n 1. `composer update`\n 2. `npm install`']);
+              },
+              duration: 10000
+            }); // window.location.reload();
+          })["catch"](function (error) {
+            console.log(error);
+            self.$Message.error('could not make, see network');
           });
         }
       };
