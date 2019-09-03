@@ -42,21 +42,21 @@ class Definition implements DefinitionInterface
         $schema_hierarchy = (new SchemaHierarchy())->get();
         $request_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Resource'][1]);
         $request_schema_definition = app()->make($request_schema_namespace);
-        $request_schema = $request_schema_definition->getFilledValues();
+        $request_schema = $request_schema_definition->get();
 
         $response_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Resource'][2]);
         $response_schema_definition = app()->make($response_schema_namespace);
-        $response_schema = $response_schema_definition->getFilledValues();
+        $response_schema = $response_schema_definition->get();
 
         $presentation_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Presentation'][0]);
         $presentation_schema_definition = app()->make($presentation_schema_namespace);
-        $presentation_schema = $presentation_schema_definition->getFilledValues();
-
+        $presentation_schema = $presentation_schema_definition->get();
+        
 
         //request schema
         $request_table_data = [];
         foreach ($columns as $column) {
-            $tmp_type = $request_schema['data']['{{entity_property}}']['type'];
+            $tmp_type = $request_schema['schema']['data']['{{entity_property}}']['type'];
             if ($column->getType() instanceof IntegerType) {
                 $tmp_type = 'T::integer()';
             } else if ($column->getType() instanceof TextType) {
@@ -70,15 +70,15 @@ class Definition implements DefinitionInterface
             $request_table_data []= [
                 'name' => $column->getName(),
                 'type' => $tmp_type,
-                'validation' => json_encode($request_schema['data']['{{entity_property}}']['validation']),
-                'fillable' => $request_schema['data']['{{entity_property}}']['fillable'],
+                'validation' => json_encode($request_schema['schema']['data']['{{entity_property}}']['validation']),
+                'fillable' => $request_schema['schema']['data']['{{entity_property}}']['fillable'],
             ];
         }
 
         //response schema
         $response_table_data = [];
         foreach ($columns as $column) {
-            $tmp_type = $response_schema['data']['{{entity_property}}']['resource'];
+            $tmp_type = $response_schema['schema']['data']['{{entity_property}}']['resource'];
 
             $response_table_data []= [
                 'name' => $column->getName(),

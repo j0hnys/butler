@@ -2,11 +2,10 @@
 
 namespace App\Trident\Base\Typed\Definitions;
 
-use App\Trident\Base\Typed\Structs\StructOptionalValues;
 use J0hnys\Typed\T;
 use J0hnys\Typed\Struct;
 
-class Definition extends StructOptionalValues
+class Definition
 {
 
     public function check($data = [], $haystack = null)

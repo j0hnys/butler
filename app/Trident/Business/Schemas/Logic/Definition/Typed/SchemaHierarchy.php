@@ -24,18 +24,6 @@ class SchemaHierarchy extends Definition
     ];
 
     const entity_name = 'T::string()';
-
-    public function __construct($data = [])
-    {
-        $this->types = [
-            'trident-vista' => T::array(),
-        ];
-        
-        parent::__construct($this->types);
-
-        $this->set(self::hierarchy);
-    }
     
-
 }
 

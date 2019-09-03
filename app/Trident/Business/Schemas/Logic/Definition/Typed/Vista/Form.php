@@ -67,20 +67,7 @@ class Form extends Definition
     const attributes_type_name = [
         'string', 'number'
     ];
-
-
-    public function __construct($data = [])
-    {
-        $this->types = [
-            'ajax' => T::array(),
-            'presentation' => T::array(),
-        ];
-        
-        parent::__construct($this->types);
-
-        $this->set(self::schema);
-    }
-
+    
 
 }
 

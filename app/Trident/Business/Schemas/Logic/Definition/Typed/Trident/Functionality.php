@@ -12,18 +12,7 @@ class Functionality extends Definition
             "db_name" => "T::string()"
         ],
     ];
-
-    public function __construct($data = [])
-    {
-        $this->types = [
-            'model' => T::array(),
-        ];
-        
-        parent::__construct($this->types);
-
-        $this->set(self::schema);
-    }
-
+    
     
 }
 

@@ -21,19 +21,7 @@ class Response extends Definition
     ];
 
     const entity_property = 'T::string()';
-
-
-    public function __construct()
-    {
-        $this->types = [
-            'type' => T::string(),
-            'data' => T::array(),
-        ];
-        
-        parent::__construct($this->types);
-
-        $this->set(self::schema);
-    }
+    
     
 }
 

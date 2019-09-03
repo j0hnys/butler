@@ -29,19 +29,6 @@ class Request extends Definition
 
     const laravel_validation_rule_string = 'T::string()';
 
-
-    public function __construct($data = [])
-    {
-        $this->types = [
-            'type' => T::string(),
-            'data' => T::array(),
-        ];
-        
-        parent::__construct($this->types);
-
-        $this->set(self::schema);
-    }
-
     
 }
 
