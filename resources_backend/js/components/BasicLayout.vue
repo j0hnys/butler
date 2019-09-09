@@ -48,59 +48,60 @@
 <template>
     <div class="layout">
         <Layout :style="{minHeight: '100vh'}">
-            <Sider collapsible :collapsed-width="78" v-model="isCollapsed">
-                <h1 :style="{color: 'white', position: 'relative', top: '5px', left: '28px'}">{{menu_logo}}</h1>
-                <Menu ref="main_menu" @on-select="on_main_menu_item_clicked" :active-name="active_menu_name" theme="dark" width="auto" :class="menuitemClasses">
-                    <MenuItem v-for="menu_item in this.$store.getters['components/BasicLayout/navigation']()['main_menu']" v-bind:data="menu_item" v-bind:key="menu_item.name" v-if="!menu_item.children" :name="menu_item.name">
-                        <Icon :type="menu_item.icon_type"></Icon>
-                        <router-link :to="menu_item.redirect_url"><span v-if="!isCollapsed" :style="{color: 'white', width: '80%'}">{{menu_item.text}}</span></router-link>
-                    </MenuItem>
-
-                    <Submenu v-for="menu_item in this.$store.getters['components/BasicLayout/navigation']()['main_menu']" v-bind:data="menu_item" v-bind:key="menu_item.name" v-if="menu_item.children" :name="menu_item.name">
-                        <template slot="title">
-                            <Icon :type="menu_item.icon_type"></Icon>
-                            <router-link :to="menu_item.redirect_url"><span v-if="!isCollapsed" :style="{color: 'white', width: '65%'}">{{menu_item.text}}</span></router-link>
-                        </template>
-                        <MenuGroup v-for="submenu_group in menu_item.children" v-bind:data="submenu_group" v-bind:key="submenu_group.name" :title="submenu_group.text">
-                            <MenuItem v-for="submenu_group_item in submenu_group.children" v-bind:data="submenu_group_item" v-bind:key="submenu_group_item.name" :name="submenu_group_item.name">
-                                <router-link :to="submenu_group_item.redirect_url"><span v-if="!isCollapsed" :style="{color: 'white', width: '100%'}">{{submenu_group_item.text}}</span></router-link>
-                            </MenuItem>
-                        </MenuGroup>
-                    </Submenu>
-
-                </Menu>
-            </Sider>
+            <Header :style="{'padding': '0px'}">
+                <Row> 
+                    <Col :xs="21" :sm="21" :md="22" :lg="22">
+                        <span :style="{'font-size': '3em', 'color': 'white', 'margin-left': '20px'}">{{menu_logo}}</span>
+                        <!-- <h1 :style="{color: 'white', position: 'relative', top: '5px', left: '28px'}">{{menu_logo}}</h1> -->
+                    </Col>
+                    <Col :xs="3" :sm="3" :md="2" :lg="2">
+                        <Col span="12">
+                            <Poptip
+                                confirm
+                                title="Want to see all notifications?"
+                                ok-text="yes"
+                                cancel-text="no">
+                                <Badge :count="0" :offset="[15,0]">
+                                    <Icon :style="{'color': 'white'}" type="ios-notifications-outline" size="26"></Icon>
+                                </Badge>
+                            </Poptip>
+                        </Col>
+                        <Col span="12">
+                            <Dropdown @on-click="onLogoutButtonClicked">
+                                <Avatar icon="ios-person" size="large" />
+                                <DropdownMenu slot="list">
+                                    <!-- <DropdownItem>Account</DropdownItem>
+                                    <DropdownItem>Settings</DropdownItem> -->
+                                    <DropdownItem name="logout">Logout</DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                        </Col>
+                    </Col>
+                </Row>
+            </Header>
             <Layout>
-                <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)', padding: '0px 10px'}">
-                    <Row> 
-                        <Col :xs="21" :sm="21" :md="22" :lg="22">
-                            <span :style="{'font-size': '2em'}">{{page_title}}</span>
-                        </Col>
-                        <Col :xs="3" :sm="3" :md="2" :lg="2">
-                            <Col span="12">
-                                <Poptip
-                                    confirm
-                                    title="Want to see all notifications?"
-                                    ok-text="yes"
-                                    cancel-text="no">
-                                    <Badge :count="0" :offset="[15,0]">
-                                        <Icon type="ios-notifications-outline" size="26"></Icon>
-                                    </Badge>
-                                </Poptip>
-                            </Col>
-                            <Col span="12">
-                                <Dropdown @on-click="onLogoutButtonClicked">
-                                    <Avatar icon="ios-person" size="large" />
-                                    <DropdownMenu slot="list">
-                                        <!-- <DropdownItem>Account</DropdownItem>
-                                        <DropdownItem>Settings</DropdownItem> -->
-                                        <DropdownItem name="logout">Logout</DropdownItem>
-                                    </DropdownMenu>
-                                </Dropdown>
-                            </Col>
-                        </Col>
-                    </Row>
-                </Header>
+                <Sider collapsible :collapsed-width="78" v-model="isCollapsed">
+                    <Menu ref="main_menu" @on-select="on_main_menu_item_clicked" :active-name="active_menu_name" theme="dark" width="auto" :class="menuitemClasses">
+                        <MenuItem v-for="menu_item in this.$store.getters['components/BasicLayout/navigation']()['main_menu']" v-bind:data="menu_item" v-bind:key="menu_item.name" v-if="!menu_item.children" :name="menu_item.name">
+                            <Icon :type="menu_item.icon_type"></Icon>
+                            <router-link :to="menu_item.redirect_url"><span v-if="!isCollapsed" :style="{color: 'white', width: '80%'}">{{menu_item.text}}</span></router-link>
+                        </MenuItem>
+
+                        <Submenu v-for="menu_item in this.$store.getters['components/BasicLayout/navigation']()['main_menu']" v-bind:data="menu_item" v-bind:key="menu_item.name" v-if="menu_item.children" :name="menu_item.name">
+                            <template slot="title">
+                                <Icon :type="menu_item.icon_type"></Icon>
+                                <router-link :to="menu_item.redirect_url"><span v-if="!isCollapsed" :style="{color: 'white', width: '65%'}">{{menu_item.text}}</span></router-link>
+                            </template>
+                            <MenuGroup v-for="submenu_group in menu_item.children" v-bind:data="submenu_group" v-bind:key="submenu_group.name" :title="submenu_group.text">
+                                <MenuItem v-for="submenu_group_item in submenu_group.children" v-bind:data="submenu_group_item" v-bind:key="submenu_group_item.name" :name="submenu_group_item.name">
+                                    <router-link :to="submenu_group_item.redirect_url"><span v-if="!isCollapsed" :style="{color: 'white', width: '100%'}">{{submenu_group_item.text}}</span></router-link>
+                                </MenuItem>
+                            </MenuGroup>
+                        </Submenu>
+
+                    </Menu>
+                </Sider>
+                
                 <Content :style="{padding: '0 16px 16px'}">
                     <Breadcrumb :style="{margin: '16px 0'}">
                         <BreadcrumbItem v-for="breadcrumb in this.$store.state.components.BasicLayout.breadcrumbs" v-bind:data="breadcrumb" v-bind:key="breadcrumb.text">{{breadcrumb.text}}</BreadcrumbItem>
@@ -177,9 +178,9 @@
                 ]
             },
             menu_logo() {
-                if (this.isCollapsed) {
-                    return this.app_title.collapsed_menu;
-                }
+                // if (this.isCollapsed) {
+                //     return this.app_title.collapsed_menu;
+                // }
                 return this.app_title.expanded_menu;
             },
         },

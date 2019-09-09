@@ -2019,6 +2019,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var state = {
@@ -2050,10 +2051,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return ['menu-item', this.isCollapsed ? 'collapsed-menu' : ''];
     },
     menu_logo: function menu_logo() {
-      if (this.isCollapsed) {
-        return this.app_title.collapsed_menu;
-      }
-
+      // if (this.isCollapsed) {
+      //     return this.app_title.collapsed_menu;
+      // }
       return this.app_title.expanded_menu;
     }
   },
@@ -86485,102 +86485,150 @@ var render = function() {
         { style: { minHeight: "100vh" } },
         [
           _c(
-            "Sider",
-            {
-              attrs: { collapsible: "", "collapsed-width": 78 },
-              model: {
-                value: _vm.isCollapsed,
-                callback: function($$v) {
-                  _vm.isCollapsed = $$v
-                },
-                expression: "isCollapsed"
-              }
-            },
+            "Header",
+            { style: { padding: "0px" } },
             [
               _c(
-                "h1",
-                {
-                  style: {
-                    color: "white",
-                    position: "relative",
-                    top: "5px",
-                    left: "28px"
-                  }
-                },
-                [_vm._v(_vm._s(_vm.menu_logo))]
-              ),
-              _vm._v(" "),
-              _c(
-                "Menu",
-                {
-                  ref: "main_menu",
-                  class: _vm.menuitemClasses,
-                  attrs: {
-                    "active-name": _vm.active_menu_name,
-                    theme: "dark",
-                    width: "auto"
-                  },
-                  on: { "on-select": _vm.on_main_menu_item_clicked }
-                },
+                "Row",
                 [
-                  _vm._l(
-                    this.$store.getters["components/BasicLayout/navigation"]()[
-                      "main_menu"
-                    ],
-                    function(menu_item) {
-                      return !menu_item.children
-                        ? _c(
-                            "MenuItem",
+                  _c("Col", { attrs: { xs: 21, sm: 21, md: 22, lg: 22 } }, [
+                    _c(
+                      "span",
+                      {
+                        style: {
+                          "font-size": "3em",
+                          color: "white",
+                          "margin-left": "20px"
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.menu_logo))]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "Col",
+                    { attrs: { xs: 3, sm: 3, md: 2, lg: 2 } },
+                    [
+                      _c(
+                        "Col",
+                        { attrs: { span: "12" } },
+                        [
+                          _c(
+                            "Poptip",
                             {
-                              key: menu_item.name,
-                              attrs: { data: menu_item, name: menu_item.name }
+                              attrs: {
+                                confirm: "",
+                                title: "Want to see all notifications?",
+                                "ok-text": "yes",
+                                "cancel-text": "no"
+                              }
                             },
                             [
-                              _c("Icon", {
-                                attrs: { type: menu_item.icon_type }
-                              }),
-                              _vm._v(" "),
                               _c(
-                                "router-link",
-                                { attrs: { to: menu_item.redirect_url } },
+                                "Badge",
+                                { attrs: { count: 0, offset: [15, 0] } },
                                 [
-                                  !_vm.isCollapsed
-                                    ? _c(
-                                        "span",
-                                        {
-                                          style: {
-                                            color: "white",
-                                            width: "80%"
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(menu_item.text))]
-                                      )
-                                    : _vm._e()
-                                ]
+                                  _c("Icon", {
+                                    style: { color: "white" },
+                                    attrs: {
+                                      type: "ios-notifications-outline",
+                                      size: "26"
+                                    }
+                                  })
+                                ],
+                                1
                               )
                             ],
                             1
                           )
-                        : _vm._e()
-                    }
-                  ),
-                  _vm._v(" "),
-                  _vm._l(
-                    this.$store.getters["components/BasicLayout/navigation"]()[
-                      "main_menu"
-                    ],
-                    function(menu_item) {
-                      return menu_item.children
-                        ? _c(
-                            "Submenu",
-                            {
-                              key: menu_item.name,
-                              attrs: { data: menu_item, name: menu_item.name }
-                            },
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "Col",
+                        { attrs: { span: "12" } },
+                        [
+                          _c(
+                            "Dropdown",
+                            { on: { "on-click": _vm.onLogoutButtonClicked } },
                             [
+                              _c("Avatar", {
+                                attrs: { icon: "ios-person", size: "large" }
+                              }),
+                              _vm._v(" "),
                               _c(
-                                "template",
-                                { slot: "title" },
+                                "DropdownMenu",
+                                { attrs: { slot: "list" }, slot: "list" },
+                                [
+                                  _c(
+                                    "DropdownItem",
+                                    { attrs: { name: "logout" } },
+                                    [_vm._v("Logout")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "Layout",
+            [
+              _c(
+                "Sider",
+                {
+                  attrs: { collapsible: "", "collapsed-width": 78 },
+                  model: {
+                    value: _vm.isCollapsed,
+                    callback: function($$v) {
+                      _vm.isCollapsed = $$v
+                    },
+                    expression: "isCollapsed"
+                  }
+                },
+                [
+                  _c(
+                    "Menu",
+                    {
+                      ref: "main_menu",
+                      class: _vm.menuitemClasses,
+                      attrs: {
+                        "active-name": _vm.active_menu_name,
+                        theme: "dark",
+                        width: "auto"
+                      },
+                      on: { "on-select": _vm.on_main_menu_item_clicked }
+                    },
+                    [
+                      _vm._l(
+                        this.$store.getters[
+                          "components/BasicLayout/navigation"
+                        ]()["main_menu"],
+                        function(menu_item) {
+                          return !menu_item.children
+                            ? _c(
+                                "MenuItem",
+                                {
+                                  key: menu_item.name,
+                                  attrs: {
+                                    data: menu_item,
+                                    name: menu_item.name
+                                  }
+                                },
                                 [
                                   _c("Icon", {
                                     attrs: { type: menu_item.icon_type }
@@ -86596,7 +86644,7 @@ var render = function() {
                                             {
                                               style: {
                                                 color: "white",
-                                                width: "65%"
+                                                width: "80%"
                                               }
                                             },
                                             [_vm._v(_vm._s(menu_item.text))]
@@ -86606,180 +86654,128 @@ var render = function() {
                                   )
                                 ],
                                 1
-                              ),
-                              _vm._v(" "),
-                              _vm._l(menu_item.children, function(
-                                submenu_group
-                              ) {
-                                return _c(
-                                  "MenuGroup",
-                                  {
-                                    key: submenu_group.name,
-                                    attrs: {
-                                      data: submenu_group,
-                                      title: submenu_group.text
-                                    }
-                                  },
-                                  _vm._l(submenu_group.children, function(
-                                    submenu_group_item
-                                  ) {
-                                    return _c(
-                                      "MenuItem",
-                                      {
-                                        key: submenu_group_item.name,
-                                        attrs: {
-                                          data: submenu_group_item,
-                                          name: submenu_group_item.name
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "router-link",
-                                          {
-                                            attrs: {
-                                              to:
-                                                submenu_group_item.redirect_url
-                                            }
-                                          },
-                                          [
-                                            !_vm.isCollapsed
-                                              ? _c(
-                                                  "span",
-                                                  {
-                                                    style: {
-                                                      color: "white",
-                                                      width: "100%"
-                                                    }
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        submenu_group_item.text
-                                                      )
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  }),
-                                  1
-                                )
-                              })
-                            ],
-                            2
-                          )
-                        : _vm._e()
-                    }
-                  )
-                ],
-                2
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "Layout",
-            [
-              _c(
-                "Header",
-                {
-                  style: {
-                    background: "#fff",
-                    boxShadow: "0 2px 3px 2px rgba(0,0,0,.1)",
-                    padding: "0px 10px"
-                  }
-                },
-                [
-                  _c(
-                    "Row",
-                    [
-                      _c("Col", { attrs: { xs: 21, sm: 21, md: 22, lg: 22 } }, [
-                        _c("span", { style: { "font-size": "2em" } }, [
-                          _vm._v(_vm._s(_vm.page_title))
-                        ])
-                      ]),
+                              )
+                            : _vm._e()
+                        }
+                      ),
                       _vm._v(" "),
-                      _c(
-                        "Col",
-                        { attrs: { xs: 3, sm: 3, md: 2, lg: 2 } },
-                        [
-                          _c(
-                            "Col",
-                            { attrs: { span: "12" } },
-                            [
-                              _c(
-                                "Poptip",
+                      _vm._l(
+                        this.$store.getters[
+                          "components/BasicLayout/navigation"
+                        ]()["main_menu"],
+                        function(menu_item) {
+                          return menu_item.children
+                            ? _c(
+                                "Submenu",
                                 {
+                                  key: menu_item.name,
                                   attrs: {
-                                    confirm: "",
-                                    title: "Want to see all notifications?",
-                                    "ok-text": "yes",
-                                    "cancel-text": "no"
+                                    data: menu_item,
+                                    name: menu_item.name
                                   }
                                 },
                                 [
                                   _c(
-                                    "Badge",
-                                    { attrs: { count: 0, offset: [15, 0] } },
+                                    "template",
+                                    { slot: "title" },
                                     [
                                       _c("Icon", {
-                                        attrs: {
-                                          type: "ios-notifications-outline",
-                                          size: "26"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "Col",
-                            { attrs: { span: "12" } },
-                            [
-                              _c(
-                                "Dropdown",
-                                {
-                                  on: { "on-click": _vm.onLogoutButtonClicked }
-                                },
-                                [
-                                  _c("Avatar", {
-                                    attrs: { icon: "ios-person", size: "large" }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "DropdownMenu",
-                                    { attrs: { slot: "list" }, slot: "list" },
-                                    [
+                                        attrs: { type: menu_item.icon_type }
+                                      }),
+                                      _vm._v(" "),
                                       _c(
-                                        "DropdownItem",
-                                        { attrs: { name: "logout" } },
-                                        [_vm._v("Logout")]
+                                        "router-link",
+                                        {
+                                          attrs: { to: menu_item.redirect_url }
+                                        },
+                                        [
+                                          !_vm.isCollapsed
+                                            ? _c(
+                                                "span",
+                                                {
+                                                  style: {
+                                                    color: "white",
+                                                    width: "65%"
+                                                  }
+                                                },
+                                                [_vm._v(_vm._s(menu_item.text))]
+                                              )
+                                            : _vm._e()
+                                        ]
                                       )
                                     ],
                                     1
-                                  )
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._l(menu_item.children, function(
+                                    submenu_group
+                                  ) {
+                                    return _c(
+                                      "MenuGroup",
+                                      {
+                                        key: submenu_group.name,
+                                        attrs: {
+                                          data: submenu_group,
+                                          title: submenu_group.text
+                                        }
+                                      },
+                                      _vm._l(submenu_group.children, function(
+                                        submenu_group_item
+                                      ) {
+                                        return _c(
+                                          "MenuItem",
+                                          {
+                                            key: submenu_group_item.name,
+                                            attrs: {
+                                              data: submenu_group_item,
+                                              name: submenu_group_item.name
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "router-link",
+                                              {
+                                                attrs: {
+                                                  to:
+                                                    submenu_group_item.redirect_url
+                                                }
+                                              },
+                                              [
+                                                !_vm.isCollapsed
+                                                  ? _c(
+                                                      "span",
+                                                      {
+                                                        style: {
+                                                          color: "white",
+                                                          width: "100%"
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            submenu_group_item.text
+                                                          )
+                                                        )
+                                                      ]
+                                                    )
+                                                  : _vm._e()
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      }),
+                                      1
+                                    )
+                                  })
                                 ],
-                                1
+                                2
                               )
-                            ],
-                            1
-                          )
-                        ],
-                        1
+                            : _vm._e()
+                        }
                       )
                     ],
-                    1
+                    2
                   )
                 ],
                 1
