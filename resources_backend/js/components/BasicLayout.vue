@@ -83,7 +83,7 @@
                                     title="Want to see all notifications?"
                                     ok-text="yes"
                                     cancel-text="no">
-                                    <Badge :count="1" :offset="[15,0]">
+                                    <Badge :count="0" :offset="[15,0]">
                                         <Icon type="ios-notifications-outline" size="26"></Icon>
                                     </Badge>
                                 </Poptip>
@@ -244,11 +244,6 @@
             },
         },
         mounted() {
-            // console.log('basic layout mounted');
-            // console.log({
-            //     'this': this,
-            //     'this.$store.state.BasicLayout.menu_items': this.$store.state.BasicLayout.menu_items,
-            // });
 
             var navigation = this.$store.getters['components/BasicLayout/navigation']();
 
@@ -272,9 +267,9 @@
                 }
             ]);
 
-            console.log({
-                current_menu: current_menu.name,
-            });
+            // console.log({
+            //     current_menu: current_menu.name,
+            // });
 
         },
     }

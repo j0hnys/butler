@@ -181,7 +181,7 @@
                                             overflow: 'hidden'
                                         },
                                     }, [
-                                        'go to your new project and run:\n 1. `composer update`\n 2. `npm install`'
+                                        'go to your new project and run:\n 1. `composer update`\n 2. `npm install`\n 3. `php artisan key:generate`\n 4. edit `.env` if needed'
                                     ]);
                                 },
                                 duration: 10000
