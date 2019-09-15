@@ -1,27 +1,6 @@
 <style scoped>
-    .index {
-        width: 100%;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        text-align: center;
-    }
-        .index h1 {
-            height: 150px;
-        }
-            .index h1 img {
-                height: 100%;
-            }
-        .index h2 {
-            color: #666;
-            margin-bottom: 200px;
-        }
-            .index h2 p {
-                margin: 0 0 50px;
-            }
-    .ivu-row-flex {
-        height: 100%;
+    .demo-spin-icon-load{
+        animation: ani-demo-spin 1s linear infinite;
     }
 </style>
 <template>
@@ -37,7 +16,12 @@
 
                 <Row>
                     <Col>
-                        <Table border :columns="columns" :data="data"></Table>
+                        <Table :loading="table.loading.state" border :columns="columns" :data="data">
+                            <template slot="loading">
+                                <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
+                                {{table.loading.text}}
+                            </template>
+                        </Table>
                      </Col>
                 </Row>
 
@@ -48,6 +32,15 @@
 <script>
     export default {
         data() {
+            var local = {
+                table: {
+                    loading: {
+                        state: false,
+                        text: 'loading',
+                    },
+                }
+            };
+
             var state = {
                 formValidate: {
                 },
@@ -61,6 +54,7 @@
             //
             //component state registration
             return {
+                ...local,
                 ...state,
                 columns: [
                     {
@@ -86,39 +80,6 @@
                         align: 'center',
                         render: (h, params) => {
                             var row = params.row;
-
-                            var generate_button = h('Button', {
-                                props: {
-                                    type: 'success',
-                                    size: 'small'
-                                },
-                                style: {
-                                    marginRight: '5px'
-                                },
-                                on: {
-                                    click: () => {
-                                        generate_button.componentInstance.loading = true;
-                                        this.ajax().generate(row.id).then(() => {
-                                            generate_button.componentInstance.loading = false;
-                                        });
-                                    }
-                                }
-                            }, 'Generate');
-
-                            var update_button = h('Button', {
-                                props: {
-                                    type: 'warning',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        update_button.componentInstance.loading = true;
-                                        this.ajax().updateResource(row.id).then(() => {
-                                            update_button.componentInstance.loading = false;
-                                        });
-                                    }
-                                }
-                            }, 'Update')
 
                             return h('div', [
                                 h('Button', {
@@ -157,8 +118,39 @@
                                         }
                                     }
                                 }, 'Delete'),
-                                generate_button,
-                                update_button
+                                h('Button', {
+                                    props: {
+                                        type: 'success',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.table.loading.state = true;
+                                            this.table.loading.text = 'generating...';
+                                            this.ajax().generate(row.id).then(() => {
+                                                this.table.loading.state = false;
+                                            });
+                                        }
+                                    }
+                                }, 'Generate'),
+                                h('Button', {
+                                    props: {
+                                        type: 'warning',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.table.loading.state = true;
+                                            this.table.loading.text = 'updating...';
+                                            this.ajax().updateResource(row.id).then(() => {
+                                                this.table.loading.state = false;
+                                            });
+                                        }
+                                    }
+                                }, 'Update')
                             ]);
                         }
                     }

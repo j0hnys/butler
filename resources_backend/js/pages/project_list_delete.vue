@@ -1,27 +1,6 @@
 <style scoped>
-    .index {
-        width: 100%;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        text-align: center;
-    }
-        .index h1 {
-            height: 150px;
-        }
-            .index h1 img {
-                height: 100%;
-            }
-        .index h2 {
-            color: #666;
-            margin-bottom: 200px;
-        }
-            .index h2 p {
-                margin: 0 0 50px;
-            }
-    .ivu-row-flex {
-        height: 100%;
+    .demo-spin-icon-load{
+        animation: ani-demo-spin 1s linear infinite;
     }
 </style>
 <template>
@@ -37,7 +16,12 @@
 
                 <Row>
                     <Col>
-                        <Table border :columns="columns" :data="data"></Table>
+                        <Table :loading="table.loading.state" border :columns="columns" :data="data">
+                            <template slot="loading">
+                                <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
+                                {{table.loading.text}}
+                            </template>
+                        </Table>
                      </Col>
                 </Row>
 
@@ -46,8 +30,18 @@
     </div>
 </template>
 <script>
+import { setTimeout } from 'timers';
     export default {
         data() {
+            var local = {
+                table: {
+                    loading: {
+                        state: false,
+                        text: 'loading',
+                    },
+                }
+            };
+
             var state = {
                 formValidate: {
                 },
@@ -61,6 +55,7 @@
             //
             //component state registration
             return {
+                ...local,
                 ...state,
                 columns: [
                     {
@@ -92,23 +87,6 @@
                         align: 'center',
                         render: (h, params) => {
                             var row = params.row;
-                            
-                            var make_button_loading_state = false;
-
-                            var make_button = h('Button', {
-                                props: {
-                                    type: 'success',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        make_button.componentInstance.loading = true;
-                                        this.ajax().make(row.id).then(() => {
-                                            make_button.componentInstance.loading = false;
-                                        });
-                                    }
-                                }
-                            }, 'Make');
 
                             return h('div', [
                                 h('Button', {
@@ -147,7 +125,21 @@
                                         }
                                     }
                                 }, 'Delete'),
-                                make_button,
+                                h('Button', {
+                                    props: {
+                                        type: 'success',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.table.loading.state = true;
+                                            this.table.loading.text = 'making...';
+                                            this.ajax().make(row.id).then(() => {
+                                                this.table.loading.state = false;
+                                            });
+                                        }
+                                    }
+                                }, 'Make'),
                             ]);
                         }
                     }

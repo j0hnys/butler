@@ -3091,26 +3091,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _this = this;
 
+    var local = {
+      table: {
+        loading: {
+          state: false,
+          text: 'loading'
+        }
+      }
+    };
     var state = {
       formValidate: {}
     };
@@ -3121,7 +3113,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     //component state registration
 
 
-    return _objectSpread({}, state, {
+    return _objectSpread({}, local, {}, state, {
       columns: [{
         title: 'project_id',
         key: 'project_id',
@@ -3142,39 +3134,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         align: 'center',
         render: function render(h, params) {
           var row = params.row;
-          var generate_button = h('Button', {
-            props: {
-              type: 'success',
-              size: 'small'
-            },
-            style: {
-              marginRight: '5px'
-            },
-            on: {
-              click: function click() {
-                generate_button.componentInstance.loading = true;
-
-                _this.ajax().generate(row.id).then(function () {
-                  generate_button.componentInstance.loading = false;
-                });
-              }
-            }
-          }, 'Generate');
-          var update_button = h('Button', {
-            props: {
-              type: 'warning',
-              size: 'small'
-            },
-            on: {
-              click: function click() {
-                update_button.componentInstance.loading = true;
-
-                _this.ajax().updateResource(row.id).then(function () {
-                  update_button.componentInstance.loading = false;
-                });
-              }
-            }
-          }, 'Update');
           return h('div', [h('Button', {
             props: {
               type: 'primary',
@@ -3214,7 +3173,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 });
               }
             }
-          }, 'Delete'), generate_button, update_button]);
+          }, 'Delete'), h('Button', {
+            props: {
+              type: 'success',
+              size: 'small'
+            },
+            style: {
+              marginRight: '5px'
+            },
+            on: {
+              click: function click() {
+                _this.table.loading.state = true;
+                _this.table.loading.text = 'generating...';
+
+                _this.ajax().generate(row.id).then(function () {
+                  _this.table.loading.state = false;
+                });
+              }
+            }
+          }, 'Generate'), h('Button', {
+            props: {
+              type: 'warning',
+              size: 'small'
+            },
+            on: {
+              click: function click() {
+                _this.table.loading.state = true;
+                _this.table.loading.text = 'updating...';
+
+                _this.ajax().updateResource(row.id).then(function () {
+                  _this.table.loading.state = false;
+                });
+              }
+            }
+          }, 'Update')]);
         }
       }],
       data: []
@@ -3941,6 +3933,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var timers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! timers */ "./node_modules/timers-browserify/main.js");
+/* harmony import */ var timers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(timers__WEBPACK_IMPORTED_MODULE_0__);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3978,26 +3972,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _this = this;
 
+    var local = {
+      table: {
+        loading: {
+          state: false,
+          text: 'loading'
+        }
+      }
+    };
     var state = {
       formValidate: {}
     };
@@ -4008,7 +3995,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     //component state registration
 
 
-    return _objectSpread({}, state, {
+    return _objectSpread({}, local, {}, state, {
       columns: [{
         title: 'name',
         key: 'name',
@@ -4034,22 +4021,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         align: 'center',
         render: function render(h, params) {
           var row = params.row;
-          var make_button_loading_state = false;
-          var make_button = h('Button', {
-            props: {
-              type: 'success',
-              size: 'small'
-            },
-            on: {
-              click: function click() {
-                make_button.componentInstance.loading = true;
-
-                _this.ajax().make(row.id).then(function () {
-                  make_button.componentInstance.loading = false;
-                });
-              }
-            }
-          }, 'Make');
           return h('div', [h('Button', {
             props: {
               type: 'primary',
@@ -4089,7 +4060,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 });
               }
             }
-          }, 'Delete'), make_button]);
+          }, 'Delete'), h('Button', {
+            props: {
+              type: 'success',
+              size: 'small'
+            },
+            on: {
+              click: function click() {
+                _this.table.loading.state = true;
+                _this.table.loading.text = 'making...';
+
+                _this.ajax().make(row.id).then(function () {
+                  _this.table.loading.state = false;
+                });
+              }
+            }
+          }, 'Make')]);
         }
       }],
       data: []
@@ -4674,26 +4660,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _this = this;
 
+    var local = {
+      table: {
+        loading: {
+          state: false,
+          text: 'loading'
+        }
+      }
+    };
     var state = {
       formValidate: {}
     };
@@ -4704,7 +4682,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     //component state registration
 
 
-    return _objectSpread({}, state, {
+    return _objectSpread({}, local, {}, state, {
       columns: [{
         title: 'project_id',
         key: 'project_id',
@@ -4736,21 +4714,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         align: 'center',
         render: function render(h, params) {
           var row = params.row;
-          var generate_button = h('Button', {
-            props: {
-              type: 'success',
-              size: 'small'
-            },
-            on: {
-              click: function click() {
-                generate_button.componentInstance.loading = true;
-
-                _this.ajax().generate(row.id).then(function () {
-                  generate_button.componentInstance.loading = false;
-                });
-              }
-            }
-          }, 'Generate');
           return h('div', [h('Button', {
             props: {
               type: 'primary',
@@ -4790,7 +4753,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 });
               }
             }
-          }, 'Delete'), generate_button]);
+          }, 'Delete'), h('Button', {
+            props: {
+              type: 'success',
+              size: 'small'
+            },
+            on: {
+              click: function click() {
+                _this.table.loading.state = true;
+                _this.table.loading.text = 'generating...';
+
+                _this.ajax().generate(row.id).then(function () {
+                  _this.table.loading.state = false;
+                });
+              }
+            }
+          }, 'Generate')]);
         }
       }],
       data: []
@@ -9904,7 +9882,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.index[data-v-2077bce4] {\n    width: 100%;\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    text-align: center;\n}\n.index h1[data-v-2077bce4] {\n        height: 150px;\n}\n.index h1 img[data-v-2077bce4] {\n            height: 100%;\n}\n.index h2[data-v-2077bce4] {\n        color: #666;\n        margin-bottom: 200px;\n}\n.index h2 p[data-v-2077bce4] {\n            margin: 0 0 50px;\n}\n.ivu-row-flex[data-v-2077bce4] {\n    height: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.demo-spin-icon-load[data-v-2077bce4]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n", ""]);
 
 // exports
 
@@ -9961,7 +9939,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.index[data-v-11211fb8] {\n    width: 100%;\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    text-align: center;\n}\n.index h1[data-v-11211fb8] {\n        height: 150px;\n}\n.index h1 img[data-v-11211fb8] {\n            height: 100%;\n}\n.index h2[data-v-11211fb8] {\n        color: #666;\n        margin-bottom: 200px;\n}\n.index h2 p[data-v-11211fb8] {\n            margin: 0 0 50px;\n}\n.ivu-row-flex[data-v-11211fb8] {\n    height: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.demo-spin-icon-load[data-v-11211fb8]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n", ""]);
 
 // exports
 
@@ -10018,7 +9996,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.index[data-v-4cadb5d0] {\n    width: 100%;\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    text-align: center;\n}\n.index h1[data-v-4cadb5d0] {\n        height: 150px;\n}\n.index h1 img[data-v-4cadb5d0] {\n            height: 100%;\n}\n.index h2[data-v-4cadb5d0] {\n        color: #666;\n        margin-bottom: 200px;\n}\n.index h2 p[data-v-4cadb5d0] {\n            margin: 0 0 50px;\n}\n.ivu-row-flex[data-v-4cadb5d0] {\n    height: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.demo-spin-icon-load[data-v-4cadb5d0]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n", ""]);
 
 // exports
 
@@ -87596,13 +87574,36 @@ var render = function() {
                   _c(
                     "Col",
                     [
-                      _c("Table", {
-                        attrs: {
-                          border: "",
-                          columns: _vm.columns,
-                          data: _vm.data
-                        }
-                      })
+                      _c(
+                        "Table",
+                        {
+                          attrs: {
+                            loading: _vm.table.loading.state,
+                            border: "",
+                            columns: _vm.columns,
+                            data: _vm.data
+                          }
+                        },
+                        [
+                          _c(
+                            "template",
+                            { slot: "loading" },
+                            [
+                              _c("Icon", {
+                                staticClass: "demo-spin-icon-load",
+                                attrs: { type: "ios-loading", size: "18" }
+                              }),
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.table.loading.text) +
+                                  "\n                        "
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        2
+                      )
                     ],
                     1
                   )
@@ -88423,13 +88424,36 @@ var render = function() {
                   _c(
                     "Col",
                     [
-                      _c("Table", {
-                        attrs: {
-                          border: "",
-                          columns: _vm.columns,
-                          data: _vm.data
-                        }
-                      })
+                      _c(
+                        "Table",
+                        {
+                          attrs: {
+                            loading: _vm.table.loading.state,
+                            border: "",
+                            columns: _vm.columns,
+                            data: _vm.data
+                          }
+                        },
+                        [
+                          _c(
+                            "template",
+                            { slot: "loading" },
+                            [
+                              _c("Icon", {
+                                staticClass: "demo-spin-icon-load",
+                                attrs: { type: "ios-loading", size: "18" }
+                              }),
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.table.loading.text) +
+                                  "\n                        "
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        2
+                      )
                     ],
                     1
                   )
@@ -88863,13 +88887,36 @@ var render = function() {
                   _c(
                     "Col",
                     [
-                      _c("Table", {
-                        attrs: {
-                          border: "",
-                          columns: _vm.columns,
-                          data: _vm.data
-                        }
-                      })
+                      _c(
+                        "Table",
+                        {
+                          attrs: {
+                            loading: _vm.table.loading.state,
+                            border: "",
+                            columns: _vm.columns,
+                            data: _vm.data
+                          }
+                        },
+                        [
+                          _c(
+                            "template",
+                            { slot: "loading" },
+                            [
+                              _c("Icon", {
+                                staticClass: "demo-spin-icon-load",
+                                attrs: { type: "ios-loading", size: "18" }
+                              }),
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.table.loading.text) +
+                                  "\n                        "
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        2
+                      )
                     ],
                     1
                   )
