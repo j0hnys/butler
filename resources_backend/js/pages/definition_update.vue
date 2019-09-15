@@ -41,7 +41,7 @@
                         </Select>
                     </FormItem>
                     <FormItem label="namespace" prop="namespace">
-                        <Input v-model="formValidate.namespace" placeholder="Enter your namespace"></Input>
+                        <Input readonly v-model="formValidate.namespace" placeholder="Enter your namespace"></Input>
                     </FormItem>
 
                     <FormItem>

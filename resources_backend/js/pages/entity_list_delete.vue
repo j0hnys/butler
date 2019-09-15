@@ -87,6 +87,39 @@
                         render: (h, params) => {
                             var row = params.row;
 
+                            var generate_button = h('Button', {
+                                props: {
+                                    type: 'success',
+                                    size: 'small'
+                                },
+                                style: {
+                                    marginRight: '5px'
+                                },
+                                on: {
+                                    click: () => {
+                                        generate_button.componentInstance.loading = true;
+                                        this.ajax().generate(row.id).then(() => {
+                                            generate_button.componentInstance.loading = false;
+                                        });
+                                    }
+                                }
+                            }, 'Generate');
+
+                            var update_button = h('Button', {
+                                props: {
+                                    type: 'warning',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        update_button.componentInstance.loading = true;
+                                        this.ajax().updateResource(row.id).then(() => {
+                                            update_button.componentInstance.loading = false;
+                                        });
+                                    }
+                                }
+                            }, 'Update')
+
                             return h('div', [
                                 h('Button', {
                                     props: {
@@ -112,35 +145,20 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.ajax().delete(row.id);
+                                            this.$Modal.confirm({
+                                                title: 'Attension',
+                                                content: 'Are you sure you want to delete?',
+                                                okText: 'Delete',
+                                                cancelText: 'Cancel',
+                                                onOk: () => {
+                                                    this.ajax().delete(row.id);
+                                                }
+                                            });
                                         }
                                     }
                                 }, 'Delete'),
-                                h('Button', {
-                                    props: {
-                                        type: 'success',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.ajax().generate(row.id);
-                                        }
-                                    }
-                                }, 'Generate'),
-                                h('Button', {
-                                    props: {
-                                        type: 'warning',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.ajax().updateResource(row.id);
-                                        }
-                                    }
-                                }, 'Update')
+                                generate_button,
+                                update_button
                             ]);
                         }
                     }
@@ -180,7 +198,7 @@
                         });
                     },
                     generate(id) {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_generate/'+id ).then(({ data }) => {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_generate/'+id ).then(({ data }) => {
                             self.$Message.success('Success!');
                             // window.location.reload();
                         }).catch(error => {
@@ -189,7 +207,7 @@
                         });
                     },
                     updateResource(id) {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_update/'+id ).then(({ data }) => {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_update/'+id ).then(({ data }) => {
                             self.$Message.success('Success!');
                             // window.location.reload();
                         }).catch(error => {

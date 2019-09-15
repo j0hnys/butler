@@ -2334,13 +2334,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var state = {
       formValidate: {
         project_id: '',
-        namespace: ''
+        namespace: '\\App\\Trident\\Business\\Schemas\\Logic\\Definition\\Typed\\SchemaHierarchy'
       }
     };
 
-    if (this.$store.state.pages.definition_create) {
-      state = this.$store.state.pages.definition_create;
-    } //
+    if (this.$store.state.pages.definition_create) {} // state = this.$store.state.pages.definition_create;
+    //
     //component state registration
 
 
@@ -2559,7 +2558,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             },
             on: {
               click: function click() {
-                _this.ajax()["delete"](row.id);
+                _this.$Modal.confirm({
+                  title: 'Attension',
+                  content: 'Are you sure you want to delete?',
+                  okText: 'Delete',
+                  cancelText: 'Cancel',
+                  onOk: function onOk() {
+                    _this.ajax()["delete"](row.id);
+                  }
+                });
               }
             }
           }, 'Delete')]);
@@ -2608,13 +2615,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    // console.log('test list mounted');
-    // console.log({
-    //     // 'this.$store': this.$store,
-    //     // 'this.$store.state': this.$store.state,
-    //     // 'this.$store.state.Index': this.$store.state.Index,
-    //     'this.$route': this.$route,
-    // });
     this.ajax().get();
   }
 });
@@ -3142,6 +3142,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         align: 'center',
         render: function render(h, params) {
           var row = params.row;
+          var generate_button = h('Button', {
+            props: {
+              type: 'success',
+              size: 'small'
+            },
+            style: {
+              marginRight: '5px'
+            },
+            on: {
+              click: function click() {
+                generate_button.componentInstance.loading = true;
+
+                _this.ajax().generate(row.id).then(function () {
+                  generate_button.componentInstance.loading = false;
+                });
+              }
+            }
+          }, 'Generate');
+          var update_button = h('Button', {
+            props: {
+              type: 'warning',
+              size: 'small'
+            },
+            on: {
+              click: function click() {
+                update_button.componentInstance.loading = true;
+
+                _this.ajax().updateResource(row.id).then(function () {
+                  update_button.componentInstance.loading = false;
+                });
+              }
+            }
+          }, 'Update');
           return h('div', [h('Button', {
             props: {
               type: 'primary',
@@ -3170,33 +3203,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             },
             on: {
               click: function click() {
-                _this.ajax()["delete"](row.id);
+                _this.$Modal.confirm({
+                  title: 'Attension',
+                  content: 'Are you sure you want to delete?',
+                  okText: 'Delete',
+                  cancelText: 'Cancel',
+                  onOk: function onOk() {
+                    _this.ajax()["delete"](row.id);
+                  }
+                });
               }
             }
-          }, 'Delete'), h('Button', {
-            props: {
-              type: 'success',
-              size: 'small'
-            },
-            style: {
-              marginRight: '5px'
-            },
-            on: {
-              click: function click() {
-                _this.ajax().generate(row.id);
-              }
-            }
-          }, 'Generate'), h('Button', {
-            props: {
-              type: 'warning',
-              size: 'small'
-            },
-            on: {
-              click: function click() {
-                _this.ajax().updateResource(row.id);
-              }
-            }
-          }, 'Update')]);
+          }, 'Delete'), generate_button, update_button]);
         }
       }],
       data: []
@@ -3234,7 +3252,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         },
         generate: function generate(id) {
-          window.axios.get("/butler/public_backend" + '/entity_generate/' + id).then(function (_ref3) {
+          return window.axios.get("/butler/public_backend" + '/entity_generate/' + id).then(function (_ref3) {
             var data = _ref3.data;
             self.$Message.success('Success!'); // window.location.reload();
           })["catch"](function (error) {
@@ -3243,7 +3261,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         },
         updateResource: function updateResource(id) {
-          window.axios.get("/butler/public_backend" + '/entity_update/' + id).then(function (_ref4) {
+          return window.axios.get("/butler/public_backend" + '/entity_update/' + id).then(function (_ref4) {
             var data = _ref4.data;
             self.$Message.success('Success!'); // window.location.reload();
           })["catch"](function (error) {
@@ -4016,6 +4034,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         align: 'center',
         render: function render(h, params) {
           var row = params.row;
+          var make_button_loading_state = false;
+          var make_button = h('Button', {
+            props: {
+              type: 'success',
+              size: 'small'
+            },
+            on: {
+              click: function click() {
+                make_button.componentInstance.loading = true;
+
+                _this.ajax().make(row.id).then(function () {
+                  make_button.componentInstance.loading = false;
+                });
+              }
+            }
+          }, 'Make');
           return h('div', [h('Button', {
             props: {
               type: 'primary',
@@ -4044,20 +4078,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             },
             on: {
               click: function click() {
-                _this.ajax()["delete"](row.id);
+                _this.$Modal.confirm({
+                  title: 'Attension',
+                  content: 'Are you sure you want to delete?',
+                  okText: 'Delete',
+                  cancelText: 'Cancel',
+                  onOk: function onOk() {
+                    _this.ajax()["delete"](row.id);
+                  }
+                });
               }
             }
-          }, 'Delete'), h('Button', {
-            props: {
-              type: 'success',
-              size: 'small'
-            },
-            on: {
-              click: function click() {
-                _this.ajax().make(row.id);
-              }
-            }
-          }, 'Make')]);
+          }, 'Delete'), make_button]);
         }
       }],
       data: []
@@ -4095,7 +4127,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         },
         make: function make(id) {
-          window.axios.get("/butler/public_backend" + '/project_make/' + id).then(function (_ref3) {
+          return window.axios.get("/butler/public_backend" + '/project_make/' + id).then(function (_ref3) {
             var data = _ref3.data;
             // self.$Message.success('Success!');
             self.$Notice.success({
@@ -4437,9 +4469,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         definition_id: '',
         entity_id: '',
         name: '',
-        type: '',
+        type: 'form',
         presentation_data: '{}',
-        vista_resource_folder_name: ''
+        vista_resource_folder_name: 'resources_backend'
       }
     };
 
@@ -4704,6 +4736,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         align: 'center',
         render: function render(h, params) {
           var row = params.row;
+          var generate_button = h('Button', {
+            props: {
+              type: 'success',
+              size: 'small'
+            },
+            on: {
+              click: function click() {
+                generate_button.componentInstance.loading = true;
+
+                _this.ajax().generate(row.id).then(function () {
+                  generate_button.componentInstance.loading = false;
+                });
+              }
+            }
+          }, 'Generate');
           return h('div', [h('Button', {
             props: {
               type: 'primary',
@@ -4732,20 +4779,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             },
             on: {
               click: function click() {
-                _this.ajax()["delete"](row.id);
+                _this.$Modal.confirm({
+                  title: 'Attension',
+                  content: 'Are you sure you want to delete?',
+                  okText: 'Delete',
+                  cancelText: 'Cancel',
+                  onOk: function onOk() {
+                    _this.ajax()["delete"](row.id);
+                  }
+                });
               }
             }
-          }, 'Delete'), h('Button', {
-            props: {
-              type: 'success',
-              size: 'small'
-            },
-            on: {
-              click: function click() {
-                _this.ajax().generate(row.id);
-              }
-            }
-          }, 'Generate')]);
+          }, 'Delete'), generate_button]);
         }
       }],
       data: []
@@ -4783,7 +4828,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         },
         generate: function generate(id) {
-          window.axios.get("/butler/public_backend" + '/view_generate/' + id).then(function (_ref3) {
+          return window.axios.get("/butler/public_backend" + '/view_generate/' + id).then(function (_ref3) {
             var data = _ref3.data;
             self.$Message.success('Success!'); // window.location.reload();
           })["catch"](function (error) {
@@ -87077,6 +87122,7 @@ var render = function() {
                         "Select",
                         {
                           staticStyle: { width: "200px" },
+                          attrs: { placeholder: "-select project-" },
                           model: {
                             value: _vm.formValidate.project_id,
                             callback: function($$v) {
@@ -87103,7 +87149,10 @@ var render = function() {
                     { attrs: { label: "namespace", prop: "namespace" } },
                     [
                       _c("Input", {
-                        attrs: { placeholder: "Enter your namespace" },
+                        attrs: {
+                          readonly: "",
+                          placeholder: "Enter your namespace"
+                        },
                         model: {
                           value: _vm.formValidate.namespace,
                           callback: function($$v) {
@@ -87316,7 +87365,10 @@ var render = function() {
                     { attrs: { label: "namespace", prop: "namespace" } },
                     [
                       _c("Input", {
-                        attrs: { placeholder: "Enter your namespace" },
+                        attrs: {
+                          readonly: "",
+                          placeholder: "Enter your namespace"
+                        },
                         model: {
                           value: _vm.formValidate.namespace,
                           callback: function($$v) {
@@ -88655,7 +88707,7 @@ var render = function() {
                     { attrs: { label: "type", prop: "type" } },
                     [
                       _c("Input", {
-                        attrs: { placeholder: "Enter your type" },
+                        attrs: { readonly: "", placeholder: "Enter your type" },
                         model: {
                           value: _vm.formValidate.type,
                           callback: function($$v) {
@@ -88696,6 +88748,7 @@ var render = function() {
                     [
                       _c("Input", {
                         attrs: {
+                          readonly: "",
                           placeholder: "Enter your vista_resource_folder_name"
                         },
                         model: {
@@ -88925,7 +88978,7 @@ var render = function() {
                     { attrs: { label: "type", prop: "type" } },
                     [
                       _c("Input", {
-                        attrs: { placeholder: "Enter your type" },
+                        attrs: { readonly: "", placeholder: "Enter your type" },
                         model: {
                           value: _vm.formValidate.type,
                           callback: function($$v) {
@@ -88949,6 +89002,7 @@ var render = function() {
                     [
                       _c("Input", {
                         attrs: {
+                          readonly: "",
                           placeholder: "Enter your vista_resource_folder_name"
                         },
                         model: {

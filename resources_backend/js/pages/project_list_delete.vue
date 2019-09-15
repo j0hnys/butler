@@ -92,6 +92,23 @@
                         align: 'center',
                         render: (h, params) => {
                             var row = params.row;
+                            
+                            var make_button_loading_state = false;
+
+                            var make_button = h('Button', {
+                                props: {
+                                    type: 'success',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        make_button.componentInstance.loading = true;
+                                        this.ajax().make(row.id).then(() => {
+                                            make_button.componentInstance.loading = false;
+                                        });
+                                    }
+                                }
+                            }, 'Make');
 
                             return h('div', [
                                 h('Button', {
@@ -118,21 +135,19 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.ajax().delete(row.id);
+                                            this.$Modal.confirm({
+                                                title: 'Attension',
+                                                content: 'Are you sure you want to delete?',
+                                                okText: 'Delete',
+                                                cancelText: 'Cancel',
+                                                onOk: () => {
+                                                    this.ajax().delete(row.id);
+                                                }
+                                            });
                                         }
                                     }
                                 }, 'Delete'),
-                                h('Button', {
-                                    props: {
-                                        type: 'success',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.ajax().make(row.id);
-                                        }
-                                    }
-                                }, 'Make'),
+                                make_button,
                             ]);
                         }
                     }
@@ -172,7 +187,7 @@
                         });
                     },
                     make(id) {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_make/'+id ).then(({ data }) => {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_make/'+id ).then(({ data }) => {
                             // self.$Message.success('Success!');
                             self.$Notice.success({
                                 render: h => {

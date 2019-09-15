@@ -103,7 +103,15 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.ajax().delete(row.id);
+                                            this.$Modal.confirm({
+                                                title: 'Attension',
+                                                content: 'Are you sure you want to delete?',
+                                                okText: 'Delete',
+                                                cancelText: 'Cancel',
+                                                onOk: () => {
+                                                    this.ajax().delete(row.id);
+                                                }
+                                            });
                                         }
                                     }
                                 }, 'Delete')
@@ -152,13 +160,6 @@
             },
         },
         mounted() {
-            // console.log('test list mounted');
-            // console.log({
-            //     // 'this.$store': this.$store,
-            //     // 'this.$store.state': this.$store.state,
-            //     // 'this.$store.state.Index': this.$store.state.Index,
-            //     'this.$route': this.$route,
-            // });
 
             this.ajax().get();
 

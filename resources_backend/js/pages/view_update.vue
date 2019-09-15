@@ -53,10 +53,10 @@
                         <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
                     </FormItem>
                     <FormItem label="type" prop="type">
-                        <Input v-model="formValidate.type" placeholder="Enter your type"></Input>
+                        <Input readonly v-model="formValidate.type" placeholder="Enter your type"></Input>
                     </FormItem>
                     <FormItem label="vista_resource_folder_name" prop="vista_resource_folder_name">
-                        <Input v-model="formValidate.vista_resource_folder_name" placeholder="Enter your vista_resource_folder_name"></Input>
+                        <Input readonly v-model="formValidate.vista_resource_folder_name" placeholder="Enter your vista_resource_folder_name"></Input>
                     </FormItem>
 
                     <FormItem>

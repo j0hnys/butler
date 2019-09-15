@@ -101,6 +101,21 @@
                         render: (h, params) => {
                             var row = params.row;
 
+                            var generate_button = h('Button', {
+                                props: {
+                                    type: 'success',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        generate_button.componentInstance.loading = true;
+                                        this.ajax().generate(row.id).then(() => {
+                                            generate_button.componentInstance.loading = false;
+                                        });
+                                    }
+                                }
+                            }, 'Generate');
+
                             return h('div', [
                                 h('Button', {
                                     props: {
@@ -126,21 +141,19 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.ajax().delete(row.id);
+                                            this.$Modal.confirm({
+                                                title: 'Attension',
+                                                content: 'Are you sure you want to delete?',
+                                                okText: 'Delete',
+                                                cancelText: 'Cancel',
+                                                onOk: () => {
+                                                    this.ajax().delete(row.id);
+                                                }
+                                            });
                                         }
                                     }
                                 }, 'Delete'),
-                                h('Button', {
-                                    props: {
-                                        type: 'success',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.ajax().generate(row.id);
-                                        }
-                                    }
-                                }, 'Generate')
+                                generate_button
                             ]);
                         }
                     }
@@ -180,7 +193,7 @@
                         });
                     },
                     generate(id) {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/view_generate/'+id ).then(({ data }) => {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/view_generate/'+id ).then(({ data }) => {
                             self.$Message.success('Success!');
                             // window.location.reload();
                         }).catch(error => {

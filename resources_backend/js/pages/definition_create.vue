@@ -36,12 +36,12 @@
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
                     
                     <FormItem label="project_id" prop="project_id">
-                        <Select v-model="formValidate.project_id" style="width:200px">
+                        <Select v-model="formValidate.project_id" style="width:200px" placeholder="-select project-">
                             <Option v-for="item in project_list" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                     <FormItem label="namespace" prop="namespace">
-                        <Input v-model="formValidate.namespace" placeholder="Enter your namespace"></Input>
+                        <Input readonly v-model="formValidate.namespace" placeholder="Enter your namespace"></Input>
                     </FormItem>
                     
                     
@@ -65,12 +65,12 @@
             var state = {
                 formValidate: {
                     project_id: '',
-                    namespace: '',
+                    namespace: '\\App\\Trident\\Business\\Schemas\\Logic\\Definition\\Typed\\SchemaHierarchy',
                 },
             };
             if (this.$store.state.pages.definition_create) 
             {
-                state = this.$store.state.pages.definition_create;
+                // state = this.$store.state.pages.definition_create;
             }
 
             //
