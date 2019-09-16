@@ -2,10 +2,7 @@
 
 namespace App\Trident\Business\Logic;
 
-use App\Trident\Business\Exceptions\EntityException;
 use App\Trident\Interfaces\Business\Logic\EntityInterface;
-use App\Trident\Business\Schemas\Logic\Definition\Typed\SchemaHierarchy;
-
 
 class Entity implements EntityInterface
 {
@@ -32,8 +29,7 @@ class Entity implements EntityInterface
      */
     public function generate($model, $project, $definition): void
     {
-
-        $schema_hierarchy = (new SchemaHierarchy())->get();
+        $schema_hierarchy = (app()->make($definition['namespace']))->get();
         $functionality_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Resource'][0]);
         $functionality_schema_definition = app()->make($functionality_schema_namespace);
         
@@ -113,7 +109,7 @@ class Entity implements EntityInterface
      */
     public function updateResource($model, $project, $definition): void
     {
-        $schema_hierarchy = (new SchemaHierarchy())->get();
+        $schema_hierarchy = (app()->make($definition['namespace']))->get();
         $functionality_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Resource'][0]);
         $functionality_schema_definition = app()->make($functionality_schema_namespace);
         

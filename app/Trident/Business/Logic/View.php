@@ -2,10 +2,7 @@
 
 namespace App\Trident\Business\Logic;
 
-use App\Trident\Business\Exceptions\ViewException;
 use App\Trident\Interfaces\Business\Logic\ViewInterface;
-use App\Trident\Business\Schemas\Logic\Definition\Typed\SchemaHierarchy;
-
 
 class View implements ViewInterface
 {
@@ -30,7 +27,7 @@ class View implements ViewInterface
      */
     public function generate($model, $project, $definition, $entity): void
     {        
-        $schema_hierarchy = (new SchemaHierarchy())->get();
+        $schema_hierarchy = (app()->make($definition['namespace']))->get();
         $presentation_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Presentation'][0]);
         $presentation_schema_definition = app()->make($presentation_schema_namespace);
         
