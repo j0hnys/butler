@@ -82,9 +82,11 @@
             <Layout>
                 <Sider collapsible :collapsed-width="78" v-model="isCollapsed">
                     <Menu ref="main_menu" @on-select="on_main_menu_item_clicked" :active-name="active_menu_name" theme="dark" width="auto" :class="menuitemClasses">
-                        <MenuItem v-for="menu_item in this.$store.getters['components/BasicLayout/navigation']()['main_menu']" v-bind:data="menu_item" v-bind:key="menu_item.name" v-if="!menu_item.children" :name="menu_item.name">
-                            <Icon :type="menu_item.icon_type"></Icon>
-                            <router-link :to="menu_item.redirect_url"><span v-if="!isCollapsed" :style="{color: 'white', width: '80%'}">{{menu_item.text}}</span></router-link>
+                        <MenuItem style="padding: 0px;" v-for="menu_item in this.$store.getters['components/BasicLayout/navigation']()['main_menu']" v-bind:data="menu_item" v-bind:key="menu_item.name" v-if="!menu_item.children" :name="menu_item.name">
+                            <router-link :to="menu_item.redirect_url" style="display: flex; padding: 14px 24px;">
+                                <Icon :type="menu_item.icon_type" style="position: relative; top: 4px; margin-right: 5px;"></Icon>
+                                <div v-if="!isCollapsed" :style="{color: 'white', width: '100%'}">{{menu_item.text}}</div>
+                            </router-link>
                         </MenuItem>
 
                         <Submenu v-for="menu_item in this.$store.getters['components/BasicLayout/navigation']()['main_menu']" v-bind:data="menu_item" v-bind:key="menu_item.name" v-if="menu_item.children" :name="menu_item.name">

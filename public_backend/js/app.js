@@ -2020,6 +2020,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var state = {
@@ -86615,33 +86617,46 @@ var render = function() {
                                 "MenuItem",
                                 {
                                   key: menu_item.name,
+                                  staticStyle: { padding: "0px" },
                                   attrs: {
                                     data: menu_item,
                                     name: menu_item.name
                                   }
                                 },
                                 [
-                                  _c("Icon", {
-                                    attrs: { type: menu_item.icon_type }
-                                  }),
-                                  _vm._v(" "),
                                   _c(
                                     "router-link",
-                                    { attrs: { to: menu_item.redirect_url } },
+                                    {
+                                      staticStyle: {
+                                        display: "flex",
+                                        padding: "14px 24px"
+                                      },
+                                      attrs: { to: menu_item.redirect_url }
+                                    },
                                     [
+                                      _c("Icon", {
+                                        staticStyle: {
+                                          position: "relative",
+                                          top: "4px",
+                                          "margin-right": "5px"
+                                        },
+                                        attrs: { type: menu_item.icon_type }
+                                      }),
+                                      _vm._v(" "),
                                       !_vm.isCollapsed
                                         ? _c(
-                                            "span",
+                                            "div",
                                             {
                                               style: {
                                                 color: "white",
-                                                width: "80%"
+                                                width: "100%"
                                               }
                                             },
                                             [_vm._v(_vm._s(menu_item.text))]
                                           )
                                         : _vm._e()
-                                    ]
+                                    ],
+                                    1
                                   )
                                 ],
                                 1
