@@ -104,7 +104,7 @@
                                     on: {
                                         click: () => {
                                             this.$Modal.confirm({
-                                                title: 'Attension',
+                                                title: 'Attention',
                                                 content: 'Are you sure you want to delete?',
                                                 okText: 'Delete',
                                                 cancelText: 'Cancel',

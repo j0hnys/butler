@@ -2554,7 +2554,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             on: {
               click: function click() {
                 _this.$Modal.confirm({
-                  title: 'Attension',
+                  title: 'Attention',
                   content: 'Are you sure you want to delete?',
                   okText: 'Delete',
                   cancelText: 'Cancel',
@@ -3149,7 +3149,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             on: {
               click: function click() {
                 _this.$Modal.confirm({
-                  title: 'Attension',
+                  title: 'Attention',
                   content: 'Are you sure you want to delete?',
                   okText: 'Delete',
                   cancelText: 'Cancel',
@@ -4052,7 +4052,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             on: {
               click: function click() {
                 _this.$Modal.confirm({
-                  title: 'Attension',
+                  title: 'Attention',
                   content: 'Are you sure you want to delete?',
                   okText: 'Delete',
                   cancelText: 'Cancel',
@@ -4725,7 +4725,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             on: {
               click: function click() {
                 _this.$Modal.confirm({
-                  title: 'Attension',
+                  title: 'Attention',
                   content: 'Are you sure you want to delete?',
                   okText: 'Delete',
                   cancelText: 'Cancel',
