@@ -41,7 +41,20 @@
                     
                     <FormItem></FormItem>
 
-                    <h1>Request</h1>
+                    <h1>
+                        Request
+                        <Tooltip content="" max-width="600">
+                            <Icon type="ios-information-circle" style="font-size:0.7em;" />
+                            <div slot="content">
+                                <strong>T::*</strong>
+                                <p><i>where `*` is `string()`, `integer()`, `bool()`, `nullable()`, 
+                        `array()`, `float()`, `double()` </i></p>
+                                <br>
+                                <strong>laravel_validation_rule_string</strong>
+                                <p><i>is the native laravel validation string. e.x. "required | string"  </i></p>
+                            </div>
+                        </Tooltip>
+                    </h1>
                     <Divider />
                     <Table border :columns="request_table.columns" :data="request_table.data" no-data-text="-no data-">
                         <template slot-scope="{ row, index }" slot="name">
@@ -79,7 +92,17 @@
                         <Input hidden v-model="formValidate.request_data" placeholder=""></Input>
                     </FormItem>
 
-                    <h1>Response</h1>
+                    <h1>
+                        Response
+                        <Tooltip content="" max-width="600">
+                            <Icon type="ios-information-circle" style="font-size:0.7em;" />
+                            <div slot="content">
+                                <strong>T::*</strong>
+                                <p><i>where `*` is `string()`, `integer()`, `bool()`, `nullable()`, 
+                        `array()`, `float()`, `double()` </i></p>
+                            </div>
+                        </Tooltip>
+                    </h1>
                     <Divider />
                     <Table border :columns="response_table.columns" :data="response_table.data" no-data-text="-no data-">
                         <template slot-scope="{ row, index }" slot="name">

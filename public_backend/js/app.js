@@ -3417,6 +3417,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var local = {
@@ -87763,7 +87786,56 @@ var render = function() {
                   _vm._v(" "),
                   _c("FormItem"),
                   _vm._v(" "),
-                  _c("h1", [_vm._v("Request")]),
+                  _c(
+                    "h1",
+                    [
+                      _vm._v(
+                        "\n                    Request\n                    "
+                      ),
+                      _c(
+                        "Tooltip",
+                        { attrs: { content: "", "max-width": "600" } },
+                        [
+                          _c("Icon", {
+                            staticStyle: { "font-size": "0.7em" },
+                            attrs: { type: "ios-information-circle" }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { attrs: { slot: "content" }, slot: "content" },
+                            [
+                              _c("strong", [_vm._v("T::*")]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _c("i", [
+                                  _vm._v(
+                                    "where `*` is `string()`, `integer()`, `bool()`, `nullable()`, \n                    `array()`, `float()`, `double()` "
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c("strong", [
+                                _vm._v("laravel_validation_rule_string")
+                              ]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _c("i", [
+                                  _vm._v(
+                                    'is the native laravel validation string. e.x. "required | string"  '
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("Divider"),
                   _vm._v(" "),
@@ -87983,7 +88055,42 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c("h1", [_vm._v("Response")]),
+                  _c(
+                    "h1",
+                    [
+                      _vm._v(
+                        "\n                    Response\n                    "
+                      ),
+                      _c(
+                        "Tooltip",
+                        { attrs: { content: "", "max-width": "600" } },
+                        [
+                          _c("Icon", {
+                            staticStyle: { "font-size": "0.7em" },
+                            attrs: { type: "ios-information-circle" }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { attrs: { slot: "content" }, slot: "content" },
+                            [
+                              _c("strong", [_vm._v("T::*")]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _c("i", [
+                                  _vm._v(
+                                    "where `*` is `string()`, `integer()`, `bool()`, `nullable()`, \n                    `array()`, `float()`, `double()` "
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("Divider"),
                   _vm._v(" "),
