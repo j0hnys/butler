@@ -154,7 +154,7 @@ class Definition implements DefinitionInterface
      */
     public function get($request_data, $id)
     {
-        $result = $this->definition_business->get($request_data['db_table_name'], \DB::connection('mysql_butler_trident_vista'));
+        $result = $this->definition_business->get('', $request_data['db_table_name'], \DB::connection('mysql_butler_trident_vista'));
 
         return new GetDefaultDefinitionValuesResource($result);
     }
@@ -197,7 +197,7 @@ class Definition implements DefinitionInterface
         
         $model_data = $model->getAttributes();
         
-        $result = $this->definition_business->get($model_data['db_table_name'], \DB::connection('mysql_butler_trident_vista'));
+        $result = $this->definition_business->get($model_data['name'], $model_data['db_table_name'], \DB::connection('mysql_butler_trident_vista'));
 
         return new GetDefaultDefinitionValuesResource($result);
     }

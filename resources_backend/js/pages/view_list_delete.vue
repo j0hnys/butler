@@ -16,7 +16,7 @@
 
                 <Row>
                     <Col>
-                        <Table :loading="table.loading.state" border :columns="columns" :data="data">
+                        <Table :loading="table.loading.state" border :columns="columns" :data="data" no-data-text="-no data-">
                             <template slot="loading">
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 {{table.loading.text}}

@@ -29,16 +29,7 @@ class View implements ViewInterface
      * @return void
      */
     public function generate($model, $project, $definition, $entity): void
-    {
-
-        // dd([
-        //     '$model' => $model,
-        //     // '$project' => $project,
-        //     // '$definition' => $definition,
-        //     // '$entity' => $entity,
-        // ]);
-
-        
+    {        
         $schema_hierarchy = (new SchemaHierarchy())->get();
         $presentation_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Presentation'][0]);
         $presentation_schema_definition = app()->make($presentation_schema_namespace);

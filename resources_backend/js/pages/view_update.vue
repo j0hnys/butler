@@ -84,7 +84,7 @@
 
                     <h1>Presentation</h1>
                     <Divider />
-                    <Table border :columns="presentation_table.columns" :data="presentation_table.data">
+                    <Table border :columns="presentation_table.columns" :data="presentation_table.data" no-data-text="-no data-">
                         <template slot-scope="{ row, index }" slot="column_name">
                             <Input type="text" v-model="presentation_table.edit.column_name" v-if="presentation_table.edit.index === index" />
                             <span v-else>{{ row.column_name }}</span>

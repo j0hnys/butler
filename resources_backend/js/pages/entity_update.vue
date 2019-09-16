@@ -32,7 +32,7 @@
                     <h1>Functionality</h1>
                     <Divider />
                     <FormItem label="db_table_name" prop="db_table_name">
-                        <Select v-model="formValidate.db_table_name" style="width:200px" :loading="loading_models" loading-text="loading..." @on-open-change="onModelSelectClicked">
+                        <Select v-model="formValidate.db_table_name" style="width:200px" :loading="loading_models" loading-text="loading..." @on-open-change="onModelSelectClicked" placeholder="-select db table-">
                             <Option v-for="item in database_tables" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                         <Button type="primary" @click="onGenerateDefaultValuesClicked">Generate Default Values</Button>
@@ -43,7 +43,7 @@
 
                     <h1>Request</h1>
                     <Divider />
-                    <Table border :columns="request_table.columns" :data="request_table.data">
+                    <Table border :columns="request_table.columns" :data="request_table.data" no-data-text="-no data-">
                         <template slot-scope="{ row, index }" slot="name">
                             <Input type="text" v-model="request_table.edit.name" v-if="request_table.edit.index === index" />
                             <span v-else>{{ row.name }}</span>
@@ -81,7 +81,7 @@
 
                     <h1>Response</h1>
                     <Divider />
-                    <Table border :columns="response_table.columns" :data="response_table.data">
+                    <Table border :columns="response_table.columns" :data="response_table.data" no-data-text="-no data-">
                         <template slot-scope="{ row, index }" slot="name">
                             <Input type="text" v-model="response_table.edit.name" v-if="response_table.edit.index === index" />
                             <span v-else>{{ row.name }}</span>
@@ -347,8 +347,6 @@
                     },
                     get(id='') {
                         return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity/'+id ).then(({ data }) => {
-                            self.formValidate = data;
-
                             self.database_tables = [
                                 {
                                     label: data.db_table_name,
@@ -363,6 +361,9 @@
 
                             self.request_table.data = JSON.parse(data.request_data);
                             self.response_table.data = JSON.parse(data.response_data);
+
+                            self.formValidate = data;
+
                         }).catch(error => {
                             console.log(error);
                         });

@@ -49,25 +49,18 @@ class Form extends Definition
     const column_type = [
         'string', 'integer'
     ];
-
     const element_type = [
         'fillable'
     ];
-
     const validation_rule_type = [
         'string', 'number'
     ];
-
     const validation_rule_trigger = [
         'blur'
     ];
-
     const attributes_default_value = 'T::string()';
-
     const attributes_type_name = [
         'string', 'number'
     ];
-    
-
 }
 

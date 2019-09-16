@@ -2901,8 +2901,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         definition_id: [],
         name: '',
         functionality_data: '{}',
-        request_data: '{}',
-        response_data: '{}',
+        request_data: '[]',
+        response_data: '[]',
         db_table_name: '{}'
       }
     };
@@ -3253,7 +3253,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         },
         updateResource: function updateResource(id) {
-          return window.axios.get("/butler/public_backend" + '/entity_update/' + id).then(function (_ref4) {
+          return window.axios.get("/butler/public_backend" + '/entity_update_schemas/' + id).then(function (_ref4) {
             var data = _ref4.data;
             self.$Message.success('Success!'); // window.location.reload();
           })["catch"](function (error) {
@@ -3612,7 +3612,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
           return window.axios.get("/butler/public_backend" + '/trident/resource/entity/' + id).then(function (_ref2) {
             var data = _ref2.data;
-            self.formValidate = data;
             self.database_tables = [{
               label: data.db_table_name,
               value: data.db_table_name
@@ -3620,6 +3619,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             self.cascader_definition = [data.project_id, data.definition_id];
             self.request_table.data = JSON.parse(data.request_data);
             self.response_table.data = JSON.parse(data.response_data);
+            self.formValidate = data;
           })["catch"](function (error) {
             console.log(error);
           });
@@ -87243,7 +87243,8 @@ var render = function() {
                         attrs: {
                           border: "",
                           columns: _vm.columns,
-                          data: _vm.data
+                          data: _vm.data,
+                          "no-data-text": "-no data-"
                         }
                       })
                     ],
@@ -87581,7 +87582,8 @@ var render = function() {
                             loading: _vm.table.loading.state,
                             border: "",
                             columns: _vm.columns,
-                            data: _vm.data
+                            data: _vm.data,
+                            "no-data-text": "-no data-"
                           }
                         },
                         [
@@ -87725,7 +87727,8 @@ var render = function() {
                           staticStyle: { width: "200px" },
                           attrs: {
                             loading: _vm.loading_models,
-                            "loading-text": "loading..."
+                            "loading-text": "loading...",
+                            placeholder: "-select db table-"
                           },
                           on: { "on-open-change": _vm.onModelSelectClicked },
                           model: {
@@ -87768,7 +87771,8 @@ var render = function() {
                     attrs: {
                       border: "",
                       columns: _vm.request_table.columns,
-                      data: _vm.request_table.data
+                      data: _vm.request_table.data,
+                      "no-data-text": "-no data-"
                     },
                     scopedSlots: _vm._u([
                       {
@@ -87987,7 +87991,8 @@ var render = function() {
                     attrs: {
                       border: "",
                       columns: _vm.response_table.columns,
-                      data: _vm.response_table.data
+                      data: _vm.response_table.data,
+                      "no-data-text": "-no data-"
                     },
                     scopedSlots: _vm._u([
                       {
@@ -88431,7 +88436,8 @@ var render = function() {
                             loading: _vm.table.loading.state,
                             border: "",
                             columns: _vm.columns,
-                            data: _vm.data
+                            data: _vm.data,
+                            "no-data-text": "-no data-"
                           }
                         },
                         [
@@ -88894,7 +88900,8 @@ var render = function() {
                             loading: _vm.table.loading.state,
                             border: "",
                             columns: _vm.columns,
-                            data: _vm.data
+                            data: _vm.data,
+                            "no-data-text": "-no data-"
                           }
                         },
                         [
@@ -89175,7 +89182,8 @@ var render = function() {
                     attrs: {
                       border: "",
                       columns: _vm.presentation_table.columns,
-                      data: _vm.presentation_table.data
+                      data: _vm.presentation_table.data,
+                      "no-data-text": "-no data-"
                     },
                     scopedSlots: _vm._u([
                       {

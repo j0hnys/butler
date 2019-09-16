@@ -31,7 +31,7 @@ Route::get('/definition_get_by_entity_id/{id}', 'Trident\DefinitionController@ge
 Route::get('/definition_get_with_project', 'Trident\DefinitionController@getWithProject');
 Route::get('/definition_get_database_tables/{id}', 'Trident\DefinitionController@getDatabaseTables');
 Route::get('/entity_generate/{id}', 'Trident\EntityController@generate');
-Route::get('/entity_update/{id}', 'Trident\EntityController@updateResource');
+Route::get('/entity_update_schemas/{id}', 'Trident\EntityController@updateResource');
 Route::get('/view_generate/{id}', 'Trident\ViewController@generate');
 
 

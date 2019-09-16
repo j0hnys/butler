@@ -24,6 +24,5 @@ class SchemaHierarchy extends Definition
     ];
 
     const entity_name = 'T::string()';
-    
 }
 

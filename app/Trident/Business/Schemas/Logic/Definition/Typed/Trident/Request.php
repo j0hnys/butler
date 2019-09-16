@@ -24,11 +24,7 @@ class Request extends Definition
     const request_type = [
         'json'
     ];
-
     const entity_property = 'T::string()';
-
     const laravel_validation_rule_string = 'T::string()';
-
-    
 }
 

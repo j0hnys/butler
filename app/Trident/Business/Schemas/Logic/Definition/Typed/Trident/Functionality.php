@@ -12,7 +12,5 @@ class Functionality extends Definition
             "db_name" => "T::string()"
         ],
     ];
-    
-    
 }
 

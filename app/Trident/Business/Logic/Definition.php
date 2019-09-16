@@ -31,7 +31,7 @@ class Definition implements DefinitionInterface
      * @param [type] $db_connection
      * @return void
      */
-    public function get($table_name, $db_connection)
+    public function get($entity_name, $table_name, $db_connection)
     {
         $db_name = $db_connection->getDatabaseName();
         $columns = $this->getPropertiesFromTable(
@@ -85,22 +85,22 @@ class Definition implements DefinitionInterface
                 'resource' => $tmp_type,
             ];
         }
-
+        
 
         //presentation schema
         $presentation_table_data = [
             "ajax" => [
                 "get" => [
-                    "GET" => "T::string()"
+                    "GET" => "/trident/resource/".$entity_name
                 ],
                 "create" => [
-                    "POST" => "T::string()"
+                    "POST" => "/trident/resource/".$entity_name
                 ],
                 "update" => [
-                    "POST" => "T::string()"
+                    "POST" => "/trident/resource/".$entity_name
                 ],
                 "delete" => [
-                    "DELETE" => "T::string()"
+                    "DELETE" => "/trident/resource/".$entity_name
                 ]
             ],
             "presentation" => [

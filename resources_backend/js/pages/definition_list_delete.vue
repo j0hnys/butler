@@ -37,7 +37,7 @@
 
                 <Row>
                     <Col>
-                        <Table border :columns="columns" :data="data"></Table>
+                        <Table border :columns="columns" :data="data" no-data-text="-no data-"></Table>
                      </Col>
                 </Row>
 

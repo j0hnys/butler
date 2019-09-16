@@ -68,8 +68,8 @@
                     definition_id: [],
                     name: '',
                     functionality_data: '{}',
-                    request_data: '{}',
-                    response_data: '{}',
+                    request_data: '[]',
+                    response_data: '[]',
                     db_table_name: '{}',
                 },
             };
