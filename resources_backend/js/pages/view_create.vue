@@ -28,24 +28,10 @@
     <div class="view_create">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
-                <h1>
-                    test
-                </h1>
-
+                <h1>Create</h1>
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
                     
-
-                    <!-- <FormItem label="project_id" prop="project_id">
-                        <InputNumber v-model="formValidate.project_id" placeholder="Enter your project_id"></InputNumber>
-                    </FormItem>
-                    <FormItem label="definition_id" prop="definition_id">
-                        <InputNumber v-model="formValidate.definition_id" placeholder="Enter your definition_id"></InputNumber>
-                    </FormItem>
-                    <FormItem label="entity_id" prop="entity_id">
-                        <InputNumber v-model="formValidate.entity_id" placeholder="Enter your entity_id"></InputNumber>
-                    </FormItem> -->
-
                     <FormItem label="entity_id" prop="entity_id">
                         <Cascader v-model="cascader_entity" :data="project_definitions_entities" placeholder="---NOTHING SELECTED---"></Cascader>
                     </FormItem>
@@ -61,14 +47,12 @@
                     </FormItem>
                     <FormItem label="vista_resource_folder_name" prop="vista_resource_folder_name">
                         <Input readonly v-model="formValidate.vista_resource_folder_name" placeholder="Enter your vista_resource_folder_name"></Input>
-                    </FormItem>
-                    
+                    </FormItem>                    
                     
                     <FormItem>
                         <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
                     </FormItem>
                 </Form>
-
 
             </Col>
         </Row>

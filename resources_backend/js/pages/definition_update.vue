@@ -28,10 +28,7 @@
     <div class="definition_update">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
-                <h1>
-                    test update
-                </h1>
-
+                <h1>Update</h1>
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
 
@@ -48,7 +45,6 @@
                         <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
                     </FormItem>
                 </Form>
-
 
             </Col>
         </Row>

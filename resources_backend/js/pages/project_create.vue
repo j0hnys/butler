@@ -28,10 +28,7 @@
     <div class="project_create">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
-                <h1>
-                    test
-                </h1>
-
+                <h1>Create</h1>
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
                     
@@ -48,13 +45,11 @@
                     <FormItem label="db_connection_name" prop="db_connection_name">
                         <Input v-model="formValidate.db_connection_name" placeholder="Enter your db_connection_name"></Input>
                     </FormItem>
-                    
-                    
+                                        
                     <FormItem>
                         <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
                     </FormItem>
                 </Form>
-
 
             </Col>
         </Row>

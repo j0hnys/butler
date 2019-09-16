@@ -7,9 +7,7 @@
     <div class="entity_update">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
-                <h1>
-                    test update
-                </h1>
+                <h1>Update</h1>
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
 

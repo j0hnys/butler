@@ -28,10 +28,7 @@
     <div class="definition_create">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
-                <h1>
-                    test
-                </h1>
-
+                <h1>Create</h1>
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
                     
@@ -44,12 +41,10 @@
                         <Input readonly v-model="formValidate.namespace" placeholder="Enter your namespace"></Input>
                     </FormItem>
                     
-                    
                     <FormItem>
                         <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
                     </FormItem>
                 </Form>
-
 
             </Col>
         </Row>

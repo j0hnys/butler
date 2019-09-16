@@ -2321,11 +2321,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var local = {
@@ -2688,10 +2683,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var local = {
@@ -2834,11 +2825,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3438,8 +3424,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var local = {
@@ -3779,11 +3763,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
 //
 //
 //
@@ -4247,10 +4226,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var state = {
@@ -4390,22 +4365,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -4873,20 +4832,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -87041,7 +86986,7 @@ var render = function() {
             "Col",
             { attrs: { span: "24" } },
             [
-              _c("h1", [_vm._v("\n                test\n            ")]),
+              _c("h1", [_vm._v("\n                Hi!\n            ")]),
               _vm._v(" "),
               _c("router-link", { attrs: { to: { name: "/" } } }, [
                 _vm._v("Home")
@@ -87102,7 +87047,7 @@ var render = function() {
             "Col",
             { attrs: { span: "24" } },
             [
-              _c("h1", [_vm._v("\n                test\n            ")]),
+              _c("h1", [_vm._v("Create")]),
               _vm._v(" "),
               _c(
                 "Form",
@@ -87320,7 +87265,7 @@ var render = function() {
             "Col",
             { attrs: { span: "24" } },
             [
-              _c("h1", [_vm._v("\n                test update\n            ")]),
+              _c("h1", [_vm._v("Update")]),
               _vm._v(" "),
               _c(
                 "Form",
@@ -87448,7 +87393,7 @@ var render = function() {
             "Col",
             { attrs: { span: "24" } },
             [
-              _c("h1", [_vm._v("\n                test\n            ")]),
+              _c("h1", [_vm._v("Create")]),
               _vm._v(" "),
               _c(
                 "Form",
@@ -87679,7 +87624,7 @@ var render = function() {
             "Col",
             { attrs: { span: "24" } },
             [
-              _c("h1", [_vm._v("\n                test update\n            ")]),
+              _c("h1", [_vm._v("Update")]),
               _vm._v(" "),
               _c(
                 "Form",
@@ -88335,7 +88280,7 @@ var render = function() {
             "Col",
             { attrs: { span: "24" } },
             [
-              _c("h1", [_vm._v("\n                test\n            ")]),
+              _c("h1", [_vm._v("Create")]),
               _vm._v(" "),
               _c(
                 "Form",
@@ -88617,7 +88562,7 @@ var render = function() {
             "Col",
             { attrs: { span: "24" } },
             [
-              _c("h1", [_vm._v("\n                test update\n            ")]),
+              _c("h1", [_vm._v("Update")]),
               _vm._v(" "),
               _c(
                 "Form",
@@ -88787,7 +88732,7 @@ var render = function() {
             "Col",
             { attrs: { span: "24" } },
             [
-              _c("h1", [_vm._v("\n                test\n            ")]),
+              _c("h1", [_vm._v("Create")]),
               _vm._v(" "),
               _c(
                 "Form",
@@ -89081,7 +89026,7 @@ var render = function() {
             "Col",
             { attrs: { span: "24" } },
             [
-              _c("h1", [_vm._v("\n                test update\n            ")]),
+              _c("h1", [_vm._v("Update")]),
               _vm._v(" "),
               _c(
                 "Form",

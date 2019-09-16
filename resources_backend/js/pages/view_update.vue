@@ -28,22 +28,9 @@
     <div class="view_update">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
-                <h1>
-                    test update
-                </h1>
-
+                <h1>Update</h1>
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
-
-                    <!-- <FormItem label="project_id" prop="project_id">
-                        <InputNumber :disabled="true" v-model="formValidate.project_id" placeholder="Enter your project_id"></InputNumber>
-                    </FormItem>
-                    <FormItem label="definition_id" prop="definition_id">
-                        <InputNumber :disabled="true" v-model="formValidate.definition_id" placeholder="Enter your definition_id"></InputNumber>
-                    </FormItem>
-                    <FormItem label="entity_id" prop="entity_id">
-                        <InputNumber :disabled="true" v-model="formValidate.entity_id" placeholder="Enter your entity_id"></InputNumber>
-                    </FormItem> -->
 
                     <FormItem label="entity_id" prop="entity_id">
                         <Cascader :disabled="true" v-model="cascader_entity" :data="project_definitions_entities" placeholder="---NOTHING SELECTED---"></Cascader>
@@ -125,7 +112,6 @@
                         <Input hidden v-model="formValidate.presentation_data" placeholder=""></Input>
                     </FormItem>
                 </Form>
-
 
             </Col>
         </Row>
