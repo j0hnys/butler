@@ -37,7 +37,7 @@
             var state = {
                 formValidate: {
                     project_id: '',
-                    namespace: '\\App\\Trident\\Business\\Schemas\\Logic\\Definition\\Typed\\SchemaHierarchy',
+                    namespace: 'App\\Trident\\Business\\Schemas\\Logic\\Definition\\Typed\\SchemaHierarchy',
                 },
             };
             if (this.$store.state.pages.definition_create) 

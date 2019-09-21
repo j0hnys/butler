@@ -4,7 +4,6 @@ namespace App\Trident\Business\Logic;
 
 use App\Trident\Interfaces\Business\Logic\DefinitionInterface;
 use App\Trident\Business\Schemas\Logic\Definition\Typed\SchemaHierarchy;
-use App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Response;
 
 use Doctrine\DBAL\Types\StringType;
 use Doctrine\DBAL\Types\TextType;

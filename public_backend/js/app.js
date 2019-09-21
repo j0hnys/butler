@@ -2244,7 +2244,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var state = {
       formValidate: {
         project_id: '',
-        namespace: '\\App\\Trident\\Business\\Schemas\\Logic\\Definition\\Typed\\SchemaHierarchy'
+        namespace: 'App\\Trident\\Business\\Schemas\\Logic\\Definition\\Typed\\SchemaHierarchy'
       }
     };
 
