@@ -8,21 +8,7 @@ use App\Trident\Interfaces\Business\Logic\ProjectInterface;
 
 class Project implements ProjectInterface
 {
-
     /**
-     * constructor.
-     *
-     * @var string
-     * @return void
-     */
-    public function __construct()
-    {
-       //
-    }
-
-    /**
-     * *description goes here*.
-     *
      * @var array
      * @return void
      */

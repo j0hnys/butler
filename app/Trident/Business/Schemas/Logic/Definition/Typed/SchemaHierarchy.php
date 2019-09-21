@@ -3,9 +3,8 @@
 namespace App\Trident\Business\Schemas\Logic\Definition\Typed;
 
 use App\Trident\Base\Typed\Definitions\Definition;
-use J0hnys\Typed\T;
 
-class SchemaHierarchy extends Definition
+final class SchemaHierarchy extends Definition
 {
     const hierarchy = [
         'trident-vista' => [

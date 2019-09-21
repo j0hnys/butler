@@ -171,7 +171,6 @@
                 return {
                     get(id='') {
                         window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/view'+id ).then(({ data }) => {
-                            // console.log(data);
                             self.data = data;
                         }).catch(error => {
                             console.log(error);
@@ -179,7 +178,6 @@
                     },
                     delete(id) {
                         window.axios.delete( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/view/'+id ).then(({ data }) => {
-                            // console.log(data);
                             window.location.reload();
                         }).catch(error => {
                             console.log(error);
@@ -188,7 +186,6 @@
                     generate(id) {
                         return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/view_generate/'+id ).then(({ data }) => {
                             self.$Message.success('Success!');
-                            // window.location.reload();
                         }).catch(error => {
                             console.log(error);
                         });
@@ -200,13 +197,6 @@
             },
         },
         mounted() {
-            // console.log('test list mounted');
-            // console.log({
-            //     // 'this.$store': this.$store,
-            //     // 'this.$store.state': this.$store.state,
-            //     // 'this.$store.state.Index': this.$store.state.Index,
-            //     'this.$route': this.$route,
-            // });
 
             this.ajax().get();
 

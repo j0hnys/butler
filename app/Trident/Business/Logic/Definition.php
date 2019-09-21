@@ -12,18 +12,6 @@ use Doctrine\DBAL\Types\IntegerType;
 
 class Definition implements DefinitionInterface
 {
-
-    /**
-     * constructor.
-     *
-     * @var string
-     * @return void
-     */
-    public function __construct()
-    {
-       //
-    }
-
     /**
      * gets schema definitions
      *
@@ -151,18 +139,7 @@ class Definition implements DefinitionInterface
             ];
         }
 
-        // dd([
-        //     '$schema_hierarchy' => $schema_hierarchy,
-        //     '$request_schema' => $request_schema,
-        //     '$request_table_data' => $request_table_data,
-        //     '$response_schema' => $response_schema,
-        //     '$response_table_data' => $response_table_data,
-        //     '$presentation_schema' => $presentation_schema,
-        //     '$presentation_table_data' => $presentation_table_data,
-        //     '$db_name' => $db_name,
-        //     '$columns' => $columns,
-        // ]);
-        
+
         return (object)[
             'request_table_data' => $request_table_data,
             'response_table_data' => $response_table_data,
@@ -194,8 +171,6 @@ class Definition implements DefinitionInterface
 
 
     /**
-     * *description goes here*.
-     *
      * @var array
      * @return array
      */
@@ -211,8 +186,6 @@ class Definition implements DefinitionInterface
 
 
     /**
-     * *description goes here*.
-     *
      * @var array
      * @return array
      */

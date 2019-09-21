@@ -6,22 +6,7 @@ use App\Trident\Interfaces\Business\Logic\EntityInterface;
 
 class Entity implements EntityInterface
 {
-
     /**
-     * constructor.
-     *
-     * @var string
-     * @return void
-     */
-    public function __construct()
-    {
-       //
-    }
-
-
-    /**
-     * Undocumented function
-     *
      * @param array $model
      * @param array $project
      * @param array $definition

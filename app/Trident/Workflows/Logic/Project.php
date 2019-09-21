@@ -33,8 +33,6 @@ class Project implements ProjectInterface
     protected $project_repository;
 
     /**
-     * constructor.
-     *
      * @var string
      * @return void
      */

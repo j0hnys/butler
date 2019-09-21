@@ -33,8 +33,6 @@ class Entity implements EntityInterface
     protected $entity_repository;
 
     /**
-     * constructor.
-     *
      * @var string
      * @return void
      */

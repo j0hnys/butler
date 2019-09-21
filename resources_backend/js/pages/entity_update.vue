@@ -11,13 +11,6 @@
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
 
-                    <!-- <FormItem label="project_id" prop="project_id">
-                        <InputNumber :disabled="true" v-model="formValidate.project_id" placeholder="Enter your project_id"></InputNumber>
-                    </FormItem>
-                    <FormItem label="definition_id" prop="definition_id">
-                        <InputNumber :disabled="true" v-model="formValidate.definition_id" placeholder="Enter your definition_id"></InputNumber>
-                    </FormItem> -->
-
                     <FormItem label="definition_id" prop="definition_id">
                         <Cascader :disabled="true" v-model="cascader_definition" :data="project_definitions" placeholder="---NOTHING SELECTED---"></Cascader>
                     </FormItem>
@@ -324,28 +317,11 @@
                                         for (const j in element.definitions) {
                                             if (element.definitions.hasOwnProperty(j)) {
                                                 const element_ = element.definitions[j];
-                                                
-                                                // let tmp_groups = [];
-
-                                                // if (element_.groups.length > 0) {
-                                                //     for (const k in element_.groups) {
-                                                //         if (element_.groups.hasOwnProperty(k)) {
-                                                //             const element__ = element_.groups[k];
-                                                            
-                                                //             tmp_groups.push({
-                                                //                 value: element__.id,
-                                                //                 label: element__.name,
-                                                //                 data: element__
-                                                //             });
-                                                //         }
-                                                //     }
-                                                // }
 
                                                 tmp_definitions.push({
                                                     value: element_.id,
                                                     label: element_.namespace,
                                                     data: element_,
-                                                    // children: tmp_groups
                                                 });
                                             }
                                         }
@@ -421,7 +397,6 @@
                         }
 
                         return window.axios.post( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity/'+id,  form_data ).then((response) => {
-                            // Once AJAX resolves we can update the Crud with the new color
                             self.$Message.success('Success!');
                         }).catch(error => {
                             console.log(error);
@@ -453,11 +428,8 @@
                     this.formValidate.definition_id,
                     this.formValidate.db_table_name
                 ).then(({data}) => {
-                    console.log(data);
-
                     this.request_table.data = data.request_table_data;
                     this.response_table.data = data.response_table_data;
-
                 });
             },
             onModelSelectClicked() {

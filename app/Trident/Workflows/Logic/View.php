@@ -32,8 +32,6 @@ class View implements ViewInterface
     protected $view_repository;
 
     /**
-     * constructor.
-     *
      * @var string
      * @return void
      */

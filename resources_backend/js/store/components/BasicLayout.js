@@ -17,11 +17,9 @@ export default {
     },
     getters: {
         breadcrumbs: (state) => {
-            // console.log(data);
             return state.breadcrumbs;
         },
         navigation: (state) => (data) => {
-            // console.log(data);
             return state.navigation;
         }
     },

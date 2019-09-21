@@ -1,58 +1,13 @@
 <style scoped>
-    /* .layout-con{
-        height: 100%;
-        width: 100%;
-    }
-    .menu-item span{
-        display: inline-block;
-        overflow: hidden;
-        width: 69px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        vertical-align: bottom;
-        transition: width .2s ease .2s;
-    }
-    .menu-item i{
-        transform: translateX(0px);
-        transition: font-size .2s ease, transform .2s ease;
-        vertical-align: middle;
-        font-size: 16px;
-    }
-    .collapsed-menu span{
-        width: 0px;
-        transition: width .2s ease;
-    }
-    .collapsed-menu i{
-        transform: translateX(5px);
-        transition: font-size .2s ease .2s, transform .2s ease .2s;
-        vertical-align: middle;
-        font-size: 22px;
-    }
-
-    .router-link-exact-active {
-        color: white;
-    }
-        .router-link-exact-active:hover {
-            text-decoration: none;
-        }
-    .router-link-active {
-        color: white;
-    }
-        .router-link-active:hover {
-            text-decoration: none;
-        }
-    .link-style-black {
-        color: black;
-    } */
+    
 </style>
 <template>
     <div class="layout">
         <Layout :style="{minHeight: '100vh'}">
-            <Header :style="{'padding': '0px'}">
+            <Header :style="{'padding': '0px', 'padding-right': '15px'}">
                 <Row> 
                     <Col :xs="21" :sm="21" :md="22" :lg="22">
                         <span :style="{'font-size': '3em', 'color': 'white', 'margin-left': '20px'}">{{menu_logo}}</span>
-                        <!-- <h1 :style="{color: 'white', position: 'relative', top: '5px', left: '28px'}">{{menu_logo}}</h1> -->
                     </Col>
                     <Col :xs="3" :sm="3" :md="2" :lg="2">
                         <Col span="12">
@@ -70,8 +25,6 @@
                             <Dropdown @on-click="onLogoutButtonClicked">
                                 <Avatar icon="ios-person" size="large" />
                                 <DropdownMenu slot="list">
-                                    <!-- <DropdownItem>Account</DropdownItem>
-                                    <DropdownItem>Settings</DropdownItem> -->
                                     <DropdownItem name="logout">Logout</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
@@ -180,18 +133,11 @@
                 ]
             },
             menu_logo() {
-                // if (this.isCollapsed) {
-                //     return this.app_title.collapsed_menu;
-                // }
                 return this.app_title.expanded_menu;
             },
         },
         methods: {
             on_main_menu_item_clicked(menu_name) {
-                console.log('on_main_menu_item_clicked');
-                console.log({
-                    menu_name: menu_name,
-                });
 
                 var indexes = menu_name.split('-');
 
@@ -214,11 +160,6 @@
 
             },
             on_sub_menu_item_clicked(menu_name) {
-                console.log('on_sub_menu_item_clicked');
-                console.log({
-                    menu_name: menu_name,
-                });
-
                 var indexes = menu_name.split('-');
                 // indexes.shift();    //<-- to remove "sub"
                 var sub_menu = this.submenu;
@@ -269,10 +210,6 @@
                     text: current_menu.text    //<-- einai k t arxiko active...
                 }
             ]);
-
-            // console.log({
-            //     current_menu: current_menu.name,
-            // });
 
         },
     }

@@ -6,22 +6,7 @@ use App\Trident\Interfaces\Business\Logic\ViewInterface;
 
 class View implements ViewInterface
 {
-
     /**
-     * constructor.
-     *
-     * @var string
-     * @return void
-     */
-    public function __construct()
-    {
-       //
-    }
-
-
-    /**
-     * *description goes here*.
-     *
      * @var array
      * @return void
      */

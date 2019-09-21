@@ -35,8 +35,6 @@ class Definition implements DefinitionInterface
     protected $definition_repository;
 
     /**
-     * constructor.
-     *
      * @var string
      * @return void
      */

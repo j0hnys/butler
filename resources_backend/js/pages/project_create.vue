@@ -31,8 +31,6 @@
                 <h1>Create</h1>
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
-                    
-
                     <FormItem label="name" prop="name">
                         <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
                     </FormItem>
@@ -62,7 +60,7 @@
                 formValidate: {
                     name: '',
                     root_folder: '',
-                    relative_schemas_folder: '',
+                    relative_schemas_folder: 'app/Solution/Schemas',
                     db_connection_name: '',
                 },
             };
@@ -136,7 +134,6 @@
                         }
 
                         window.axios.post( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/project',  form_data ).then((response) => {
-                            // Once AJAX resolves we can update the Crud with the new color
                             self.$Message.success('Success!');
                         }).catch(error => {
                             console.log(error);
@@ -163,13 +160,7 @@
             },
         },
         mounted() {
-            // console.log('test form mounted');
-            // console.log({
-            //     // 'this.$store': this.$store,
-            //     // 'this.$store.state': this.$store.state,
-            //     // 'this.$store.state.Index': this.$store.state.Index,
-            //     'this.$route': this.$route,
-            // });
+            //
         },
     }
 </script>

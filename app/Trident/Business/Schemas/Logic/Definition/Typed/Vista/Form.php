@@ -3,9 +3,8 @@
 namespace App\Trident\Business\Schemas\Logic\Definition\Typed\Vista;
 
 use App\Trident\Base\Typed\Definitions\Definition;
-use J0hnys\Typed\T;
 
-class Form extends Definition
+final class Form extends Definition
 {
     const schema = [
         "ajax" => [

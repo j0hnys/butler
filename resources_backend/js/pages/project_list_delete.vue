@@ -164,7 +164,6 @@ import { setTimeout } from 'timers';
                 return {
                     get(id='') {
                         window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/project'+id ).then(({ data }) => {
-                            // console.log(data);
                             self.data = data;
                         }).catch(error => {
                             console.log(error);
@@ -172,7 +171,6 @@ import { setTimeout } from 'timers';
                     },
                     delete(id) {
                         window.axios.delete( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/project/'+id ).then(({ data }) => {
-                            // console.log(data);
                             window.location.reload();
                         }).catch(error => {
                             console.log(error);
@@ -180,7 +178,6 @@ import { setTimeout } from 'timers';
                     },
                     make(id) {
                         return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_make/'+id ).then(({ data }) => {
-                            // self.$Message.success('Success!');
                             self.$Notice.success({
                                 render: h => {
                                     return h('pre', {
@@ -193,7 +190,6 @@ import { setTimeout } from 'timers';
                                 },
                                 duration: 10000
                             });
-                            // window.location.reload();
                         }).catch(error => {
                             console.log(error);
                             self.$Message.error('could not make, see network');
@@ -206,14 +202,7 @@ import { setTimeout } from 'timers';
             },
         },
         mounted() {
-            // console.log('test list mounted');
-            // console.log({
-            //     // 'this.$store': this.$store,
-            //     // 'this.$store.state': this.$store.state,
-            //     // 'this.$store.state.Index': this.$store.state.Index,
-            //     'this.$route': this.$route,
-            // });
-
+            
             this.ajax().get();
 
         },

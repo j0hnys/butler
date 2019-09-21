@@ -33,11 +33,15 @@
                     Hi!
                 </h1>
 
-                <router-link :to="{name:'/'}">Home</router-link>
-
                 <h2>
-                    <p>Welcome to your iView app!</p>
-                    <Button @click="handleStart">Start iView</Button>
+                    <p>
+                        This is an Implementation Manager for laravel applications made with Trident and Vista.
+                        <br>
+                        Click the "Projects" menu item on the top left to get started    
+                    </p>
+                    <p>
+                        Build something cool. ;)
+                    </p>
                 </h2>
             </Col>
         </Row>
@@ -72,15 +76,6 @@
             }
         },
         methods: {
-            handleStart () {
-                this.$Modal.info({
-                    title: 'Bravo',
-                    content: 'Now, enjoy the convenience of iView.'
-                });
-
-                this.$global_events.$emit('pages/Index/test','emited string');
-
-            }
         },
         mounted() {
             this.$global_events.$on('pages/Index/test',(data) => {

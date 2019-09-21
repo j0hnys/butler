@@ -3,9 +3,8 @@
 namespace App\Trident\Business\Schemas\Logic\Definition\Typed\Trident;
 
 use App\Trident\Base\Typed\Definitions\Definition;
-use J0hnys\Typed\T;
 
-class Request extends Definition
+final class Request extends Definition
 {
     const schema = [
         "type" => '{{request_type}}',

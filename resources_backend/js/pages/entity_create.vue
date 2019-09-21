@@ -1,28 +1,5 @@
 <style scoped>
-    .index {
-        width: 100%;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        text-align: center;
-    }
-        .index h1 {
-            height: 150px;
-        }
-            .index h1 img {
-                height: 100%;
-            }
-        .index h2 {
-            color: #666;
-            margin-bottom: 200px;
-        }
-            .index h2 p {
-                margin: 0 0 50px;
-            }
-    .ivu-row-flex {
-        height: 100%;
-    }
+
 </style>
 <template>
     <div class="entity_create">
@@ -127,28 +104,11 @@
                                         for (const j in element.definitions) {
                                             if (element.definitions.hasOwnProperty(j)) {
                                                 const element_ = element.definitions[j];
-                                                
-                                                // let tmp_groups = [];
-
-                                                // if (element_.groups.length > 0) {
-                                                //     for (const k in element_.groups) {
-                                                //         if (element_.groups.hasOwnProperty(k)) {
-                                                //             const element__ = element_.groups[k];
-                                                            
-                                                //             tmp_groups.push({
-                                                //                 value: element__.id,
-                                                //                 label: element__.name,
-                                                //                 data: element__
-                                                //             });
-                                                //         }
-                                                //     }
-                                                // }
 
                                                 tmp_definitions.push({
                                                     value: element_.id,
                                                     label: element_.namespace,
                                                     data: element_,
-                                                    // children: tmp_groups
                                                 });
                                             }
                                         }
@@ -189,7 +149,6 @@
                         }
 
                         window.axios.post( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity',  form_data ).then((response) => {
-                            // Once AJAX resolves we can update the Crud with the new color
                             self.$Message.success('Success!');
                         }).catch(error => {
                             console.log(error);
