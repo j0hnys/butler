@@ -36,7 +36,7 @@ import { setTimeout } from 'timers';
             var local = {
                 table: {
                     loading: {
-                        state: false,
+                        state: true,
                         text: 'loading',
                     },
                 }
@@ -165,6 +165,7 @@ import { setTimeout } from 'timers';
                     get(id='') {
                         window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/project'+id ).then(({ data }) => {
                             self.data = data;
+                            self.table.loading.state = false;
                         }).catch(error => {
                             console.log(error);
                         });

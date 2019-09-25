@@ -35,7 +35,7 @@
             var local = {
                 table: {
                     loading: {
-                        state: false,
+                        state: true,
                         text: 'loading',
                     },
                 }
@@ -176,6 +176,7 @@
                     get(id='') {
                         window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity'+id ).then(({ data }) => {
                             self.data = data;
+                            self.table.loading.state = false;
                         }).catch(error => {
                             console.log(error);
                         });

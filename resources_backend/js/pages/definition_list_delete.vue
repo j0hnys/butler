@@ -1,5 +1,7 @@
 <style scoped>
-
+    .demo-spin-icon-load{
+        animation: ani-demo-spin 1s linear infinite;
+    }
 </style>
 <template>
     <div class="definition_list_delete">
@@ -14,7 +16,12 @@
 
                 <Row>
                     <Col>
-                        <Table border :columns="columns" :data="data" no-data-text="-no data-"></Table>
+                        <Table border :loading="table.loading.state" :columns="columns" :data="data" no-data-text="-no data-">
+                            <template slot="loading">
+                                <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
+                                {{table.loading.text}}
+                            </template>
+                        </Table>
                      </Col>
                 </Row>
 
@@ -25,6 +32,15 @@
 <script>
     export default {
         data() {
+            var local = {
+                table: {
+                    loading: {
+                        state: true,
+                        text: 'loading',
+                    },
+                }
+            };
+
             var state = {
                 formValidate: {
                 },
@@ -38,6 +54,7 @@
             //
             //component state registration
             return {
+                ...local,
                 ...state,
                 columns: [
                     {
@@ -118,6 +135,7 @@
                         window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/definition'+id ).then(({ data }) => {
                             // console.log(data);
                             self.data = data;
+                            self.table.loading.state = false;
                         }).catch(error => {
                             console.log(error);
                         });

@@ -40,7 +40,7 @@
                         Click the "Projects" menu item on the top left to get started    
                     </p>
                     <p>
-                        Build something cool. ;)
+                        Build something cool. :)
                     </p>
                 </h2>
             </Col>
