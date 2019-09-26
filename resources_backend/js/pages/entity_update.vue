@@ -220,7 +220,7 @@
             };
             if (this.$store.state.pages.entity_update) 
             {
-                state = this.$store.state.pages.entity_update;
+                // state = this.$store.state.pages.entity_update;
             }
 
             //

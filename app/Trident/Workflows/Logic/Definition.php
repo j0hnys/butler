@@ -152,7 +152,10 @@ class Definition implements DefinitionInterface
      */
     public function get($request_data, $id)
     {
-        $result = $this->definition_business->get('', $request_data['db_table_name'], \DB::connection('mysql_butler_trident_vista'));
+        $model = $this->definition_repository->with(['project','entities'])->find($id);
+        $project_data = ($model->getRelations())['project']->getAttributes();
+
+        $result = $this->definition_business->get('', $request_data['db_table_name'], \DB::connection($project_data['db_connection_name']));
 
         return new GetDefaultDefinitionValuesResource($result);
     }
@@ -166,7 +169,10 @@ class Definition implements DefinitionInterface
      */
     public function getDatabaseTables($request_data, $id)
     {
-        $table_names = \DB::connection('mysql_butler_trident_vista')->getDoctrineSchemaManager()->listTableNames();
+        $model = $this->definition_repository->with(['project','entities'])->find($id);
+        $project_data = ($model->getRelations())['project']->getAttributes();
+
+        $table_names = \DB::connection($project_data['db_connection_name'])->getDoctrineSchemaManager()->listTableNames();
 
         $structured_for_ui = [];
         foreach ($table_names as $table_name) {
@@ -191,11 +197,12 @@ class Definition implements DefinitionInterface
      */
     public function getByEntityId($request_data, $id)
     {
-        $model = $this->entity_repository->with(['project','definition'])->find($request_data['entity_id']);
+        $model = $this->definition_repository->with(['project','entities'])->find($request_data['entity_id']);
+        $project_data = ($model->getRelations())['project']->getAttributes();
         
         $model_data = $model->getAttributes();
         
-        $result = $this->definition_business->get($model_data['name'], $model_data['db_table_name'], \DB::connection('mysql_butler_trident_vista'));
+        $result = $this->definition_business->get($model_data['name'], $model_data['db_table_name'], \DB::connection($project_data['db_connection_name']));
 
         return new GetDefaultDefinitionValuesResource($result);
     }

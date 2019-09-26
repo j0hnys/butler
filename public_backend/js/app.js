@@ -3329,9 +3329,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
 
-    if (this.$store.state.pages.entity_update) {
-      state = this.$store.state.pages.entity_update;
-    } //
+    if (this.$store.state.pages.entity_update) {} // state = this.$store.state.pages.entity_update;
+    //
     //component state registration
 
 
