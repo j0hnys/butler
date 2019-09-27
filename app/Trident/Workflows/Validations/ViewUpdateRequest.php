@@ -27,6 +27,7 @@ class ViewUpdateRequest extends FormRequest
     {
         return [
             'id' => 'required | integer',
+            'user_id' => 'integer',
             'project_id' => 'required | integer',
             'definition_id' => 'required | integer',
             'entity_id' => 'required | integer',
@@ -35,12 +36,6 @@ class ViewUpdateRequest extends FormRequest
             'presentation_data' => 'required | string',
             'vista_resource_folder_name' => 'required | string',
         ];
-
-        // return [
-        //     // 'id' => 'required',
-        //     'string_parameter' => 'string',
-        //     'integer_parameter' => 'integer',
-        // ];  //<-- when [] there is no validation.
     }
 
      /**
@@ -52,6 +47,7 @@ class ViewUpdateRequest extends FormRequest
     {
         return [
             'id' => 'id is required',
+            'user_id' => '',
             'project_id' => 'project_id is required',
             'definition_id' => 'definition_id is required',
             'entity_id' => 'entity_id is required',
@@ -60,13 +56,6 @@ class ViewUpdateRequest extends FormRequest
             'presentation_data' => 'presentation_data is required',
             'vista_resource_folder_name' => 'vista_resource_folder_name is required',
         ];
-
-        // return [
-        //     // 'id.required' => 'id is required!!',
-        //     'string_parameter.required' => 'string_parameter is required!!',
-        //     'string_parameter.string' => 'string_parameter must be string!!',
-        //     'integer_parameter.integer' => 'integer_parameter must be integer!!',
-        // ];  //<-- when [] there is no validation.
     }
 
     /**

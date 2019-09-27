@@ -7,7 +7,13 @@
         "project_id": {
             "resource": true
         },
+        "project_name": {
+            "resource": true
+        },
         "definition_id": {
+            "resource": true
+        },
+        "definition_namespace": {
             "resource": true
         },
         "name": {

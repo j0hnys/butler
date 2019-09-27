@@ -27,16 +27,15 @@ class EntityUpdateRequest extends FormRequest
     {
         return [
             'id' => 'required | integer',
+            'user_id' => 'integer',
             'project_id' => 'required | integer',
             'definition_id' => 'required | integer',
             'name' => 'required | string',
+            'functionality_data' => 'required | string',
+            'request_data' => 'required | string',
+            'response_data' => 'required | string',
+            'db_table_name' => 'required | string',
         ];
-
-        // return [
-        //     // 'id' => 'required',
-        //     'string_parameter' => 'string',
-        //     'integer_parameter' => 'integer',
-        // ];  //<-- when [] there is no validation.
     }
 
      /**
@@ -48,17 +47,15 @@ class EntityUpdateRequest extends FormRequest
     {
         return [
             'id' => 'id is required',
+            'user_id' => '',
             'project_id' => 'project_id is required',
             'definition_id' => 'definition_id is required',
             'name' => 'name is required',
+            'functionality_data' => 'functionality_data is required',
+            'request_data' => 'request_data is required',
+            'response_data' => 'response_data is required',
+            'db_table_name' => 'db_table_name is required',
         ];
-
-        // return [
-        //     // 'id.required' => 'id is required!!',
-        //     'string_parameter.required' => 'string_parameter is required!!',
-        //     'string_parameter.string' => 'string_parameter must be string!!',
-        //     'integer_parameter.integer' => 'integer_parameter must be integer!!',
-        // ];  //<-- when [] there is no validation.
     }
 
     /**

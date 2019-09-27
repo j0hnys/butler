@@ -58,13 +58,13 @@
                 ...state,
                 columns: [
                     {
-                        title: 'project_id',
-                        key: 'project_id',
+                        title: 'project_name',
+                        key: 'project_name',
                         minWidth: 100,
                     },
                     {
-                        title: 'definition_id',
-                        key: 'definition_id',
+                        title: 'definition_namespace',
+                        key: 'definition_namespace',
                         minWidth: 100,
                     },
                     {

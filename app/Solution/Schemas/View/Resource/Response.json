@@ -7,10 +7,19 @@
         "project_id": {
             "resource": true
         },
+        "project_name": {
+            "resource": true
+        },
         "definition_id": {
             "resource": true
         },
+        "definition_namespace": {
+            "resource": true
+        },
         "entity_id": {
+            "resource": true
+        },
+        "entity_name": {
             "resource": true
         },
         "name": {

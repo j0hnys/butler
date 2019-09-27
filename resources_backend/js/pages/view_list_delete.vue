@@ -58,24 +58,24 @@
                 ...state,
                 columns: [
                     {
-                        title: 'project_id',
-                        key: 'project_id',
-                        maxWidth: 100,
+                        title: 'project_name',
+                        key: 'project_name',
+                        maxWidth: 150,
                     },
                     {
-                        title: 'definition_id',
-                        key: 'definition_id',
-                        maxWidth: 120,
+                        title: 'definition_namespace',
+                        key: 'definition_namespace',
+                        maxWidth: 190,
                     },
                     {
-                        title: 'entity_id',
-                        key: 'entity_id',
-                        maxWidth: 100,
+                        title: 'entity_name',
+                        key: 'entity_name',
+                        maxWidth: 150,
                     },
                     {
                         title: 'name',
                         key: 'name',
-                        minWidth: 100,
+                        maxWidth: 100,
                     },
                     {
                         title: 'type',
