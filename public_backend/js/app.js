@@ -2420,8 +2420,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     return _objectSpread({}, local, {}, state, {
       columns: [{
-        title: 'project_id',
-        key: 'project_id',
+        title: 'project_name',
+        key: 'project_name',
         minWidth: 100
       }, {
         title: 'namespace',

@@ -21,6 +21,13 @@
             "options": {
                 "symlink": true
             }
+        },
+        {
+            "type": "path",
+            "url": "../my_github_repos/definitions",
+            "options": {
+                "symlink": true
+            }
         }
     ],
     "require": {
@@ -37,7 +44,8 @@
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^7.5",
         "j0hnys/trident": "dev-new-features--workflow-cascade-process--schema-jsons",
-        "j0hnys/vista": "dev-master"
+        "j0hnys/vista": "dev-master",
+        "j0hnys/definitions": "dev-master"
     },
     "config": {
         "optimize-autoloader": true,

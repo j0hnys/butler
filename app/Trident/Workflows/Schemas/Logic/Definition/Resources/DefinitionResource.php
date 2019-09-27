@@ -17,19 +17,11 @@ class DefinitionResource extends JsonResource
         return [
             'id' => $this->id,
             'project_id' => $this->project_id,
+            'project_name' => $this->project->name,
             'namespace' => $this->namespace,
         ];
 
-        // return [
-        //     'id' => $this->id,
-        //     'name' => $this->name,
-        //     'email' => $this->email,
-        //     'posts' => PostResource::collection($this->whenLoaded('posts')),    
-        //     'somekey' => $this->getSomeTransformation(); 
-        //     'created_at' => $this->created_at,
-        //     'updated_at' => $this->updated_at,
-        // ];
-
+        
         return parent::toArray($request);
     }
 

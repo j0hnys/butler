@@ -58,8 +58,8 @@
                 ...state,
                 columns: [
                     {
-                        title: 'project_id',
-                        key: 'project_id',
+                        title: 'project_name',
+                        key: 'project_name',
                         minWidth: 100,
                     },
                     {

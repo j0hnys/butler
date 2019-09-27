@@ -15,6 +15,7 @@ $factory->define(App\Models\Project::class, function (Faker $faker) {
         'name' => $faker->name,
         'root_folder' => $faker->word,
         'relative_schemas_folder' => $faker->word,
+        'db_connection_name' => $faker->word,
     ];
 });
 

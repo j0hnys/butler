@@ -7,6 +7,9 @@
         "project_id": {
             "resource": true
         },
+        "project_name": {
+            "resource": true
+        },
         "namespace": {
             "resource": true
         }

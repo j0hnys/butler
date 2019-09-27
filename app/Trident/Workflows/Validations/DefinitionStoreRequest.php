@@ -27,15 +27,10 @@ class DefinitionStoreRequest extends FormRequest
     {
         return [
             'id' => 'required | integer',
+            'user_id' => 'integer',
             'project_id' => 'required | integer',
             'namespace' => 'required | string',
         ];
-
-        // return [
-        //     // 'id' => 'required',
-        //     'string_parameter' => 'string',
-        //     'integer_parameter' => 'integer',
-        // ];  //<-- when [] there is no validation.
     }
 
      /**
@@ -47,16 +42,10 @@ class DefinitionStoreRequest extends FormRequest
     {
         return [
             'id' => 'id is required',
+            'user_id' => 'user_id is required',
             'project_id' => 'project is required',
             'namespace' => 'namespace is required',
         ];
-
-        // return [
-        //     // 'id.required' => 'id is required!!',
-        //     'string_parameter.required' => 'string_parameter is required!!',
-        //     'string_parameter.string' => 'string_parameter must be string!!',
-        //     'integer_parameter.integer' => 'integer_parameter must be integer!!',
-        // ];  //<-- when [] there is no validation.
     }
 
     /**
