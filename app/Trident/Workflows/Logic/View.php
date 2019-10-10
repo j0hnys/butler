@@ -141,8 +141,6 @@ class View implements ViewInterface
     }
 
     /**
-     * *description goes here*.
-     *
      * @var array
      * @return array
      */

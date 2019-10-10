@@ -4,12 +4,8 @@ namespace App\Http\Controllers\Trident;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use Illuminate\Container\Container as App;
-// use Workflow;
 use App\Trident\Interfaces\Workflows\Logic\DefinitionInterface as DefinitionWorkflow;
 use App\Trident\Interfaces\Workflows\Repositories\DefinitionRepositoryInterface as DefinitionRepository;
-// use App\Trident\Workflows\Exceptions\DefinitionException;
-// use App\Trident\Workflows\Events\Triggers\DefinitionTrigger;
 use App\Trident\Workflows\Validations\DefinitiongetRequest;
 use App\Trident\Workflows\Validations\DefinitiongetByEntityIdRequest;
 use App\Trident\Workflows\Validations\DefinitiongetWithProjectRequest;
@@ -148,8 +144,6 @@ class DefinitionController extends Controller
     
 
     /**
-     * *enter description here.*
-     *
      * @param  DefinitiongetRequest
      * @return \Illuminate\Http\Response
      */
@@ -165,8 +159,6 @@ class DefinitionController extends Controller
 
 
     /**
-     * *enter description here.*
-     *
      * @param  DefinitiongetDatabaseTablesRequest
      * @return \Illuminate\Http\Response
      */
@@ -181,8 +173,6 @@ class DefinitionController extends Controller
 
 
     /**
-     * *enter description here.*
-     *
      * @param  DefinitiongetByEntityIdRequest
      * @return \Illuminate\Http\Response
      */
@@ -197,8 +187,6 @@ class DefinitionController extends Controller
 
 
     /**
-     * *enter description here.*
-     *
      * @param  DefinitiongetWithProjectRequest
      * @return \Illuminate\Http\Response
      */

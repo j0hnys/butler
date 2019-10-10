@@ -142,8 +142,6 @@ class Project implements ProjectInterface
     }
 
     /**
-     * *description goes here*.
-     *
      * @var array
      * @return array
      */
@@ -157,8 +155,6 @@ class Project implements ProjectInterface
 
 
     /**
-     * *description goes here*.
-     *
      * @var array
      * @return array
      */
@@ -172,8 +168,6 @@ class Project implements ProjectInterface
 
 
     /**
-     * *description goes here*.
-     *
      * @var array
      * @return array
      */

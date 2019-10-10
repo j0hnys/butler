@@ -145,8 +145,6 @@ class Definition implements DefinitionInterface
     }
 
     /**
-     * *description goes here*.
-     *
      * @var array
      * @return array
      */
@@ -162,8 +160,6 @@ class Definition implements DefinitionInterface
 
 
     /**
-     * *description goes here*.
-     *
      * @var array
      * @return array
      */
@@ -190,8 +186,6 @@ class Definition implements DefinitionInterface
 
 
     /**
-     * *description goes here*.
-     *
      * @var array
      * @return array
      */
@@ -210,8 +204,6 @@ class Definition implements DefinitionInterface
 
 
     /**
-     * *description goes here*.
-     *
      * @var array
      * @return array
      */

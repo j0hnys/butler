@@ -4,12 +4,8 @@ namespace App\Http\Controllers\Trident;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use Illuminate\Container\Container as App;
-// use Workflow;
 use App\Trident\Interfaces\Workflows\Logic\ProjectInterface as ProjectWorkflow;
 use App\Trident\Interfaces\Workflows\Repositories\ProjectRepositoryInterface as ProjectRepository;
-// use App\Trident\Workflows\Exceptions\ProjectException;
-// use App\Trident\Workflows\Events\Triggers\ProjectTrigger;
 use App\Trident\Workflows\Validations\ProjectgetWithDefinitionsRequest;
 use App\Trident\Workflows\Validations\ProjectgetWithDefinitionsEntitiesRequest;
 use App\Trident\Workflows\Validations\ProjectStoreRequest;
@@ -144,8 +140,6 @@ class ProjectController extends Controller
     
 
     /**
-     * *enter description here.*
-     *
      * @param  ProjectgetWithDefinitionsRequest
      * @return \Illuminate\Http\Response
      */
@@ -159,8 +153,6 @@ class ProjectController extends Controller
 
 
     /**
-     * *enter description here.*
-     *
      * @param  ProjectgetWithDefinitionsEntitiesRequest
      * @return \Illuminate\Http\Response
      */
@@ -172,8 +164,6 @@ class ProjectController extends Controller
     
 
     /**
-     * *enter description here.*
-     *
      * @param  ProjectmakeRequest
      * @return \Illuminate\Http\Response
      */

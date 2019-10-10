@@ -4,12 +4,8 @@ namespace App\Http\Controllers\Trident;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use Illuminate\Container\Container as App;
-// use Workflow;
 use App\Trident\Interfaces\Workflows\Logic\ViewInterface as ViewWorkflow;
 use App\Trident\Interfaces\Workflows\Repositories\ViewRepositoryInterface as ViewRepository;
-// use App\Trident\Workflows\Exceptions\ViewException;
-// use App\Trident\Workflows\Events\Triggers\ViewTrigger;
 use App\Trident\Workflows\Validations\ViewgenerateRequest;
 use App\Trident\Workflows\Validations\ViewStoreRequest;
 use App\Trident\Workflows\Validations\ViewUpdateRequest;
@@ -149,8 +145,6 @@ class ViewController extends Controller
     
 
     /**
-     * *enter description here.*
-     *
      * @param  ViewgenerateRequest
      * @return \Illuminate\Http\Response
      */

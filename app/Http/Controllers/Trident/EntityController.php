@@ -4,12 +4,8 @@ namespace App\Http\Controllers\Trident;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use Illuminate\Container\Container as App;
-// use Workflow;
 use App\Trident\Interfaces\Workflows\Logic\EntityInterface as EntityWorkflow;
 use App\Trident\Interfaces\Workflows\Repositories\EntityRepositoryInterface as EntityRepository;
-// use App\Trident\Workflows\Exceptions\EntityException;
-// use App\Trident\Workflows\Events\Triggers\EntityTrigger;
 use App\Trident\Workflows\Validations\EntitygenerateRequest;
 use App\Trident\Workflows\Validations\EntityStoreRequest;
 use App\Trident\Workflows\Validations\EntityUpdateRequest;
@@ -149,8 +145,6 @@ class EntityController extends Controller
     
 
     /**
-     * *enter description here.*
-     *
      * @param  EntitygenerateRequest
      * @return \Illuminate\Http\Response
      */
@@ -165,8 +159,6 @@ class EntityController extends Controller
 
 
     /**
-     * *enter description here.*
-     *
      * @param  EntityupdateResourceRequest
      * @return \Illuminate\Http\Response
      */

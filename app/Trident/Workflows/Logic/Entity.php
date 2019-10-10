@@ -142,8 +142,6 @@ class Entity implements EntityInterface
     }
 
     /**
-     * *description goes here*.
-     *
      * @var array
      * @return array
      */
@@ -163,8 +161,6 @@ class Entity implements EntityInterface
 
 
     /**
-     * *description goes here*.
-     *
      * @var array
      * @return array
      */
