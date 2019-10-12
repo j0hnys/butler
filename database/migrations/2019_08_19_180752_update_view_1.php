@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateEntity extends Migration
+class UpdateView1 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UpdateEntity extends Migration
      */
     public function up()
     {
-        Schema::table('entity', function($table) {
-            $table->string("db_table_name");
+        Schema::table('view', function($table) {
+            $table->string("vista_resource_folder_name");
         });
     }
 

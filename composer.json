@@ -43,7 +43,7 @@
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^7.5",
-        "j0hnys/trident": "dev-new-features--workflow-cascade-process--schema-jsons",
+        "j0hnys/trident": "dev-definitions-package",
         "j0hnys/vista": "dev-master",
         "j0hnys/definitions": "dev-master"
     },
