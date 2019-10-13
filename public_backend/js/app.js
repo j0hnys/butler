@@ -107211,7 +107211,7 @@ var TestType = new hello_type__WEBPACK_IMPORTED_MODULE_0__["Type"]({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\butler\resources_backend\js\app.js */"./resources_backend/js/app.js");
+module.exports = __webpack_require__(/*! C:\laravel_workspace\code\butler\resources_backend\js\app.js */"./resources_backend/js/app.js");
 
 
 /***/ })
