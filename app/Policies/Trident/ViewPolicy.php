@@ -18,7 +18,7 @@ class ViewPolicy
      */
     public function list(User $user)
     {
-        return true;
+        return \Auth::check();
     }
 
     /**
@@ -41,7 +41,7 @@ class ViewPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return \Auth::check();
     }
 
     /**

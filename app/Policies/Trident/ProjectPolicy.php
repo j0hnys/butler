@@ -18,7 +18,7 @@ class ProjectPolicy
      */
     public function list(User $user)
     {
-        return true;
+        return \Auth::check();
     }
 
     /**
@@ -41,7 +41,7 @@ class ProjectPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return \Auth::check();
     }
 
     /**
@@ -101,7 +101,7 @@ class ProjectPolicy
      */
     public function getWithDefinitions(User $user, Project $project)
     {
-        return true;
+        return \Auth::check();
     }
 
 
@@ -116,7 +116,7 @@ class ProjectPolicy
      */
     public function getWithDefinitionsEntities(User $user, Project $project)
     {
-        return true;
+        return \Auth::check();
     }
 
 
