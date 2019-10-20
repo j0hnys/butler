@@ -2,6 +2,7 @@
 
 namespace App\Trident\Business\Logic;
 
+use Illuminate\Support\Facades\Config;
 use App\Trident\Interfaces\Business\Logic\EntityInterface;
 use App\Trident\Business\Schemas\Logic\Definition\Typed\SchemaHierarchy;
 
@@ -85,7 +86,12 @@ class Entity implements EntityInterface
         $command .= '--validation_schema_path="'.$project['relative_schemas_folder'].'/'.$model['name'].'/Resource/'.'Request.json'.'" ';
         $command .= '--strict_type_schema_path="'.$project['relative_schemas_folder'].'/'.$model['name'].'/Resource/'.'Request.json'.'" ';
 
+        $butler_db_name = env('DB_DATABASE');
+        $project_db_name = $project['db_connection_name'];
+
+        putenv("DB_DATABASE=".$project_db_name);
         shell_exec( $command );
+        putenv("DB_DATABASE=".$butler_db_name);
     }
 
 
