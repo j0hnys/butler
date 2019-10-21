@@ -191,7 +191,7 @@ class Definition implements DefinitionInterface
      */
     public function getByEntityId($request_data, $id)
     {
-        $model = $this->definition_repository->with(['project','entities'])->find($request_data['entity_id']);
+        $model = $this->entity_repository->with(['project','definition'])->find($request_data['entity_id']);
         $project_data = ($model->getRelations())['project']->getAttributes();
         
         $model_data = $model->getAttributes();
