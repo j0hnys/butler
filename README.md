@@ -2,6 +2,8 @@
 
 Butler is an Implementation Manager for laravel applications made with [Trident](https://github.com/j0hnys/trident) and [Vista](https://github.com/j0hnys/vista).
 
+**video introduction at:** https://www.youtube.com/watch?v=4zuZATtU1GA
+
 ## Installation
 
  1. clone repo and `cd` to it
