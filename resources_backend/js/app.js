@@ -13,12 +13,13 @@ import store from './store';
 import App from './app.vue';
 import Routers from './router.js';
 import TypedComponentData from './types/TypedComponentData.js';
+import locale from 'iview/dist/locale/en-US';
 
 window.Vue = require('vue');
 window.iView = require('iview');
 
 Vue.use(VueRouter);
-Vue.use(iView);
+Vue.use(iView, {locale});
 Vue.use(TypedComponentData);
 
 //

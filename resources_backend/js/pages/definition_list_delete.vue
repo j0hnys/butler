@@ -16,7 +16,7 @@
 
                 <Row>
                     <Col>
-                        <Table border :loading="table.loading.state" :columns="columns" :data="data" no-data-text="-no data-">
+                        <Table border :key="table.render_switch" :loading="table.loading.state" :columns="columns" :data="data" no-data-text="-no data-">
                             <template slot="loading">
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 {{table.loading.text}}
@@ -38,7 +38,9 @@
                         state: true,
                         text: 'loading',
                     },
-                }
+                    render_switch: true,
+                },
+                project_name_filter_data: []
             };
 
             var state = {
@@ -49,6 +51,7 @@
             {
                 state = this.$store.state.pages.definition_list_delete;
             }
+            var self = this;
 
 
             //
@@ -61,6 +64,17 @@
                         title: 'project_name',
                         key: 'project_name',
                         minWidth: 100,
+                        filters: (async function(){
+                            return self.project_name_filter_data;
+                        })(),
+                        filterMultiple: false,
+                        filterRemote:function(value,key,column){
+                            //    this.filterColumn(value,key,column);
+                            self.table.render_switch = !self.table.render_switch;
+                        },
+                        filterMethod (value, row) {
+                            return row.project_name == value;
+                        }
                     },
                     {
                         title: 'namespace',
@@ -159,5 +173,25 @@
             this.ajax().get();
 
         },
+        watch: {
+            data: {
+                deep: true,
+                handler: function(value) {
+                    let tmp_table = [];
+                    for (const i in value) {
+                        if (value.hasOwnProperty(i)) {
+                            const element = value[i];
+                            tmp_table.push({
+                                'label': element.project_name,
+                                'value': element.project_name,
+                            });
+                        }
+                    }
+
+                    this.project_name_filter_data = tmp_table;
+                    this.table.render_switch = !this.table.render_switch;
+                }
+            }
+        }
     }
 </script>
