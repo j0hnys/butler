@@ -2418,7 +2418,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _this = this;
 
@@ -2429,16 +2429,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           text: 'loading'
         },
         render_switch: true
-      },
+      }
+    };
+    var state = {
+      formValidate: {},
       filters: {
         project_name: {
           selected: [],
           data: []
         }
       }
-    };
-    var state = {
-      formValidate: {}
     };
 
     if (this.$store.state.pages.definition_list_delete) {
@@ -2513,6 +2513,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       handler: function handler(value) {
         this.$store.commit('pages/definition_list_delete/setFormValidate', value);
       }
+    },
+    filters: {
+      deep: true,
+      handler: function handler(value) {
+        this.$store.commit('pages/definition_list_delete/setFilters', value);
+      }
+    },
+    data: {
+      deep: true,
+      handler: function handler(value) {
+        var tmp_table = [];
+
+        for (var i in value) {
+          if (value.hasOwnProperty(i)) {
+            var element = value[i];
+            tmp_table.push({
+              'label': element.project_name,
+              'value': element.project_name
+            });
+          }
+        }
+
+        this.filters.project_name.data = tmp_table;
+      }
     }
   },
   methods: {
@@ -2582,26 +2606,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.ajax().get();
   }
-}, "watch", {
-  data: {
-    deep: true,
-    handler: function handler(value) {
-      var tmp_table = [];
-
-      for (var i in value) {
-        if (value.hasOwnProperty(i)) {
-          var element = value[i];
-          tmp_table.push({
-            'label': element.project_name,
-            'value': element.project_name
-          });
-        }
-      }
-
-      this.filters.project_name.data = tmp_table;
-    }
-  }
-}));
+});
 
 /***/ }),
 
@@ -106875,7 +106880,13 @@ var state = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var state = {
-  formValidate: {}
+  formValidate: {},
+  filters: {
+    project_name: {
+      selected: [],
+      data: []
+    }
+  }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
@@ -106883,11 +106894,17 @@ var state = {
   mutations: {
     setFormValidate: function setFormValidate(state, data) {
       state.formValidate = data;
+    },
+    setFilters: function setFilters(state, data) {
+      state.filters = data;
     }
   },
   getters: {
     formValidate: function formValidate(state) {
       return state.formValidate;
+    },
+    filters: function filters(state) {
+      return state.filters;
     }
   }
 });

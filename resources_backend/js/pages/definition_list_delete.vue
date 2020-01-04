@@ -62,17 +62,17 @@
                     },
                     render_switch: true,
                 },
+            };
+
+            var state = {
+                formValidate: {
+                },
                 filters: {
                     project_name: {
                         selected: [],
                         data: [],
                     },
                 }
-            };
-
-            var state = {
-                formValidate: {
-                },
             };
             if (this.$store.state.pages.definition_list_delete) 
             {
@@ -156,6 +156,30 @@
                 {
                     this.$store.commit('pages/definition_list_delete/setFormValidate', value);
                 }
+            },
+            filters: {
+                deep: true,
+                handler(value) 
+                {
+                    this.$store.commit('pages/definition_list_delete/setFilters', value);
+                }
+            },
+            data: {
+                deep: true,
+                handler: function(value) {
+                    let tmp_table = [];
+                    for (const i in value) {
+                        if (value.hasOwnProperty(i)) {
+                            const element = value[i];
+                            tmp_table.push({
+                                'label': element.project_name,
+                                'value': element.project_name,
+                            });
+                        }
+                    }
+
+                    this.filters.project_name.data = tmp_table;
+                }
             }
         },
         methods: {
@@ -222,25 +246,6 @@
 
             this.ajax().get();
 
-        },
-        watch: {
-            data: {
-                deep: true,
-                handler: function(value) {
-                    let tmp_table = [];
-                    for (const i in value) {
-                        if (value.hasOwnProperty(i)) {
-                            const element = value[i];
-                            tmp_table.push({
-                                'label': element.project_name,
-                                'value': element.project_name,
-                            });
-                        }
-                    }
-
-                    this.filters.project_name.data = tmp_table;
-                }
-            }
         }
     }
 </script>
