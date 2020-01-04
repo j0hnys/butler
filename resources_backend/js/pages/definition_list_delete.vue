@@ -2,6 +2,9 @@
     .demo-spin-icon-load{
         animation: ani-demo-spin 1s linear infinite;
     }
+    .dld-table-filters {
+        margin-bottom: 20px;
+    }
 </style>
 <template>
     <div class="definition_list_delete">
@@ -10,7 +13,26 @@
 
                 <Row type="flex" justify="end" style="margin-bottom: 20px;">
                     <Col>
-                        <Button type="primary" @click="on_create_button_clicked">Create</Button>
+                        <Button type="primary" @click="onCreateButtonClicked">Create</Button>
+                    </Col>
+                </Row>
+
+                <Row type="flex">
+                    <Col span="1" style="width: 80px; text-align: center;">
+                        Filters: 
+                        <Divider style="margin: 2px; 0px;" />
+                        <Button type="default" size="small" @click  ="onClearAllButtonClicked">clear all</Button>
+                    </Col>
+                    <Col span="1" style="width: 10px; height: 53px;">
+                        <Divider type="vertical" style="height: 53px; margin-left:0px;" />
+                    </Col>
+                    <Col>
+                        <div class="dld-table-filters">
+                            <Select v-model="filters.project_name.selected" @on-change="onFilterSelected('project_name')" multiple style="width:260px" placeholder="--nothing selected--">
+                                <div slot="prefix"><strong style="margin-bottom: 2px;">project_name: </strong></div>
+                                <Option v-for="item in filters.project_name.data" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            </Select>
+                        </div>
                     </Col>
                 </Row>
 
@@ -40,7 +62,12 @@
                     },
                     render_switch: true,
                 },
-                project_name_filter_data: []
+                filters: {
+                    project_name: {
+                        selected: [],
+                        data: [],
+                    },
+                }
             };
 
             var state = {
@@ -64,17 +91,6 @@
                         title: 'project_name',
                         key: 'project_name',
                         minWidth: 100,
-                        filters: (async function(){
-                            return self.project_name_filter_data;
-                        })(),
-                        filterMultiple: false,
-                        filterRemote:function(value,key,column){
-                            //    this.filterColumn(value,key,column);
-                            self.table.render_switch = !self.table.render_switch;
-                        },
-                        filterMethod (value, row) {
-                            return row.project_name == value;
-                        }
                     },
                     {
                         title: 'namespace',
@@ -127,6 +143,7 @@
                         }
                     }
                 ],
+                server_data: [],
                 data: []
 
 
@@ -147,7 +164,7 @@
                 return {
                     get(id='') {
                         window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/definition'+id ).then(({ data }) => {
-                            // console.log(data);
+                            self.server_data = data;
                             self.data = data;
                             self.table.loading.state = false;
                         }).catch(error => {
@@ -156,7 +173,6 @@
                     },
                     delete(id) {
                         window.axios.delete( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/definition/'+id ).then(({ data }) => {
-                            // console.log(data);
                             window.location.reload();
                         }).catch(error => {
                             console.log(error);
@@ -164,9 +180,43 @@
                     }
                 }
             },
-            on_create_button_clicked() {
+            onCreateButtonClicked() {
                 this.$router.push({ name: 'definition_create' });
             },
+            onClearAllButtonClicked() {
+                let filters = this.filters;
+
+                for (const key in filters) {
+                    if (filters.hasOwnProperty(key)) {
+                        const element = filters[key];
+                        
+                        filters[key].selected = [];
+                    }
+                }
+
+                this.filters = filters;
+            },
+            onFilterSelected(column_name) {
+                let server_data = this.server_data;
+                let selected_filters = this.filters[column_name].selected;
+                let tmp_array = [];
+
+                for (const i in server_data) {
+                    if (server_data.hasOwnProperty(i)) {
+                        const element = server_data[i];
+
+                        if (selected_filters.includes(element[column_name])) {
+                            tmp_array.push(element);
+                        }
+                    }
+                }
+
+                if (tmp_array.length > 0) {
+                    this.data = tmp_array;
+                } else {
+                    this.data = server_data;
+                }
+            }
         },
         mounted() {
 
@@ -188,8 +238,7 @@
                         }
                     }
 
-                    this.project_name_filter_data = tmp_table;
-                    this.table.render_switch = !this.table.render_switch;
+                    this.filters.project_name.data = tmp_table;
                 }
             }
         }
