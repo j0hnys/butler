@@ -2427,8 +2427,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         loading: {
           state: true,
           text: 'loading'
-        },
-        render_switch: true
+        }
       }
     };
     var state = {
@@ -3017,6 +3016,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _this = this;
@@ -3030,7 +3051,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
     var state = {
-      formValidate: {}
+      formValidate: {},
+      filters: {
+        project_name: {
+          selected: [],
+          data: []
+        }
+      }
     };
 
     if (this.$store.state.pages.entity_list_delete) {
@@ -3135,6 +3162,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }, 'Update')]);
         }
       }],
+      server_data: [],
       data: []
     });
   },
@@ -3143,6 +3171,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       deep: true,
       handler: function handler(value) {
         this.$store.commit('pages/entity_list_delete/setFormValidate', value);
+      }
+    },
+    filters: {
+      deep: true,
+      handler: function handler(value) {
+        this.$store.commit('pages/entity_list_delete/setFilters', value);
+      }
+    },
+    data: {
+      deep: true,
+      handler: function handler(value) {
+        var tmp_table = [];
+
+        for (var i in value) {
+          if (value.hasOwnProperty(i)) {
+            var element = value[i];
+            tmp_table.push({
+              'label': element.project_name,
+              'value': element.project_name
+            });
+          }
+        }
+
+        this.filters.project_name.data = tmp_table;
       }
     }
   },
@@ -3154,8 +3206,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
           window.axios.get("/butler/public_backend" + '/trident/resource/entity' + id).then(function (_ref) {
             var data = _ref.data;
+            self.server_data = data;
             self.data = data;
             self.table.loading.state = false;
+            self.setFiltersToTable();
           })["catch"](function (error) {
             console.log(error);
           });
@@ -3188,10 +3242,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       };
     },
-    on_create_button_clicked: function on_create_button_clicked() {
+    onCreateButtonClicked: function onCreateButtonClicked() {
       this.$router.push({
         name: 'entity_create'
       });
+    },
+    onClearAllButtonClicked: function onClearAllButtonClicked() {
+      var filters = this.filters;
+
+      for (var key in filters) {
+        if (filters.hasOwnProperty(key)) {
+          var element = filters[key];
+          filters[key].selected = [];
+        }
+      }
+
+      this.filters = filters;
+    },
+    setFiltersToTable: function setFiltersToTable() {
+      var filters = this.filters;
+
+      for (var key in filters) {
+        this.onFilterSelected(key);
+      }
+    },
+    onFilterSelected: function onFilterSelected(column_name) {
+      var server_data = this.server_data;
+      var selected_filters = this.filters[column_name].selected;
+      var tmp_array = [];
+
+      for (var i in server_data) {
+        if (server_data.hasOwnProperty(i)) {
+          var element = server_data[i];
+
+          if (selected_filters.includes(element[column_name])) {
+            tmp_array.push(element);
+          }
+        }
+      }
+
+      if (tmp_array.length > 0) {
+        this.data = tmp_array;
+      } else {
+        this.data = server_data;
+      }
     }
   },
   mounted: function mounted() {
@@ -3873,6 +3967,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3887,7 +4003,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
     var state = {
-      formValidate: {}
+      formValidate: {},
+      filters: {
+        name: {
+          selected: [],
+          data: []
+        }
+      }
     };
 
     if (this.$store.state.pages.project_list_delete) {
@@ -3979,6 +4101,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }, 'Make')]);
         }
       }],
+      server_data: [],
       data: []
     });
   },
@@ -3987,6 +4110,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       deep: true,
       handler: function handler(value) {
         this.$store.commit('pages/project_list_delete/setFormValidate', value);
+      }
+    },
+    filters: {
+      deep: true,
+      handler: function handler(value) {
+        this.$store.commit('pages/project_list_delete/setFilters', value);
+      }
+    },
+    data: {
+      deep: true,
+      handler: function handler(value) {
+        var tmp_table = [];
+
+        for (var i in value) {
+          if (value.hasOwnProperty(i)) {
+            var element = value[i];
+            tmp_table.push({
+              'label': element.name,
+              'value': element.name
+            });
+          }
+        }
+
+        this.filters.name.data = tmp_table;
       }
     }
   },
@@ -3998,8 +4145,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
           window.axios.get("/butler/public_backend" + '/trident/resource/project' + id).then(function (_ref) {
             var data = _ref.data;
+            self.server_data = data;
             self.data = data;
             self.table.loading.state = false;
+            self.setFiltersToTable();
           })["catch"](function (error) {
             console.log(error);
           });
@@ -4032,10 +4181,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       };
     },
-    on_create_button_clicked: function on_create_button_clicked() {
+    onCreateButtonClicked: function onCreateButtonClicked() {
       this.$router.push({
         name: 'project_create'
       });
+    },
+    onClearAllButtonClicked: function onClearAllButtonClicked() {
+      var filters = this.filters;
+
+      for (var key in filters) {
+        if (filters.hasOwnProperty(key)) {
+          var element = filters[key];
+          filters[key].selected = [];
+        }
+      }
+
+      this.filters = filters;
+    },
+    setFiltersToTable: function setFiltersToTable() {
+      var filters = this.filters;
+
+      for (var key in filters) {
+        this.onFilterSelected(key);
+      }
+    },
+    onFilterSelected: function onFilterSelected(column_name) {
+      var server_data = this.server_data;
+      var selected_filters = this.filters[column_name].selected;
+      var tmp_array = [];
+
+      for (var i in server_data) {
+        if (server_data.hasOwnProperty(i)) {
+          var element = server_data[i];
+
+          if (selected_filters.includes(element[column_name])) {
+            tmp_array.push(element);
+          }
+        }
+      }
+
+      if (tmp_array.length > 0) {
+        this.data = tmp_array;
+      } else {
+        this.data = server_data;
+      }
     }
   },
   mounted: function mounted() {
@@ -4477,6 +4666,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _this = this;
@@ -4490,7 +4701,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
     var state = {
-      formValidate: {}
+      formValidate: {},
+      filters: {
+        project_name: {
+          selected: [],
+          data: []
+        }
+      }
     };
 
     if (this.$store.state.pages.view_list_delete) {
@@ -4588,6 +4805,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }, 'Generate')]);
         }
       }],
+      server_data: [],
       data: []
     });
   },
@@ -4596,6 +4814,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       deep: true,
       handler: function handler(value) {
         this.$store.commit('pages/view_list_delete/setFormValidate', value);
+      }
+    },
+    filters: {
+      deep: true,
+      handler: function handler(value) {
+        this.$store.commit('pages/view_list_delete/setFilters', value);
+      }
+    },
+    data: {
+      deep: true,
+      handler: function handler(value) {
+        var tmp_table = [];
+
+        for (var i in value) {
+          if (value.hasOwnProperty(i)) {
+            var element = value[i];
+            tmp_table.push({
+              'label': element.project_name,
+              'value': element.project_name
+            });
+          }
+        }
+
+        this.filters.project_name.data = tmp_table;
       }
     }
   },
@@ -4607,8 +4849,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
           window.axios.get("/butler/public_backend" + '/trident/resource/view' + id).then(function (_ref) {
             var data = _ref.data;
+            self.server_data = data;
             self.data = data;
             self.table.loading.state = false;
+            self.setFiltersToTable();
           })["catch"](function (error) {
             console.log(error);
           });
@@ -4631,10 +4875,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       };
     },
-    on_create_button_clicked: function on_create_button_clicked() {
+    onCreateButtonClicked: function onCreateButtonClicked() {
       this.$router.push({
         name: 'view_create'
       });
+    },
+    onClearAllButtonClicked: function onClearAllButtonClicked() {
+      var filters = this.filters;
+
+      for (var key in filters) {
+        if (filters.hasOwnProperty(key)) {
+          var element = filters[key];
+          filters[key].selected = [];
+        }
+      }
+
+      this.filters = filters;
+    },
+    setFiltersToTable: function setFiltersToTable() {
+      var filters = this.filters;
+
+      for (var key in filters) {
+        this.onFilterSelected(key);
+      }
+    },
+    onFilterSelected: function onFilterSelected(column_name) {
+      var server_data = this.server_data;
+      var selected_filters = this.filters[column_name].selected;
+      var tmp_array = [];
+
+      for (var i in server_data) {
+        if (server_data.hasOwnProperty(i)) {
+          var element = server_data[i];
+
+          if (selected_filters.includes(element[column_name])) {
+            tmp_array.push(element);
+          }
+        }
+      }
+
+      if (tmp_array.length > 0) {
+        this.data = tmp_array;
+      } else {
+        this.data = server_data;
+      }
     }
   },
   mounted: function mounted() {
@@ -9582,7 +9866,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.demo-spin-icon-load[data-v-2891affe]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.dld-table-filters[data-v-2891affe] {\n    margin-bottom: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.demo-spin-icon-load[data-v-2891affe]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-2891affe] {\n    margin-bottom: 20px;\n}\n", ""]);
 
 // exports
 
@@ -9601,7 +9885,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.demo-spin-icon-load[data-v-2077bce4]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n", ""]);
+exports.push([module.i, "\n.demo-spin-icon-load[data-v-2077bce4]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-2077bce4] {\n    margin-bottom: 20px;\n}\n", ""]);
 
 // exports
 
@@ -9658,7 +9942,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.demo-spin-icon-load[data-v-11211fb8]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n", ""]);
+exports.push([module.i, "\n.demo-spin-icon-load[data-v-11211fb8]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-11211fb8] {\n    margin-bottom: 20px;\n}\n", ""]);
 
 // exports
 
@@ -9677,7 +9961,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.demo-spin-icon-load[data-v-4cadb5d0]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n", ""]);
+exports.push([module.i, "\n.demo-spin-icon-load[data-v-4cadb5d0]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-4cadb5d0] {\n    margin-bottom: 20px;\n}\n", ""]);
 
 // exports
 
@@ -86802,7 +87086,7 @@ var render = function() {
                   _c("Col", [
                     _c(
                       "div",
-                      { staticClass: "dld-table-filters" },
+                      { staticClass: "table-filters" },
                       [
                         _c(
                           "Select",
@@ -86874,7 +87158,6 @@ var render = function() {
                       _c(
                         "Table",
                         {
-                          key: _vm.table.render_switch,
                           attrs: {
                             border: "",
                             loading: _vm.table.loading.state,
@@ -87214,13 +87497,122 @@ var render = function() {
                         "Button",
                         {
                           attrs: { type: "primary" },
-                          on: { click: _vm.on_create_button_clicked }
+                          on: { click: _vm.onCreateButtonClicked }
                         },
                         [_vm._v("Create")]
                       )
                     ],
                     1
                   )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "Row",
+                { attrs: { type: "flex" } },
+                [
+                  _c(
+                    "Col",
+                    {
+                      staticStyle: { width: "80px", "text-align": "center" },
+                      attrs: { span: "1" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Filters: \n                    "
+                      ),
+                      _c("Divider", { staticStyle: { margin: "2px" } }),
+                      _vm._v(" "),
+                      _c(
+                        "Button",
+                        {
+                          attrs: { type: "default", size: "small" },
+                          on: { click: _vm.onClearAllButtonClicked }
+                        },
+                        [_vm._v("clear all")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "Col",
+                    {
+                      staticStyle: { width: "10px", height: "53px" },
+                      attrs: { span: "1" }
+                    },
+                    [
+                      _c("Divider", {
+                        staticStyle: { height: "53px", "margin-left": "0px" },
+                        attrs: { type: "vertical" }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("Col", [
+                    _c(
+                      "div",
+                      { staticClass: "table-filters" },
+                      [
+                        _c(
+                          "Select",
+                          {
+                            staticStyle: { width: "260px" },
+                            attrs: {
+                              multiple: "",
+                              placeholder: "--nothing selected--"
+                            },
+                            on: {
+                              "on-change": function($event) {
+                                return _vm.onFilterSelected("project_name")
+                              }
+                            },
+                            model: {
+                              value: _vm.filters.project_name.selected,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.filters.project_name,
+                                  "selected",
+                                  $$v
+                                )
+                              },
+                              expression: "filters.project_name.selected"
+                            }
+                          },
+                          [
+                            _c(
+                              "div",
+                              { attrs: { slot: "prefix" }, slot: "prefix" },
+                              [
+                                _c(
+                                  "strong",
+                                  { staticStyle: { "margin-bottom": "2px" } },
+                                  [_vm._v("project_name: ")]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.filters.project_name.data, function(
+                              item
+                            ) {
+                              return _c(
+                                "Option",
+                                {
+                                  key: item.value,
+                                  attrs: { value: item.value }
+                                },
+                                [_vm._v(_vm._s(item.label))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ],
+                      1
+                    )
+                  ])
                 ],
                 1
               ),
@@ -88152,13 +88544,116 @@ var render = function() {
                         "Button",
                         {
                           attrs: { type: "primary" },
-                          on: { click: _vm.on_create_button_clicked }
+                          on: { click: _vm.onCreateButtonClicked }
                         },
                         [_vm._v("Create")]
                       )
                     ],
                     1
                   )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "Row",
+                { attrs: { type: "flex" } },
+                [
+                  _c(
+                    "Col",
+                    {
+                      staticStyle: { width: "80px", "text-align": "center" },
+                      attrs: { span: "1" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Filters: \n                    "
+                      ),
+                      _c("Divider", { staticStyle: { margin: "2px" } }),
+                      _vm._v(" "),
+                      _c(
+                        "Button",
+                        {
+                          attrs: { type: "default", size: "small" },
+                          on: { click: _vm.onClearAllButtonClicked }
+                        },
+                        [_vm._v("clear all")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "Col",
+                    {
+                      staticStyle: { width: "10px", height: "53px" },
+                      attrs: { span: "1" }
+                    },
+                    [
+                      _c("Divider", {
+                        staticStyle: { height: "53px", "margin-left": "0px" },
+                        attrs: { type: "vertical" }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("Col", [
+                    _c(
+                      "div",
+                      { staticClass: "table-filters" },
+                      [
+                        _c(
+                          "Select",
+                          {
+                            staticStyle: { width: "260px" },
+                            attrs: {
+                              multiple: "",
+                              placeholder: "--nothing selected--"
+                            },
+                            on: {
+                              "on-change": function($event) {
+                                return _vm.onFilterSelected("name")
+                              }
+                            },
+                            model: {
+                              value: _vm.filters.name.selected,
+                              callback: function($$v) {
+                                _vm.$set(_vm.filters.name, "selected", $$v)
+                              },
+                              expression: "filters.name.selected"
+                            }
+                          },
+                          [
+                            _c(
+                              "div",
+                              { attrs: { slot: "prefix" }, slot: "prefix" },
+                              [
+                                _c(
+                                  "strong",
+                                  { staticStyle: { "margin-bottom": "2px" } },
+                                  [_vm._v("name: ")]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.filters.name.data, function(item) {
+                              return _c(
+                                "Option",
+                                {
+                                  key: item.value,
+                                  attrs: { value: item.value }
+                                },
+                                [_vm._v(_vm._s(item.label))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ],
+                      1
+                    )
+                  ])
                 ],
                 1
               ),
@@ -88616,13 +89111,122 @@ var render = function() {
                         "Button",
                         {
                           attrs: { type: "primary" },
-                          on: { click: _vm.on_create_button_clicked }
+                          on: { click: _vm.onCreateButtonClicked }
                         },
                         [_vm._v("Create")]
                       )
                     ],
                     1
                   )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "Row",
+                { attrs: { type: "flex" } },
+                [
+                  _c(
+                    "Col",
+                    {
+                      staticStyle: { width: "80px", "text-align": "center" },
+                      attrs: { span: "1" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Filters: \n                    "
+                      ),
+                      _c("Divider", { staticStyle: { margin: "2px" } }),
+                      _vm._v(" "),
+                      _c(
+                        "Button",
+                        {
+                          attrs: { type: "default", size: "small" },
+                          on: { click: _vm.onClearAllButtonClicked }
+                        },
+                        [_vm._v("clear all")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "Col",
+                    {
+                      staticStyle: { width: "10px", height: "53px" },
+                      attrs: { span: "1" }
+                    },
+                    [
+                      _c("Divider", {
+                        staticStyle: { height: "53px", "margin-left": "0px" },
+                        attrs: { type: "vertical" }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("Col", [
+                    _c(
+                      "div",
+                      { staticClass: "table-filters" },
+                      [
+                        _c(
+                          "Select",
+                          {
+                            staticStyle: { width: "260px" },
+                            attrs: {
+                              multiple: "",
+                              placeholder: "--nothing selected--"
+                            },
+                            on: {
+                              "on-change": function($event) {
+                                return _vm.onFilterSelected("project_name")
+                              }
+                            },
+                            model: {
+                              value: _vm.filters.project_name.selected,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.filters.project_name,
+                                  "selected",
+                                  $$v
+                                )
+                              },
+                              expression: "filters.project_name.selected"
+                            }
+                          },
+                          [
+                            _c(
+                              "div",
+                              { attrs: { slot: "prefix" }, slot: "prefix" },
+                              [
+                                _c(
+                                  "strong",
+                                  { staticStyle: { "margin-bottom": "2px" } },
+                                  [_vm._v("project_name: ")]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.filters.project_name.data, function(
+                              item
+                            ) {
+                              return _c(
+                                "Option",
+                                {
+                                  key: item.value,
+                                  attrs: { value: item.value }
+                                },
+                                [_vm._v(_vm._s(item.label))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ],
+                      1
+                    )
+                  ])
                 ],
                 1
               ),
@@ -106998,7 +107602,13 @@ var state = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var state = {
-  formValidate: {}
+  formValidate: {},
+  filters: {
+    project_name: {
+      selected: [],
+      data: []
+    }
+  }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
@@ -107006,11 +107616,17 @@ var state = {
   mutations: {
     setFormValidate: function setFormValidate(state, data) {
       state.formValidate = data;
+    },
+    setFilters: function setFilters(state, data) {
+      state.filters = data;
     }
   },
   getters: {
     formValidate: function formValidate(state) {
       return state.formValidate;
+    },
+    filters: function filters(state) {
+      return state.filters;
     }
   }
 });
@@ -107098,7 +107714,13 @@ var state = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var state = {
-  formValidate: {}
+  formValidate: {},
+  filters: {
+    name: {
+      selected: [],
+      data: []
+    }
+  }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
@@ -107106,11 +107728,17 @@ var state = {
   mutations: {
     setFormValidate: function setFormValidate(state, data) {
       state.formValidate = data;
+    },
+    setFilters: function setFilters(state, data) {
+      state.filters = data;
     }
   },
   getters: {
     formValidate: function formValidate(state) {
       return state.formValidate;
+    },
+    filters: function filters(state) {
+      return state.filters;
     }
   }
 });
@@ -107198,7 +107826,13 @@ var state = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var state = {
-  formValidate: {}
+  formValidate: {},
+  filters: {
+    project_name: {
+      selected: [],
+      data: []
+    }
+  }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
@@ -107206,11 +107840,17 @@ var state = {
   mutations: {
     setFormValidate: function setFormValidate(state, data) {
       state.formValidate = data;
+    },
+    setFilters: function setFilters(state, data) {
+      state.filters = data;
     }
   },
   getters: {
     formValidate: function formValidate(state) {
       return state.formValidate;
+    },
+    filters: function filters(state) {
+      return state.filters;
     }
   }
 });

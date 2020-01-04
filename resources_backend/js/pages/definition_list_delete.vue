@@ -2,7 +2,7 @@
     .demo-spin-icon-load{
         animation: ani-demo-spin 1s linear infinite;
     }
-    .dld-table-filters {
+    .table-filters {
         margin-bottom: 20px;
     }
 </style>
@@ -27,7 +27,7 @@
                         <Divider type="vertical" style="height: 53px; margin-left:0px;" />
                     </Col>
                     <Col>
-                        <div class="dld-table-filters">
+                        <div class="table-filters">
                             <Select v-model="filters.project_name.selected" @on-change="onFilterSelected('project_name')" multiple style="width:260px" placeholder="--nothing selected--">
                                 <div slot="prefix"><strong style="margin-bottom: 2px;">project_name: </strong></div>
                                 <Option v-for="item in filters.project_name.data" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -38,7 +38,7 @@
 
                 <Row>
                     <Col>
-                        <Table border :key="table.render_switch" :loading="table.loading.state" :columns="columns" :data="data" no-data-text="-no data-">
+                        <Table border :loading="table.loading.state" :columns="columns" :data="data" no-data-text="-no data-">
                             <template slot="loading">
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 {{table.loading.text}}
@@ -60,7 +60,6 @@
                         state: true,
                         text: 'loading',
                     },
-                    render_switch: true,
                 },
             };
 

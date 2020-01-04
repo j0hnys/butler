@@ -1,6 +1,12 @@
 var state = {
     formValidate: {
     },
+    filters: {
+        name: {
+            selected: [],
+            data: [],
+        },
+    }
 };
 
 export default {
@@ -11,11 +17,19 @@ export default {
         {
             state.formValidate = data;
         },
+        setFilters (state, data) 
+        {
+            state.filters = data;
+        },
     },
     getters: {
         formValidate (state) 
         {
             return state.formValidate;
+        },
+        filters (state) 
+        {
+            return state.filters;
         }
     }
 };

@@ -2,6 +2,9 @@
     .demo-spin-icon-load{
         animation: ani-demo-spin 1s linear infinite;
     }
+    .table-filters {
+        margin-bottom: 20px;
+    }
 </style>
 <template>
     <div class="project_list_delete">
@@ -10,7 +13,26 @@
 
                 <Row type="flex" justify="end" style="margin-bottom: 20px;">
                     <Col>
-                        <Button type="primary" @click="on_create_button_clicked">Create</Button>
+                        <Button type="primary" @click="onCreateButtonClicked">Create</Button>
+                    </Col>
+                </Row>
+
+                <Row type="flex">
+                    <Col span="1" style="width: 80px; text-align: center;">
+                        Filters: 
+                        <Divider style="margin: 2px; 0px;" />
+                        <Button type="default" size="small" @click  ="onClearAllButtonClicked">clear all</Button>
+                    </Col>
+                    <Col span="1" style="width: 10px; height: 53px;">
+                        <Divider type="vertical" style="height: 53px; margin-left:0px;" />
+                    </Col>
+                    <Col>
+                        <div class="table-filters">
+                            <Select v-model="filters.name.selected" @on-change="onFilterSelected('name')" multiple style="width:260px" placeholder="--nothing selected--">
+                                <div slot="prefix"><strong style="margin-bottom: 2px;">name: </strong></div>
+                                <Option v-for="item in filters.name.data" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            </Select>
+                        </div>
                     </Col>
                 </Row>
 
@@ -45,6 +67,12 @@ import { setTimeout } from 'timers';
             var state = {
                 formValidate: {
                 },
+                filters: {
+                    name: {
+                        selected: [],
+                        data: [],
+                    },
+                }
             };
             if (this.$store.state.pages.project_list_delete) 
             {
@@ -144,6 +172,7 @@ import { setTimeout } from 'timers';
                         }
                     }
                 ],
+                server_data: [],
                 data: []
 
 
@@ -156,6 +185,30 @@ import { setTimeout } from 'timers';
                 {
                     this.$store.commit('pages/project_list_delete/setFormValidate', value);
                 }
+            },
+            filters: {
+                deep: true,
+                handler(value) 
+                {
+                    this.$store.commit('pages/project_list_delete/setFilters', value);
+                }
+            },
+            data: {
+                deep: true,
+                handler: function(value) {
+                    let tmp_table = [];
+                    for (const i in value) {
+                        if (value.hasOwnProperty(i)) {
+                            const element = value[i];
+                            tmp_table.push({
+                                'label': element.name,
+                                'value': element.name,
+                            });
+                        }
+                    }
+
+                    this.filters.name.data = tmp_table;
+                }
             }
         },
         methods: {
@@ -164,8 +217,10 @@ import { setTimeout } from 'timers';
                 return {
                     get(id='') {
                         window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/project'+id ).then(({ data }) => {
+                            self.server_data = data;
                             self.data = data;
                             self.table.loading.state = false;
+                            self.setFiltersToTable();
                         }).catch(error => {
                             console.log(error);
                         });
@@ -198,9 +253,50 @@ import { setTimeout } from 'timers';
                     },
                 }
             },
-            on_create_button_clicked() {
+            onCreateButtonClicked() {
                 this.$router.push({ name: 'project_create' });
             },
+            onClearAllButtonClicked() {
+                let filters = this.filters;
+
+                for (const key in filters) {
+                    if (filters.hasOwnProperty(key)) {
+                        const element = filters[key];
+                        
+                        filters[key].selected = [];
+                    }
+                }
+
+                this.filters = filters;
+            },
+            setFiltersToTable() {
+                let filters = this.filters;
+
+                for (const key in filters) {
+                    this.onFilterSelected(key);
+                }
+            },
+            onFilterSelected(column_name) {
+                let server_data = this.server_data;
+                let selected_filters = this.filters[column_name].selected;
+                let tmp_array = [];
+
+                for (const i in server_data) {
+                    if (server_data.hasOwnProperty(i)) {
+                        const element = server_data[i];
+
+                        if (selected_filters.includes(element[column_name])) {
+                            tmp_array.push(element);
+                        }
+                    }
+                }
+
+                if (tmp_array.length > 0) {
+                    this.data = tmp_array;
+                } else {
+                    this.data = server_data;
+                }
+            }
         },
         mounted() {
             
