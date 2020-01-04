@@ -2550,6 +2550,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             self.server_data = data;
             self.data = data;
             self.table.loading.state = false;
+            self.setFiltersToTable();
           })["catch"](function (error) {
             console.log(error);
           });
@@ -2580,6 +2581,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.filters = filters;
+    },
+    setFiltersToTable: function setFiltersToTable() {
+      var filters = this.filters;
+
+      for (var key in filters) {
+        this.onFilterSelected(key);
+      }
     },
     onFilterSelected: function onFilterSelected(column_name) {
       var server_data = this.server_data;

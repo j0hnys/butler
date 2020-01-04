@@ -191,6 +191,7 @@
                             self.server_data = data;
                             self.data = data;
                             self.table.loading.state = false;
+                            self.setFiltersToTable();
                         }).catch(error => {
                             console.log(error);
                         });
@@ -219,6 +220,13 @@
                 }
 
                 this.filters = filters;
+            },
+            setFiltersToTable() {
+                let filters = this.filters;
+
+                for (const key in filters) {
+                    this.onFilterSelected(key);
+                }
             },
             onFilterSelected(column_name) {
                 let server_data = this.server_data;
