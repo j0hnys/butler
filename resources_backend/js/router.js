@@ -122,5 +122,32 @@ const routers = [
             submenu: null,
         }
     },
+    { // add "import test_list_delete from './pages/test_list_delete.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_list',
+        title: 'otinanai',
+        name: 'test_list_delete',
+        component: routes.test_list_delete,
+        meta: {
+            submenu: null,
+        }
+    },
+    { // add "import test_create from './pages/test_create.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_create',
+        title: 'otinanai',
+        name: 'test_create',
+        component: routes.test_create,
+        meta: {
+            submenu: null,
+        }
+    },
+    { // add "import test_update from './pages/test_update.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_update/:id',
+        title: 'otinanai',
+        name: 'test_update',
+        component: routes.test_update,
+        meta: {
+            submenu: null,
+        }
+    },
 ];
 export default routers;

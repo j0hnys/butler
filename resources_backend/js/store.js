@@ -41,6 +41,9 @@ const store = new Vuex.Store({
                 view_list_delete: stores.view_list_delete,
                 view_create: stores.view_create,
                 view_update: stores.view_update,
+                test_list_delete: stores.test_list_delete,
+                test_create: stores.test_create,
+                test_update: stores.test_update,
             }
         },
     },

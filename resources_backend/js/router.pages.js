@@ -23,3 +23,6 @@ exports.entity_update = require("./pages/entity_update.vue").default;
 exports.view_list_delete = require("./pages/view_list_delete.vue").default;
 exports.view_create = require("./pages/view_create.vue").default;
 exports.view_update = require("./pages/view_update.vue").default;
+exports.test_list_delete = require("./pages/test_list_delete.vue").default;
+exports.test_create = require("./pages/test_create.vue").default;
+exports.test_update = require("./pages/test_update.vue").default;
