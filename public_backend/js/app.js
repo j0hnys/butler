@@ -5068,6 +5068,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var local = {
@@ -90365,7 +90369,7 @@ var render = function() {
                     { attrs: { label: "type", prop: "type" } },
                     [
                       _c("Input", {
-                        attrs: { placeholder: "Enter your type" },
+                        attrs: { readonly: "", placeholder: "Enter your type" },
                         model: {
                           value: _vm.formValidate.type,
                           callback: function($$v) {
@@ -90374,6 +90378,21 @@ var render = function() {
                           expression: "formValidate.type"
                         }
                       })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    [
+                      _c(
+                        "Button",
+                        {
+                          attrs: { type: "primary" },
+                          on: { click: _vm.onGenerateDefaultValuesClicked }
+                        },
+                        [_vm._v("Generate Default Values")]
+                      )
                     ],
                     1
                   ),

@@ -41,7 +41,11 @@
                         <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
                     </FormItem>
                     <FormItem label="type" prop="type">
-                        <Input v-model="formValidate.type" placeholder="Enter your type"></Input>
+                        <Input readonly v-model="formValidate.type" placeholder="Enter your type"></Input>
+                    </FormItem>
+
+                    <FormItem>
+                        <Button type="primary" @click="onGenerateDefaultValuesClicked">Generate Default Values</Button>
                     </FormItem>
 
                     <FormItem></FormItem>
