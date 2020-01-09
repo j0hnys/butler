@@ -11,6 +11,9 @@ use App\Trident\Workflows\Validations\TestUpdateRequest;
 use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructIndexTest;
 use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructStoreTest;
 use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructUpdateTest;
+use App\Trident\Workflows\Validations\TestGenerateRequest;
+use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructGenerateTest;
+
 
 class TestController extends Controller
 {
@@ -132,6 +135,20 @@ class TestController extends Controller
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
+    /**
+     * *enter description here.*
+     *
+     * @param  TestgenerateRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function generate(TestGenerateRequest $request, $id)
+    {   
+        $this->authorize('generate', [$this->test_repository,$id]);
+        $structgenerateTest = new StructGenerateTest($request->all());    
+        $testgenerateResource = $this->test_workflow->generate( $structgenerateTest ,$id);
+        return response()->json( $testgenerateResource );
+    }
 
-    
+
+
 }

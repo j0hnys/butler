@@ -91,4 +91,19 @@ class TestPolicy
     {
         return $user->id == $Test->findOrFail($id)->user_id;
     }
+
+    /**
+     * Determine whether the user can permanently generate the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\TestRepository $Test
+     * @return mixed
+     */
+    public function generate(User $user, Test $test, int $id)
+    {
+        return $user->id == $test->findOrFail($id)->user_id;
+    }
+
+
+
 }

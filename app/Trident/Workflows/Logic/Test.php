@@ -12,6 +12,7 @@ use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructStoreTest;
 use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructUpdateTest;
 use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestResource;
 use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestResourceCollection;
+use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestgenerateResource;
 
 class Test implements TestInterface
 {
@@ -141,4 +142,26 @@ class Test implements TestInterface
         $deleted_count = $this->test_repository->destroy($id);
         return ($deleted_count > 0);
     }
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function generate($request_struct, $id)
+    {   
+        $model = $this->view_repository->with(['project','definition','entity'])->find($id);
+        
+        $this->test_business->generate(
+            $model->getAttributes(),
+            $model->getRelations()['project']->getAttributes(),
+            $model->getRelations()['definition']->getAttributes(),
+            $model->getRelations()['entity']->getAttributes(),
+        );
+
+        return new TestgenerateResource( $model );
+    }
+
+
 }
