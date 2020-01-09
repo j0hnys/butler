@@ -73,7 +73,11 @@ class TestController extends Controller
     public function store(TestStoreRequest $request)
     {
         $this->authorize('create',$this->test_repository);
-        $structStoreTest = new StructStoreTest( $request->all() );
+        $request_all = $request->all();
+        $request_all['project_id'] = (int)$request_all['project_id'];
+        $request_all['definition_id'] = (int)$request_all['definition_id'];
+        $request_all['entity_id'] = (int)$request_all['entity_id'];
+        $structStoreTest = new StructStoreTest( $request_all );
         $testResource = $this->test_workflow->store($structStoreTest);
         return response()->json( $testResource );
     }

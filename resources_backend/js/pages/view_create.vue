@@ -38,7 +38,6 @@
 <script>
     export default {
         data() {
-
             var local = {
                 cascader_entity: [],
                 project_definitions_entities: [],

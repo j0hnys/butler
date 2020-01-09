@@ -111,21 +111,6 @@
                         minWidth: 100,
                     },
                     {
-                        title: 'functionality_data',
-                        key: 'functionality_data',
-                        minWidth: 100,
-                    },
-                    {
-                        title: 'request_data',
-                        key: 'request_data',
-                        minWidth: 100,
-                    },
-                    {
-                        title: 'response_data',
-                        key: 'response_data',
-                        minWidth: 100,
-                    },
-                    {
                         title: 'Action',
                         key: 'action',
                         width: 150,

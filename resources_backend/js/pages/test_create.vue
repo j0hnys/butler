@@ -1,64 +1,24 @@
 <style scoped>
-    .index {
-        width: 100%;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        text-align: center;
-    }
-        .index h1 {
-            height: 150px;
-        }
-            .index h1 img {
-                height: 100%;
-            }
-        .index h2 {
-            color: #666;
-            margin-bottom: 200px;
-        }
-            .index h2 p {
-                margin: 0 0 50px;
-            }
-    .ivu-row-flex {
-        height: 100%;
-    }
+
 </style>
 <template>
     <div class="test_create">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
-                <h1>
-                    test
-                </h1>
+                <h1>Create</h1>
 
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
                     
-
-                    <FormItem label="project_id" prop="project_id">
-                        <InputNumber v-model="formValidate.project_id" placeholder="Enter your project_id"></InputNumber>
-                    </FormItem>
-                    <FormItem label="definition_id" prop="definition_id">
-                        <InputNumber v-model="formValidate.definition_id" placeholder="Enter your definition_id"></InputNumber>
-                    </FormItem>
                     <FormItem label="entity_id" prop="entity_id">
-                        <InputNumber v-model="formValidate.entity_id" placeholder="Enter your entity_id"></InputNumber>
+                        <Cascader v-model="cascader_entity" :data="project_definitions_entities" placeholder="---NOTHING SELECTED---"></Cascader>
                     </FormItem>
+
                     <FormItem label="name" prop="name">
                         <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
                     </FormItem>
                     <FormItem label="type" prop="type">
                         <Input v-model="formValidate.type" placeholder="Enter your type"></Input>
-                    </FormItem>
-                    <FormItem label="functionality_data" prop="functionality_data">
-                        <Input v-model="formValidate.functionality_data" placeholder="Enter your functionality_data"></Input>
-                    </FormItem>
-                    <FormItem label="request_data" prop="request_data">
-                        <Input v-model="formValidate.request_data" placeholder="Enter your request_data"></Input>
-                    </FormItem>
-                    <FormItem label="response_data" prop="response_data">
-                        <Input v-model="formValidate.response_data" placeholder="Enter your response_data"></Input>
                     </FormItem>
                     
                     
@@ -75,53 +35,34 @@
 <script>
     export default {
         data() {
+            var local = {
+                cascader_entity: [],
+                project_definitions_entities: [],
+            };
+
             var state = {
                 formValidate: {
                     project_id: '',
                     definition_id: '',
                     entity_id: '',
                     name: '',
-                    type: '',
-                    functionality_data: '',
-                    request_data: '',
-                    response_data: '',
+                    type: 'resource',
+                    functionality_data: '{}',
+                    request_data: '[]',
+                    response_data: '[]',
                 },
             };
             if (this.$store.state.pages.test_create) 
             {
-                state = this.$store.state.pages.test_create;
+                // state = this.$store.state.pages.test_create;
             }
 
             //
             //component state registration
             return {
+                ...local,
                 ...state,
                 ruleValidate: {
-
-                    project_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The project_id cannot be empty', 
-                        }
-                    ],
-                    definition_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The definition_id cannot be empty', 
-                        }
-                    ],
-                    entity_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The entity_id cannot be empty', 
-                        }
-                    ],
                     name: [
                         { 
                             required: true, 
@@ -136,30 +77,6 @@
                             type: 'string', 
                             trigger: 'blur',
                             message: 'The type cannot be empty', 
-                        }
-                    ],
-                    functionality_data: [
-                        { 
-                            required: true, 
-                            type: 'string', 
-                            trigger: 'blur',
-                            message: 'The functionality_data cannot be empty', 
-                        }
-                    ],
-                    request_data: [
-                        { 
-                            required: true, 
-                            type: 'string', 
-                            trigger: 'blur',
-                            message: 'The request_data cannot be empty', 
-                        }
-                    ],
-                    response_data: [
-                        { 
-                            required: true, 
-                            type: 'string', 
-                            trigger: 'blur',
-                            message: 'The response_data cannot be empty', 
                         }
                     ],
 
@@ -180,7 +97,66 @@
             ajax() {
                 var self = this;
                 return {
+                    getProjectsWithDefinitionsEntities() {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_get_with_definitions_entities' ).then(({ data }) => {
+                            let tmp_data = [];
+                            for (const i in data) {
+                                if (data.hasOwnProperty(i)) {
+                                    const element = data[i];
+                                    
+                                    let tmp_definitions = [];
+
+                                    if (element.definitions.length > 0) {
+                                        for (const j in element.definitions) {
+                                            if (element.definitions.hasOwnProperty(j)) {
+                                                const element_ = element.definitions[j];
+                                                
+                                                let tmp_entities = [];
+
+                                                if (element_.entities.length > 0) {
+                                                    for (const k in element_.entities) {
+                                                        if (element_.entities.hasOwnProperty(k)) {
+                                                            const element__ = element_.entities[k];
+                                                            
+                                                            tmp_entities.push({
+                                                                value: element__.id,
+                                                                label: element__.name,
+                                                                data: element__
+                                                            });
+                                                        }
+                                                    }
+                                                }
+
+                                                tmp_definitions.push({
+                                                    value: element_.id,
+                                                    label: element_.namespace,
+                                                    data: element_,
+                                                    children: tmp_entities
+                                                });
+                                            }
+                                        }
+                                    }
+
+                                    tmp_data.push({
+                                        value: element.id,
+                                        label: element.name,
+                                        data: element,
+                                        children: tmp_definitions
+                                    });
+
+                                }
+                            }
+                    
+                            self.project_definitions_entities = tmp_data;
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    },
                     create(data) {
+
+                        data.project_id = self.cascader_entity[0];
+                        data.definition_id = self.cascader_entity[1];
+                        data.entity_id = self.cascader_entity[2];
 
                         var form_data = new FormData();
                         
@@ -190,6 +166,8 @@
                                 
                                 if (key == 'file') {
                                     form_data.append(key, data[key], data[key].name);
+                                } else if (key == 'functionality_data' || key == 'request_data' || key == 'response_data') {
+                                    form_data.append(key, '{}');
                                 } else {
                                     form_data.append(key, data[key]);
                                 }
@@ -224,13 +202,9 @@
             },
         },
         mounted() {
-            // console.log('test form mounted');
-            // console.log({
-            //     // 'this.$store': this.$store,
-            //     // 'this.$store.state': this.$store.state,
-            //     // 'this.$store.state.Index': this.$store.state.Index,
-            //     'this.$route': this.$route,
-            // });
+            
+            this.ajax().getProjectsWithDefinitionsEntities();
+
         },
     }
 </script>

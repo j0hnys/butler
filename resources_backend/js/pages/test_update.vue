@@ -28,44 +28,118 @@
     <div class="test_update">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
-                <h1>
-                    test update
-                </h1>
+                <h1>Update</h1>
 
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
 
-                    <FormItem label="project_id" prop="project_id">
-                        <InputNumber v-model="formValidate.project_id" placeholder="Enter your project_id"></InputNumber>
-                    </FormItem>
-                    <FormItem label="definition_id" prop="definition_id">
-                        <InputNumber v-model="formValidate.definition_id" placeholder="Enter your definition_id"></InputNumber>
-                    </FormItem>
                     <FormItem label="entity_id" prop="entity_id">
-                        <InputNumber v-model="formValidate.entity_id" placeholder="Enter your entity_id"></InputNumber>
+                        <Cascader :disabled="true" v-model="cascader_entity" :data="project_definitions_entities" placeholder="---NOTHING SELECTED---"></Cascader>
                     </FormItem>
+
                     <FormItem label="name" prop="name">
                         <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
                     </FormItem>
                     <FormItem label="type" prop="type">
                         <Input v-model="formValidate.type" placeholder="Enter your type"></Input>
                     </FormItem>
-                    <FormItem label="functionality_data" prop="functionality_data">
-                        <Input v-model="formValidate.functionality_data" placeholder="Enter your functionality_data"></Input>
-                    </FormItem>
-                    <FormItem label="request_data" prop="request_data">
-                        <Input v-model="formValidate.request_data" placeholder="Enter your request_data"></Input>
-                    </FormItem>
-                    <FormItem label="response_data" prop="response_data">
-                        <Input v-model="formValidate.response_data" placeholder="Enter your response_data"></Input>
+
+                    <FormItem></FormItem>
+
+                    <h1>
+                        Request
+                        <Tooltip content="" max-width="600">
+                            <Icon type="ios-information-circle" style="font-size:0.7em;" />
+                            <div slot="content">
+                                <strong>T::*</strong>
+                                <p><i>where `*` is `string()`, `integer()`, `bool()`, `nullable()`, 
+                        `array()`, `float()`, `double()` </i></p>
+                                <br>
+                                <strong>laravel_validation_rule_string</strong>
+                                <p><i>is the native laravel validation string. e.x. "required | string"  </i></p>
+                            </div>
+                        </Tooltip>
+                    </h1>
+                    <Divider />
+                    <Table border :columns="request_table.columns" :data="request_table.data" no-data-text="-no data-">
+                        <template slot-scope="{ row, index }" slot="name">
+                            <Input type="text" v-model="request_table.edit.name" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.name }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="type">
+                            <Input type="text" v-model="request_table.edit.type" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.type }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="validation">
+                            <Input type="text" v-model="request_table.edit.validation" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.validation }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="fillable">
+                            <Input type="text" v-model="request_table.edit.fillable" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.fillable }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="action">
+                            <div v-if="request_table.edit.index === index">
+                                <Button type="success" size="small" @click="requestTableHandleSave(index)">Save</Button>
+                                <Button type="warning" size="small" @click="request_table.edit.index = -1">Cancel</Button>
+                            </div>
+                            <div v-else>
+                                <Button type="primary" size="small" @click="requestTableHandleEdit(row, index)">Edit</Button>
+                                <Button type="error" size="small" @click="requestTableHandleDelete(index)">Delete</Button>
+                            </div>
+                        </template>
+                    </Table>
+                    <FormItem>
+                        <Input hidden v-model="formValidate.request_data" placeholder=""></Input>
                     </FormItem>
 
+                    <h1>
+                        Response
+                        <Tooltip content="" max-width="600">
+                            <Icon type="ios-information-circle" style="font-size:0.7em;" />
+                            <div slot="content">
+                                <strong>T::*</strong>
+                                <p><i>where `*` is `string()`, `integer()`, `bool()`, `nullable()`, 
+                        `array()`, `float()`, `double()` </i></p>
+                            </div>
+                        </Tooltip>
+                    </h1>
+                    <Divider />
+                    <Table border :columns="response_table.columns" :data="response_table.data" no-data-text="-no data-">
+                        <template slot-scope="{ row, index }" slot="name">
+                            <Input type="text" v-model="response_table.edit.name" v-if="response_table.edit.index === index" />
+                            <span v-else>{{ row.name }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="resource">
+                            <Input type="text" v-model="response_table.edit.resource" v-if="response_table.edit.index === index" />
+                            <span v-else>{{ row.resource }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="action">
+                            <div v-if="response_table.edit.index === index">
+                                <Button type="success" size="small" @click="responseTableHandleSave(index)">Save</Button>
+                                <Button type="warning" size="small" @click="response_table.edit.index = -1">Cancel</Button>
+                            </div>
+                            <div v-else>
+                                <Button type="primary" size="small" @click="responseTableHandleEdit(row, index)">Edit</Button>
+                                <Button type="error" size="small" @click="responseTableHandleDelete(index)">Delete</Button>
+                            </div>
+                        </template>    
+                    </Table>    
                     <FormItem>
-                        <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
+                        <Input hidden v-model="formValidate.response_data" placeholder=""></Input>                
                     </FormItem>
                 </Form>
-
-
+            </Col>
+        </Row>
+        <Row type="flex" justify="end" align="middle" style="margin-top: 25px; margin-bottom: 15px;">
+            <Col>
+                <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
             </Col>
         </Row>
     </div>
@@ -73,6 +147,76 @@
 <script>
     export default {
         data() {
+            var local = {
+                cascader_entity: [],
+                project_definitions_entities: [],
+                loading_models: true,
+                request_table: {
+                    edit: {
+                        index: -1,
+                        name: '',
+                        type: '',
+                        validation: '',
+                        fillable: '',
+                    },
+                    columns: [
+                        {
+                            title: 'Name',
+                            slot: 'name',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Type',
+                            slot: 'type',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Validation',
+                            slot: 'validation',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Fillable',
+                            slot: 'fillable',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Action',
+                            slot: 'action',
+                            width: 150,
+                            align: 'center',
+                        }
+                    ],
+                    data: []
+                },
+                response_table: {
+                    edit: {
+                        index: -1,
+                        name: '',
+                        resource: '',
+                    },
+                    columns: [
+                        {
+                            title: 'Name',
+                            slot: 'name',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Resource',
+                            slot: 'resource',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Action',
+                            slot: 'action',
+                            width: 150,
+                            align: 'center',
+                        }
+                    ],
+                    data: []
+                }                
+            }
+
             var state = {
                 formValidate: {
                     project_id: '',
@@ -87,39 +231,15 @@
             };
             if (this.$store.state.pages.test_update) 
             {
-                state = this.$store.state.pages.test_update;
+                // state = this.$store.state.pages.test_update;
             }
 
             //
             //component state registration
             return {
+                ...local,
                 ...state,
-                ruleValidate: {                   
-
-                    project_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The project_id cannot be empty', 
-                        }
-                    ],
-                    definition_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The definition_id cannot be empty', 
-                        }
-                    ],
-                    entity_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The entity_id cannot be empty', 
-                        }
-                    ],
+                ruleValidate: {
                     name: [
                         { 
                             required: true, 
@@ -160,7 +280,6 @@
                             message: 'The response_data cannot be empty', 
                         }
                     ],
-
                 },
 
             };
@@ -178,9 +297,73 @@
             ajax() {
                 var self = this;
                 return {
+                    getProjectsWithDefinitionsEntities() {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_get_with_definitions_entities' ).then(({ data }) => {
+                            let tmp_data = [];
+                            for (const i in data) {
+                                if (data.hasOwnProperty(i)) {
+                                    const element = data[i];
+                                    
+                                    let tmp_definitions = [];
+
+                                    if (element.definitions.length > 0) {
+                                        for (const j in element.definitions) {
+                                            if (element.definitions.hasOwnProperty(j)) {
+                                                const element_ = element.definitions[j];
+                                                
+                                                let tmp_entities = [];
+
+                                                if (element_.entities.length > 0) {
+                                                    for (const k in element_.entities) {
+                                                        if (element_.entities.hasOwnProperty(k)) {
+                                                            const element__ = element_.entities[k];
+                                                            
+                                                            tmp_entities.push({
+                                                                value: element__.id,
+                                                                label: element__.name,
+                                                                data: element__
+                                                            });
+                                                        }
+                                                    }
+                                                }
+
+                                                tmp_definitions.push({
+                                                    value: element_.id,
+                                                    label: element_.namespace,
+                                                    data: element_,
+                                                    children: tmp_entities
+                                                });
+                                            }
+                                        }
+                                    }
+
+                                    tmp_data.push({
+                                        value: element.id,
+                                        label: element.name,
+                                        data: element,
+                                        children: tmp_definitions
+                                    });
+
+                                }
+                            }
+                    
+                            self.project_definitions_entities = tmp_data;
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    },
                     get(id='') {
                         window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/test/'+id ).then(({ data }) => {
                             self.formValidate = data;
+
+                            self.cascader_entity = [
+                                data.project_id,
+                                data.definition_id,
+                                data.entity_id,
+                            ];
+
+                            self.request_table.data = JSON.parse(data.request_data);
+                            self.response_table.data = JSON.parse(data.response_data);
                         }).catch(error => {
                             console.log(error);
                         });
@@ -209,6 +392,15 @@
                             console.log(error);
                         });
                     },
+                    getDefaultValues(definition_id) {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/definition_get_by_entity_id/'+definition_id, {
+                            params: {
+                                entity_id: self.formValidate.entity_id
+                            }
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    },
                 }
             },
             handleUpload (file) {
@@ -220,6 +412,8 @@
                     if (valid) {
 
                         var formValidate = this.formValidate;
+                        formValidate.request_data = JSON.stringify(this.request_table.data);
+                        formValidate.response_data = JSON.stringify(this.response_table.data);
 
                         this.ajax().update(this.$route.params.id, formValidate);
 
@@ -227,17 +421,49 @@
                         this.$Message.error('Fail!');
                     }
                 })
+            },
+            onGenerateDefaultValuesClicked() {
+                this.ajax().getDefaultValues(
+                    this.formValidate.definition_id
+                ).then(({data}) => {
+                    this.request_table.data = data.request_table_data;
+                    this.response_table.data = data.response_table_data;
+                });
+            },
+            requestTableHandleEdit (row, index) {
+                this.request_table.edit.name = row.name;
+                this.request_table.edit.type = row.type;
+                this.request_table.edit.validation = row.validation;
+                this.request_table.edit.fillable = row.fillable;
+                this.request_table.edit.index = index;
+            },
+            requestTableHandleSave (index) {
+                this.request_table.data[index].name = this.request_table.edit.name;
+                this.request_table.data[index].type = this.request_table.edit.type;
+                this.request_table.data[index].validation = this.request_table.edit.validation;
+                this.request_table.data[index].fillable = this.request_table.edit.fillable;
+                this.request_table.edit.index = -1;
+            },
+            requestTableHandleDelete (index) {
+                this.request_table.data.splice(index, 1);
+            },
+            responseTableHandleEdit (row, index) {
+                this.response_table.edit.name = row.name;
+                this.response_table.edit.resource = row.resource;
+                this.response_table.edit.index = index;
+            },
+            responseTableHandleSave (index) {
+                this.response_table.data[index].name = this.response_table.edit.name;
+                this.response_table.data[index].resource = this.response_table.edit.resource;
+                this.response_table.edit.index = -1;
+            },
+            responseTableHandleDelete (index) {
+                this.response_table.data.splice(index, 1);
             }
         },
         mounted() {
-            // console.log('test form mounted');
-            // console.log({
-            //     // 'this.$store': this.$store,
-            //     // 'this.$store.state': this.$store.state,
-            //     // 'this.$store.state.Index': this.$store.state.Index,
-            //     'this.$route': this.$route,
-            // });
-
+            
+            this.ajax().getProjectsWithDefinitionsEntities();
             this.ajax().get(this.$route.params.id);
 
         },

@@ -125,7 +125,6 @@
 <script>
     export default {
         data() {
-
             var local = {
                 cascader_entity: [],
                 project_definitions_entities: [],
@@ -211,31 +210,6 @@
                 ...local,
                 ...state,
                 ruleValidate: {                   
-
-                    // project_id: [
-                    //     { 
-                    //         required: true, 
-                    //         type: 'number', 
-                    //         trigger: 'blur',
-                    //         message: 'The project_id cannot be empty', 
-                    //     }
-                    // ],
-                    // definition_id: [
-                    //     { 
-                    //         required: true, 
-                    //         type: 'number', 
-                    //         trigger: 'blur',
-                    //         message: 'The definition_id cannot be empty', 
-                    //     }
-                    // ],
-                    // entity_id: [
-                    //     { 
-                    //         required: true, 
-                    //         type: 'number', 
-                    //         trigger: 'blur',
-                    //         message: 'The entity_id cannot be empty', 
-                    //     }
-                    // ],
                     name: [
                         { 
                             required: true, 
