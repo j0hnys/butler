@@ -50,6 +50,7 @@
                     functionality_data: '{}',
                     request_data: '[]',
                     response_data: '[]',
+                    parent_id: 0,
                 },
             };
             if (this.$store.state.pages.test_create) 

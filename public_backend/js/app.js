@@ -2843,7 +2843,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         functionality_data: '{}',
         request_data: '[]',
         response_data: '[]',
-        db_table_name: '{}'
+        db_table_name: '{}',
+        type: 'resource',
+        parent_id: 0
       }
     };
 
@@ -3514,7 +3516,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         functionality_data: '',
         request_data: '',
         response_data: '',
-        db_table_name: ''
+        db_table_name: '',
+        type: 'resource',
+        parent_id: 0
       }
     };
 
@@ -4462,7 +4466,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: 'resource',
         functionality_data: '{}',
         request_data: '[]',
-        response_data: '[]'
+        response_data: '[]',
+        parent_id: 0
       }
     };
 
@@ -5142,7 +5147,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: '',
         functionality_data: '',
         request_data: '',
-        response_data: ''
+        response_data: '',
+        parent_id: 0
       }
     };
 

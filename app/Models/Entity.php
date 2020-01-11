@@ -32,7 +32,7 @@ class Entity extends Model
     /**
      * @var array
      */
-    protected $fillable = ['user_id', 'project_id', 'definition_id', 'name', 'functionality_data', 'request_data', 'response_data', 'db_table_name', 'created_at', 'updated_at'];
+    protected $fillable = ['user_id', 'project_id', 'definition_id', 'name', 'functionality_data', 'request_data', 'response_data', 'db_table_name', 'type', 'parent_id', 'created_at', 'updated_at'];
 
 
     public function project()

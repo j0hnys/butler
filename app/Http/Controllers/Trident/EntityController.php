@@ -76,6 +76,7 @@ class EntityController extends Controller
         $request_all = $request->all();
         $request_all['project_id'] = (int)$request_all['project_id'];
         $request_all['definition_id'] = (int)$request_all['definition_id'];
+        $request_all['parent_id'] = (int)$request_all['parent_id'];
         $structStoreEntity = new StructStoreEntity( $request_all );
         $entityResource = $this->entity_workflow->store($structStoreEntity);
         return response()->json( $entityResource );
@@ -119,6 +120,7 @@ class EntityController extends Controller
         $request_all = $request->all();
         $request_all['project_id'] = (int)$request_all['project_id'];
         $request_all['definition_id'] = (int)$request_all['definition_id'];
+        $request_all['parent_id'] = (int)$request_all['parent_id'];
         $structUpdateEntity = new StructUpdateEntity($request_all);        
         $entityResource = $this->entity_workflow->update($structUpdateEntity);
         return response()->json( $entityResource );

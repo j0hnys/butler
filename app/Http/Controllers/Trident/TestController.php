@@ -77,6 +77,7 @@ class TestController extends Controller
         $request_all['project_id'] = (int)$request_all['project_id'];
         $request_all['definition_id'] = (int)$request_all['definition_id'];
         $request_all['entity_id'] = (int)$request_all['entity_id'];
+        $request_all['parent_id'] = (int)$request_all['parent_id'];
         $structStoreTest = new StructStoreTest( $request_all );
         $testResource = $this->test_workflow->store($structStoreTest);
         return response()->json( $testResource );
@@ -121,6 +122,7 @@ class TestController extends Controller
         $request_all['project_id'] = (int)$request_all['project_id'];
         $request_all['definition_id'] = (int)$request_all['definition_id'];
         $request_all['entity_id'] = (int)$request_all['entity_id'];
+        $request_all['parent_id'] = (int)$request_all['parent_id'];
         $structUpdateTest = new StructUpdateTest($request_all);        
         $testResource = $this->test_workflow->update($structUpdateTest);
         return response()->json( $testResource );

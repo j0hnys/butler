@@ -37,7 +37,7 @@ class Test extends Model
     /**
      * @var array
      */
-    protected $fillable = ['user_id', 'project_id', 'definition_id', 'entity_id', 'name', 'type', 'functionality_data', 'request_data', 'response_data', 'created_at', 'updated_at'];
+    protected $fillable = ['user_id', 'project_id', 'definition_id', 'entity_id', 'name', 'type', 'functionality_data', 'request_data', 'response_data', 'parent_id', 'created_at', 'updated_at'];
 
     
     public function project()

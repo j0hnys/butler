@@ -43,6 +43,8 @@
                     request_data: '[]',
                     response_data: '[]',
                     db_table_name: '{}',
+                    type: 'resource',
+                    parent_id: 0,
                 },
             };
             if (this.$store.state.pages.entity_create) 
