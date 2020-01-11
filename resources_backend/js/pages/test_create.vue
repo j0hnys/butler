@@ -2,10 +2,11 @@
 
 </style>
 <template>
-    <div class="view_create">
+    <div class="test_create">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
                 <h1>Create</h1>
+
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
                     
@@ -17,19 +18,15 @@
                         <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
                     </FormItem>
                     <FormItem label="type" prop="type">
-                        <Input readonly v-model="formValidate.type" placeholder="Enter your type"></Input>
+                        <Input v-model="formValidate.type" placeholder="Enter your type"></Input>
                     </FormItem>
-                    <FormItem>
-                        <Input hidden v-model="formValidate.presentation_data" placeholder=""></Input>
-                    </FormItem>
-                    <FormItem label="vista_resource_folder_name" prop="vista_resource_folder_name">
-                        <Input readonly v-model="formValidate.vista_resource_folder_name" placeholder="Enter your vista_resource_folder_name"></Input>
-                    </FormItem>                    
+                    
                     
                     <FormItem>
                         <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
                     </FormItem>
                 </Form>
+
 
             </Col>
         </Row>
@@ -49,14 +46,15 @@
                     definition_id: '',
                     entity_id: '',
                     name: '',
-                    type: 'form',
-                    presentation_data: '{}',
-                    vista_resource_folder_name: 'resources_backend',
+                    type: 'resource',
+                    functionality_data: '{}',
+                    request_data: '[]',
+                    response_data: '[]',
                 },
             };
-            if (this.$store.state.pages.view_create) 
+            if (this.$store.state.pages.test_create) 
             {
-                // state = this.$store.state.pages.view_create;
+                // state = this.$store.state.pages.test_create;
             }
 
             //
@@ -81,22 +79,6 @@
                             message: 'The type cannot be empty', 
                         }
                     ],
-                    presentation_data: [
-                        { 
-                            required: true, 
-                            type: 'string', 
-                            trigger: 'blur',
-                            message: 'The presentation_data cannot be empty', 
-                        }
-                    ],
-                    vista_resource_folder_name: [
-                        { 
-                            required: true, 
-                            type: 'string', 
-                            trigger: 'blur',
-                            message: 'The vista_resource_folder_name cannot be empty', 
-                        }
-                    ],
 
                 },
 
@@ -107,7 +89,7 @@
                 deep: true,
                 handler(value) 
                 {
-                    this.$store.commit('pages/view_create/setFormValidate', value);
+                    this.$store.commit('pages/test_create/setFormValidate', value);
                 }
             }
         },
@@ -184,7 +166,7 @@
                                 
                                 if (key == 'file') {
                                     form_data.append(key, data[key], data[key].name);
-                                } else if (key == 'presentation_data') {
+                                } else if (key == 'functionality_data' || key == 'request_data' || key == 'response_data') {
                                     form_data.append(key, '{}');
                                 } else {
                                     form_data.append(key, data[key]);
@@ -192,7 +174,8 @@
                             }
                         }
 
-                        window.axios.post( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/view',  form_data ).then((response) => {
+                        window.axios.post( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/test',  form_data ).then((response) => {
+                            // Once AJAX resolves we can update the Crud with the new color
                             self.$Message.success('Success!');
                         }).catch(error => {
                             console.log(error);

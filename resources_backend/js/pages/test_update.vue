@@ -25,10 +25,11 @@
     }
 </style>
 <template>
-    <div class="view_update">
+    <div class="test_update">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
                 <h1>Update</h1>
+
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
 
@@ -42,9 +43,6 @@
                     <FormItem label="type" prop="type">
                         <Input readonly v-model="formValidate.type" placeholder="Enter your type"></Input>
                     </FormItem>
-                    <FormItem label="vista_resource_folder_name" prop="vista_resource_folder_name">
-                        <Input readonly v-model="formValidate.vista_resource_folder_name" placeholder="Enter your vista_resource_folder_name"></Input>
-                    </FormItem>
 
                     <FormItem>
                         <Button type="primary" @click="onGenerateDefaultValuesClicked">Generate Default Values</Button>
@@ -52,67 +50,95 @@
 
                     <FormItem></FormItem>
 
-                    <h1>Ajax</h1>
+                    <h1>
+                        Request
+                        <Tooltip content="" max-width="600">
+                            <Icon type="ios-information-circle" style="font-size:0.7em;" />
+                            <div slot="content">
+                                <strong>T::*</strong>
+                                <p><i>where `*` is `string()`, `integer()`, `bool()`, `nullable()`, 
+                        `array()`, `float()`, `double()` </i></p>
+                                <br>
+                                <strong>laravel_validation_rule_string</strong>
+                                <p><i>is the native laravel validation string. e.x. "required | string"  </i></p>
+                            </div>
+                        </Tooltip>
+                    </h1>
                     <Divider />
-                    <FormItem label="get">
-                        <Input v-model="presentation_ajax.get.GET" placeholder="Enter your uri"></Input>
-                    </FormItem>
-                    <FormItem label="create">
-                        <Input v-model="presentation_ajax.create.POST" placeholder="Enter your uri"></Input>
-                    </FormItem>
-                    <FormItem label="update">
-                        <Input v-model="presentation_ajax.update.POST" placeholder="Enter your uri"></Input>
-                    </FormItem>
-                    <FormItem label="delete">
-                        <Input v-model="presentation_ajax.delete.DELETE" placeholder="Enter your uri"></Input>
-                    </FormItem>
-
-                    <FormItem></FormItem>
-
-                    <h1>Presentation</h1>
-                    <Divider />
-                    <Table border :columns="presentation_table.columns" :data="presentation_table.data" no-data-text="-no data-">
-                        <template slot-scope="{ row, index }" slot="column_name">
-                            <Input type="text" v-model="presentation_table.edit.column_name" v-if="presentation_table.edit.index === index" />
-                            <span v-else>{{ row.column_name }}</span>
+                    <Table border :columns="request_table.columns" :data="request_table.data" no-data-text="-no data-">
+                        <template slot-scope="{ row, index }" slot="name">
+                            <Input type="text" v-model="request_table.edit.name" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.name }}</span>
                         </template>
 
-                        <template slot-scope="{ row, index }" slot="column_type">
-                            <Input type="text" v-model="presentation_table.edit.column_type" v-if="presentation_table.edit.index === index" />
-                            <span v-else>{{ row.column_type }}</span>
+                        <template slot-scope="{ row, index }" slot="property_type">
+                            <Input type="text" v-model="request_table.edit.property_type" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.property_type }}</span>
                         </template>
 
-                        <template slot-scope="{ row, index }" slot="type">
-                            <Input type="text" v-model="presentation_table.edit.type" v-if="presentation_table.edit.index === index" />
-                            <span v-else>{{ row.type }}</span>
-                        </template>
-
-                        <template slot-scope="{ row, index }" slot="validation_rules">
-                            <Input type="text" v-model="presentation_table.edit.validation_rules" v-if="presentation_table.edit.index === index" />
-                            <span v-else>{{ row.validation_rules }}</span>
-                        </template>
-
-                        <template slot-scope="{ row, index }" slot="attributes">
-                            <Input type="text" v-model="presentation_table.edit.attributes" v-if="presentation_table.edit.index === index" />
-                            <span v-else>{{ row.attributes }}</span>
+                        <template slot-scope="{ row, index }" slot="value">
+                            <Input type="text" v-model="request_table.edit.value" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.value }}</span>
                         </template>
 
                         <template slot-scope="{ row, index }" slot="action">
-                            <div v-if="presentation_table.edit.index === index">
-                                <Button type="success" size="small" @click="presentationTableHandleSave(index)">Save</Button>
-                                <Button type="warning" size="small" @click="presentation_table.edit.index = -1">Cancel</Button>
+                            <div v-if="request_table.edit.index === index">
+                                <Button type="success" size="small" @click="requestTableHandleSave(index)">Save</Button>
+                                <Button type="warning" size="small" @click="request_table.edit.index = -1">Cancel</Button>
                             </div>
                             <div v-else>
-                                <Button type="primary" size="small" @click="presentationTableHandleEdit(row, index)">Edit</Button>
-                                <Button type="error" size="small" @click="presentationTableHandleDelete(index)">Delete</Button>
+                                <Button type="primary" size="small" @click="requestTableHandleEdit(row, index)">Edit</Button>
+                                <Button type="error" size="small" @click="requestTableHandleDelete(index)">Delete</Button>
                             </div>
                         </template>
                     </Table>
                     <FormItem>
-                        <Input hidden v-model="formValidate.presentation_data" placeholder=""></Input>
+                        <Input hidden v-model="formValidate.request_data" placeholder=""></Input>
+                    </FormItem>
+
+                    <h1>
+                        Response
+                        <Tooltip content="" max-width="600">
+                            <Icon type="ios-information-circle" style="font-size:0.7em;" />
+                            <div slot="content">
+                                <strong>T::*</strong>
+                                <p><i>where `*` is `string()`, `integer()`, `bool()`, `nullable()`, 
+                        `array()`, `float()`, `double()` </i></p>
+                            </div>
+                        </Tooltip>
+                    </h1>
+                    <Divider />
+                    <Table border :columns="response_table.columns" :data="response_table.data" no-data-text="-no data-">
+                        <template slot-scope="{ row, index }" slot="name">
+                            <Input type="text" v-model="response_table.edit.name" v-if="response_table.edit.index === index" />
+                            <span v-else>{{ row.name }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="property_type">
+                            <Input type="text" v-model="response_table.edit.property_type" v-if="response_table.edit.index === index" />
+                            <span v-else>{{ row.property_type }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="value">
+                            <Input type="text" v-model="response_table.edit.value" v-if="response_table.edit.index === index" />
+                            <span v-else>{{ row.value }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="action">
+                            <div v-if="response_table.edit.index === index">
+                                <Button type="success" size="small" @click="responseTableHandleSave(index)">Save</Button>
+                                <Button type="warning" size="small" @click="response_table.edit.index = -1">Cancel</Button>
+                            </div>
+                            <div v-else>
+                                <Button type="primary" size="small" @click="responseTableHandleEdit(row, index)">Edit</Button>
+                                <Button type="error" size="small" @click="responseTableHandleDelete(index)">Delete</Button>
+                            </div>
+                        </template>    
+                    </Table>    
+                    <FormItem>
+                        <Input hidden v-model="formValidate.response_data" placeholder=""></Input>                
                     </FormItem>
                 </Form>
-
             </Col>
         </Row>
         <Row type="flex" justify="end" align="middle" style="margin-top: 25px; margin-bottom: 15px;">
@@ -128,53 +154,28 @@
             var local = {
                 cascader_entity: [],
                 project_definitions_entities: [],
-                presentation_ajax: {
-                    get: {
-                        GET: ''
-                    },
-                    create: {
-                        POST: ''
-                    },
-                    update: {
-                        POST: ''
-                    },
-                    delete: {
-                        DELETE: ''
-                    },
-                },
-                presentation_table: {
+                loading_models: true,
+                request_table: {
                     edit: {
                         index: -1,
-                        column_name: '',
-                        column_type: '',
-                        type: '',
-                        validation_rules: '',
-                        attributes: '',
+                        name: '',
+                        property_type: '',
+                        value: '',
                     },
                     columns: [
                         {
-                            title: 'column_name',
-                            slot: 'column_name',
+                            title: 'Name',
+                            slot: 'name',
                             minWidth: 100,
                         },
                         {
-                            title: 'column_type',
-                            slot: 'column_type',
+                            title: 'Property Type',
+                            slot: 'property_type',
                             minWidth: 100,
                         },
                         {
-                            title: 'type',
-                            slot: 'type',
-                            minWidth: 100,
-                        },
-                        {
-                            title: 'validation_rules',
-                            slot: 'validation_rules',
-                            minWidth: 100,
-                        },
-                        {
-                            title: 'attributes',
-                            slot: 'attributes',
+                            title: 'Value',
+                            slot: 'value',
                             minWidth: 100,
                         },
                         {
@@ -185,7 +186,39 @@
                         }
                     ],
                     data: []
-                },                
+                },
+                response_table: {
+                    edit: {
+                        index: -1,
+                        name: '',
+                        property_type: '',
+                        value: '',
+                    },
+                    columns: [
+                        {
+                            title: 'Name',
+                            slot: 'name',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'property_type',
+                            slot: 'property_type',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Value',
+                            slot: 'value',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Action',
+                            slot: 'action',
+                            width: 150,
+                            align: 'center',
+                        }
+                    ],
+                    data: []
+                }                
             }
 
             var state = {
@@ -195,13 +228,14 @@
                     entity_id: '',
                     name: '',
                     type: '',
-                    presentation_data: '',
-                    vista_resource_folder_name: '',
+                    functionality_data: '',
+                    request_data: '',
+                    response_data: '',
                 },
             };
-            if (this.$store.state.pages.view_update) 
+            if (this.$store.state.pages.test_update) 
             {
-                // state = this.$store.state.pages.view_update;
+                // state = this.$store.state.pages.test_update;
             }
 
             //
@@ -209,7 +243,7 @@
             return {
                 ...local,
                 ...state,
-                ruleValidate: {                   
+                ruleValidate: {
                     name: [
                         { 
                             required: true, 
@@ -226,23 +260,30 @@
                             message: 'The type cannot be empty', 
                         }
                     ],
-                    presentation_data: [
+                    functionality_data: [
                         { 
                             required: true, 
                             type: 'string', 
                             trigger: 'blur',
-                            message: 'The presentation_data cannot be empty', 
+                            message: 'The functionality_data cannot be empty', 
                         }
                     ],
-                    vista_resource_folder_name: [
+                    request_data: [
                         { 
                             required: true, 
                             type: 'string', 
                             trigger: 'blur',
-                            message: 'The vista_resource_folder_name cannot be empty', 
+                            message: 'The request_data cannot be empty', 
                         }
                     ],
-
+                    response_data: [
+                        { 
+                            required: true, 
+                            type: 'string', 
+                            trigger: 'blur',
+                            message: 'The response_data cannot be empty', 
+                        }
+                    ],
                 },
 
             };
@@ -252,7 +293,7 @@
                 deep: true,
                 handler(value) 
                 {
-                    this.$store.commit('pages/view_update/setFormValidate', value);
+                    this.$store.commit('pages/test_update/setFormValidate', value);
                 }
             }
         },
@@ -316,10 +357,8 @@
                         });
                     },
                     get(id='') {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/view/'+id ).then(({ data }) => {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/test/'+id ).then(({ data }) => {
                             self.formValidate = data;
-
-                            let presentation_data = JSON.parse(data.presentation_data);
 
                             self.cascader_entity = [
                                 data.project_id,
@@ -327,10 +366,8 @@
                                 data.entity_id,
                             ];
 
-                            if (Object.keys(presentation_data).length !== 0) {
-                                self.presentation_ajax = presentation_data.ajax;
-                                self.presentation_table.data = presentation_data.presentation.schema;
-                            }
+                            self.request_table.data = JSON.parse(data.request_data);
+                            self.response_table.data = JSON.parse(data.response_data);
                         }).catch(error => {
                             console.log(error);
                         });
@@ -352,7 +389,7 @@
                             }
                         }
 
-                        window.axios.post( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/view/'+id,  form_data ).then((response) => {
+                        window.axios.post( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/test/'+id,  form_data ).then((response) => {
                             // Once AJAX resolves we can update the Crud with the new color
                             self.$Message.success('Success!');
                         }).catch(error => {
@@ -379,13 +416,8 @@
                     if (valid) {
 
                         var formValidate = this.formValidate;
-                        formValidate.presentation_data = JSON.stringify({
-                            ajax: this.presentation_ajax,
-                            presentation: {
-                                type: 'form',
-                                schema: this.presentation_table.data
-                            }
-                        });
+                        formValidate.request_data = JSON.stringify(this.request_table.data);
+                        formValidate.response_data = JSON.stringify(this.response_table.data);
 
                         this.ajax().update(this.$route.params.id, formValidate);
 
@@ -398,32 +430,40 @@
                 this.ajax().getDefaultValues(
                     this.formValidate.definition_id
                 ).then(({data}) => {
-                    console.log(data);
-
-                    this.presentation_table.data = data.presentation_table_data.presentation.schema;
-                    this.presentation_ajax = data.presentation_table_data.ajax;
-
+                    this.request_table.data = data.tests_request_table_data;
+                    this.response_table.data = data.tests_response_table_data;
                 });
             },
-            presentationTableHandleEdit (row, index) {
-                this.presentation_table.edit.column_name = row.column_name;
-                this.presentation_table.edit.column_type = row.column_type;
-                this.presentation_table.edit.type = row.type;
-                this.presentation_table.edit.validation_rules = row.validation_rules;
-                this.presentation_table.edit.attributes = row.attributes;
-                this.presentation_table.edit.index = index;
+            requestTableHandleEdit (row, index) {
+                this.request_table.edit.name = row.name;
+                this.request_table.edit.property_type = row.property_type;
+                this.request_table.edit.value = row.value;
+                this.request_table.edit.index = index;
             },
-            presentationTableHandleSave (index) {
-                this.presentation_table.data[index].column_name = this.presentation_table.edit.column_name;
-                this.presentation_table.data[index].column_type = this.presentation_table.edit.column_type;
-                this.presentation_table.data[index].type = this.presentation_table.edit.type;
-                this.presentation_table.data[index].validation_rules = this.presentation_table.edit.validation_rules;
-                this.presentation_table.data[index].attributes = this.presentation_table.edit.attributes;
-                this.presentation_table.edit.index = -1;
+            requestTableHandleSave (index) {
+                this.request_table.data[index].name = this.request_table.edit.name;
+                this.request_table.data[index].property_type = this.request_table.edit.property_type;
+                this.request_table.data[index].value = this.request_table.edit.value;
+                this.request_table.edit.index = -1;
             },
-            presentationTableHandleDelete (index) {
-                this.presentation_table.data.splice(index, 1);
+            requestTableHandleDelete (index) {
+                this.request_table.data.splice(index, 1);
             },
+            responseTableHandleEdit (row, index) {
+                this.response_table.edit.name = row.name;
+                this.response_table.edit.property_type = row.property_type;
+                this.response_table.edit.value = row.value;
+                this.response_table.edit.index = index;
+            },
+            responseTableHandleSave (index) {
+                this.response_table.data[index].name = this.response_table.edit.name;
+                this.response_table.data[index].property_type = this.response_table.edit.property_type;
+                this.response_table.data[index].value = this.response_table.edit.value;
+                this.response_table.edit.index = -1;
+            },
+            responseTableHandleDelete (index) {
+                this.response_table.data.splice(index, 1);
+            }
         },
         mounted() {
             

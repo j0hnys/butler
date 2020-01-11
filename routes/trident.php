@@ -14,5 +14,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/trident/resource/definition', 'DefinitionController');
     Route::resource('/trident/resource/entity', 'EntityController');
     Route::resource('/trident/resource/project', 'ProjectController');
+    Route::resource('/trident/resource/test', 'TestController');
     Route::resource('/trident/resource/view', 'ViewController');
 });

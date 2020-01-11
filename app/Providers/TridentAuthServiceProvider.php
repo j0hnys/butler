@@ -16,6 +16,7 @@ class TridentAuthServiceProvider extends ServiceProvider
         'App\Trident\Workflows\Repositories\DefinitionRepository' => 'App\Policies\Trident\DefinitionPolicy',
         'App\Trident\Workflows\Repositories\EntityRepository' => 'App\Policies\Trident\EntityPolicy',
         'App\Trident\Workflows\Repositories\ProjectRepository' => 'App\Policies\Trident\ProjectPolicy',
+        'App\Trident\Workflows\Repositories\TestRepository' => 'App\Policies\Trident\TestPolicy',
         'App\Trident\Workflows\Repositories\ViewRepository' => 'App\Policies\Trident\ViewPolicy',
     ];
 

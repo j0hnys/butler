@@ -20,6 +20,12 @@ const main_menu = [
     {
         name: '4',
         icon_type: 'ios-navigate',
+        text: 'Tests',
+        redirect_url: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_list',
+    },
+    {
+        name: '5',
+        icon_type: 'ios-navigate',
         text: 'Views',
         redirect_url: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/view_list',
     },

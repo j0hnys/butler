@@ -1,0 +1,85 @@
+{
+    "type": "json",
+    "data": {
+        "id": {
+            "type": "T::nullable(T::int())",
+            "validation": {
+                "rule": "required | integer",
+                "message": "id is required"
+            },
+            "fillable": true
+        },
+        "user_id": {
+            "type": "T::nullable(T::int())",
+            "validation": {
+                "rule": "integer",
+                "message": ""
+            },
+            "fillable": true
+        },
+        "project_id": {
+            "type": "T::nullable(T::int())",
+            "validation": {
+                "rule": "required | integer",
+                "message": "project_id is required"
+            },
+            "fillable": true
+        },
+        "definition_id": {
+            "type": "T::nullable(T::int())",
+            "validation": {
+                "rule": "required | integer",
+                "message": "definition_id is required"
+            },
+            "fillable": true
+        },
+        "entity_id": {
+            "type": "T::nullable(T::int())",
+            "validation": {
+                "rule": "required | integer",
+                "message": "entity_id is required"
+            },
+            "fillable": true
+        },
+        "name": {
+            "type": "T::nullable(T::string())",
+            "validation": {
+                "rule": "required | string",
+                "message": "name is required"
+            },
+            "fillable": true
+        },
+        "type": {
+            "type": "T::nullable(T::string())",
+            "validation": {
+                "rule": "required | string",
+                "message": "type is required"
+            },
+            "fillable": true
+        },
+        "functionality_data": {
+            "type": "T::nullable(T::string())",
+            "validation": {
+                "rule": "required | string",
+                "message": "functionality_data is required"
+            },
+            "fillable": true
+        },
+        "request_data": {
+            "type": "T::nullable(T::string())",
+            "validation": {
+                "rule": "required | string",
+                "message": "request_data is required"
+            },
+            "fillable": true
+        },
+        "response_data": {
+            "type": "T::nullable(T::string())",
+            "validation": {
+                "rule": "required | string",
+                "message": "response_data is required"
+            },
+            "fillable": true
+        }
+    }
+}

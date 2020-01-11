@@ -1,0 +1,41 @@
+{
+    "type": "json",
+    "data": {
+        "id": {
+            "resource": true
+        },
+        "project_id": {
+            "resource": true
+        },
+        "project_name": {
+            "resource": true
+        },
+        "definition_id": {
+            "resource": true
+        },
+        "definition_namespace": {
+            "resource": true
+        },
+        "entity_id": {
+            "resource": true
+        },
+        "entity_name": {
+            "resource": true
+        },
+        "name": {
+            "resource": true
+        },
+        "type": {
+            "resource": true
+        },
+        "functionality_data": {
+            "resource": true
+        },
+        "request_data": {
+            "resource": true
+        },
+        "response_data": {
+            "resource": true
+        }
+    }
+}

@@ -17,6 +17,10 @@ final class SchemaHierarchy extends Definition
                     '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Functionality',
                     '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Request',
                     '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Response',
+                ],
+                'Tests' => [
+                    '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Tests\Request',
+                    '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Tests\Response',
                 ]
             ],
         ],

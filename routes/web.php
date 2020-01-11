@@ -33,6 +33,7 @@ Route::get('/definition_get_database_tables/{id}', 'Trident\DefinitionController
 Route::get('/entity_generate/{id}', 'Trident\EntityController@generate');
 Route::get('/entity_update_schemas/{id}', 'Trident\EntityController@updateResource');
 Route::get('/view_generate/{id}', 'Trident\ViewController@generate');
+Route::get('/test_generate/{id}', 'Trident\TestController@generate');
 
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

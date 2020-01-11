@@ -53,6 +53,15 @@ class TridentServiceProvider extends ServiceProvider
         \App::bind('App\Trident\Interfaces\Workflows\Repositories\ProjectRepositoryInterface',function($app){
             return new \App\Trident\Workflows\Repositories\ProjectRepository($app);
         });
+        \App::bind('App\Trident\Interfaces\Workflows\Logic\TestInterface',function($app){
+            return new \App\Trident\Workflows\Logic\Test(
+                new \App\Trident\Business\Logic\Test, 
+                new \App\Trident\Workflows\Repositories\TestRepository($app)
+            );
+        });
+        \App::bind('App\Trident\Interfaces\Workflows\Repositories\TestRepositoryInterface',function($app){
+            return new \App\Trident\Workflows\Repositories\TestRepository($app);
+        });
         \App::bind('App\Trident\Interfaces\Workflows\Logic\ViewInterface',function($app){
             return new \App\Trident\Workflows\Logic\View(
                 new \App\Trident\Business\Logic\View, 
@@ -70,6 +79,9 @@ class TridentServiceProvider extends ServiceProvider
         });
         \App::bind('App\Trident\Interfaces\Business\Logic\ProjectInterface',function($app){
             return new \App\Trident\Business\Logic\Project($app);
+        });
+        \App::bind('App\Trident\Interfaces\Business\Logic\TestInterface',function($app){
+            return new \App\Trident\Business\Logic\Test($app);
         });
         \App::bind('App\Trident\Interfaces\Business\Logic\ViewInterface',function($app){
             return new \App\Trident\Business\Logic\View($app);
