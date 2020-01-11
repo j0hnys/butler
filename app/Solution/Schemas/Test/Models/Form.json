@@ -68,6 +68,23 @@
                 }
             },
             {
+                "column_name": "parent_id",
+                "column_type": "integer",
+                "type": "fillable",
+                "validation_rules": {
+                    "required": true,
+                    "type": "number",
+                    "trigger": "blur"
+                },
+                "attributes": {
+                    "type": {
+                        "number": true
+                    },
+                    "default_value": "''",
+                    "element_type": false
+                }
+            },
+            {
                 "column_name": "name",
                 "column_type": "string",
                 "type": "fillable",

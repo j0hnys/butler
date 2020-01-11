@@ -72,6 +72,22 @@
                 "message": "db_table_name is required"
             },
             "fillable": true
+        },
+        "type": {
+            "type": "T::nullable(T::string())",
+            "validation": {
+                "rule": "required | string",
+                "message": "type is required"
+            },
+            "fillable": true
+        },
+        "parent_id": {
+            "type": "T::nullable(T::integer())",
+            "validation": {
+                "rule": "required | integer",
+                "message": "parent_id is required"
+            },
+            "fillable": true
         }
     }
 }

@@ -30,6 +30,12 @@
         },
         "db_table_name": {
             "resource": true
+        },
+        "type": {
+            "resource": true
+        },
+        "parent_id": {
+            "resource": true
         }
     }
 }

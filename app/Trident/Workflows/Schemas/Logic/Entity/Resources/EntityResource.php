@@ -25,6 +25,8 @@ class EntityResource extends JsonResource
             'request_data' => $this->request_data,
             'response_data' => $this->response_data,
             'db_table_name' => $this->db_table_name,
+            'type' => $this->type,
+            'parent_id' => $this->parent_id,
         ];
 
         

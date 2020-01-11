@@ -22,6 +22,9 @@
         "entity_name": {
             "resource": true
         },
+        "parent_id": {
+            "resource": true
+        },
         "name": {
             "resource": true
         },
