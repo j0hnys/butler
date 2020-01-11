@@ -71,19 +71,14 @@
                             <span v-else>{{ row.name }}</span>
                         </template>
 
-                        <template slot-scope="{ row, index }" slot="type">
-                            <Input type="text" v-model="request_table.edit.type" v-if="request_table.edit.index === index" />
-                            <span v-else>{{ row.type }}</span>
+                        <template slot-scope="{ row, index }" slot="property_type">
+                            <Input type="text" v-model="request_table.edit.property_type" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.property_type }}</span>
                         </template>
 
-                        <template slot-scope="{ row, index }" slot="validation">
-                            <Input type="text" v-model="request_table.edit.validation" v-if="request_table.edit.index === index" />
-                            <span v-else>{{ row.validation }}</span>
-                        </template>
-
-                        <template slot-scope="{ row, index }" slot="fillable">
-                            <Input type="text" v-model="request_table.edit.fillable" v-if="request_table.edit.index === index" />
-                            <span v-else>{{ row.fillable }}</span>
+                        <template slot-scope="{ row, index }" slot="value">
+                            <Input type="text" v-model="request_table.edit.value" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.value }}</span>
                         </template>
 
                         <template slot-scope="{ row, index }" slot="action">
@@ -119,9 +114,14 @@
                             <span v-else>{{ row.name }}</span>
                         </template>
 
-                        <template slot-scope="{ row, index }" slot="resource">
-                            <Input type="text" v-model="response_table.edit.resource" v-if="response_table.edit.index === index" />
-                            <span v-else>{{ row.resource }}</span>
+                        <template slot-scope="{ row, index }" slot="property_type">
+                            <Input type="text" v-model="response_table.edit.property_type" v-if="response_table.edit.index === index" />
+                            <span v-else>{{ row.property_type }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="value">
+                            <Input type="text" v-model="response_table.edit.value" v-if="response_table.edit.index === index" />
+                            <span v-else>{{ row.value }}</span>
                         </template>
 
                         <template slot-scope="{ row, index }" slot="action">
@@ -159,9 +159,8 @@
                     edit: {
                         index: -1,
                         name: '',
-                        type: '',
-                        validation: '',
-                        fillable: '',
+                        property_type: '',
+                        value: '',
                     },
                     columns: [
                         {
@@ -170,18 +169,13 @@
                             minWidth: 100,
                         },
                         {
-                            title: 'Type',
-                            slot: 'type',
+                            title: 'Property Type',
+                            slot: 'property_type',
                             minWidth: 100,
                         },
                         {
-                            title: 'Validation',
-                            slot: 'validation',
-                            minWidth: 100,
-                        },
-                        {
-                            title: 'Fillable',
-                            slot: 'fillable',
+                            title: 'Value',
+                            slot: 'value',
                             minWidth: 100,
                         },
                         {
@@ -197,7 +191,8 @@
                     edit: {
                         index: -1,
                         name: '',
-                        resource: '',
+                        property_type: '',
+                        value: '',
                     },
                     columns: [
                         {
@@ -206,8 +201,13 @@
                             minWidth: 100,
                         },
                         {
-                            title: 'Resource',
-                            slot: 'resource',
+                            title: 'property_type',
+                            slot: 'property_type',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Value',
+                            slot: 'value',
                             minWidth: 100,
                         },
                         {
@@ -430,22 +430,20 @@
                 this.ajax().getDefaultValues(
                     this.formValidate.definition_id
                 ).then(({data}) => {
-                    this.request_table.data = data.request_table_data;
-                    this.response_table.data = data.response_table_data;
+                    this.request_table.data = data.tests_request_table_data;
+                    this.response_table.data = data.tests_response_table_data;
                 });
             },
             requestTableHandleEdit (row, index) {
                 this.request_table.edit.name = row.name;
-                this.request_table.edit.type = row.type;
-                this.request_table.edit.validation = row.validation;
-                this.request_table.edit.fillable = row.fillable;
+                this.request_table.edit.property_type = row.property_type;
+                this.request_table.edit.value = row.value;
                 this.request_table.edit.index = index;
             },
             requestTableHandleSave (index) {
                 this.request_table.data[index].name = this.request_table.edit.name;
-                this.request_table.data[index].type = this.request_table.edit.type;
-                this.request_table.data[index].validation = this.request_table.edit.validation;
-                this.request_table.data[index].fillable = this.request_table.edit.fillable;
+                this.request_table.data[index].property_type = this.request_table.edit.property_type;
+                this.request_table.data[index].value = this.request_table.edit.value;
                 this.request_table.edit.index = -1;
             },
             requestTableHandleDelete (index) {
@@ -453,12 +451,14 @@
             },
             responseTableHandleEdit (row, index) {
                 this.response_table.edit.name = row.name;
-                this.response_table.edit.resource = row.resource;
+                this.response_table.edit.property_type = row.property_type;
+                this.response_table.edit.value = row.value;
                 this.response_table.edit.index = index;
             },
             responseTableHandleSave (index) {
                 this.response_table.data[index].name = this.response_table.edit.name;
-                this.response_table.data[index].resource = this.response_table.edit.resource;
+                this.response_table.data[index].property_type = this.response_table.edit.property_type;
+                this.response_table.data[index].value = this.response_table.edit.value;
                 this.response_table.edit.index = -1;
             },
             responseTableHandleDelete (index) {

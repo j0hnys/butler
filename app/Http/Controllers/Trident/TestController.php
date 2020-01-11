@@ -117,7 +117,11 @@ class TestController extends Controller
     public function update(TestUpdateRequest $request, $id)
     {   
         $this->authorize('update', [$this->test_repository, $id]);
-        $structUpdateTest = new StructUpdateTest($request->all());        
+        $request_all = $request->all();
+        $request_all['project_id'] = (int)$request_all['project_id'];
+        $request_all['definition_id'] = (int)$request_all['definition_id'];
+        $request_all['entity_id'] = (int)$request_all['entity_id'];
+        $structUpdateTest = new StructUpdateTest($request_all);        
         $testResource = $this->test_workflow->update($structUpdateTest);
         return response()->json( $testResource );
     }

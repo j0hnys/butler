@@ -39,6 +39,14 @@ class Definition implements DefinitionInterface
         $presentation_schema_definition = app()->make($presentation_schema_namespace);
         $presentation_schema = $presentation_schema_definition->get();
         
+        $tests_request_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Tests'][0]);
+        $tests_request_schema_definition = app()->make($tests_request_schema_namespace);
+        $tests_request_schema = $tests_request_schema_definition->get();
+
+        $tests_response_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Tests'][1]);
+        $tests_response_schema_definition = app()->make($tests_response_schema_namespace);
+        $tests_response_schema = $tests_response_schema_definition->get();
+
 
         //request schema
         $request_table_data = [];
@@ -71,8 +79,7 @@ class Definition implements DefinitionInterface
                 'name' => $column->getName(),
                 'resource' => $tmp_type,
             ];
-        }
-        
+        }        
 
         //presentation schema
         $presentation_table_data = [
@@ -138,11 +145,39 @@ class Definition implements DefinitionInterface
             ];
         }
 
+        //tests request schema
+        $tests_request_table_data = [];
+        foreach ($columns as $column) {
+            $tmp_entity_property = $tests_request_schema['schema']['data']['{{entity_property}}'];
+            $property_type = $tests_request_schema['property_type'];
+
+            $tests_request_table_data []= [
+                'name' => $column->getName(),
+                'property_type' => $property_type[0],
+                'value' => $tmp_entity_property['value']
+            ];
+        }
+
+        //tests response schema
+        $tests_response_table_data = [];
+        foreach ($columns as $column) {
+            $tmp_entity_property = $tests_response_schema['schema']['data']['{{entity_property}}'];
+            $property_type = $tests_response_schema['property_type'];
+
+            $tests_response_table_data []= [
+                'name' => $column->getName(),
+                'property_type' => $property_type[0],
+                'value' => $tmp_entity_property['value']
+            ];
+        }
+
 
         return (object)[
             'request_table_data' => $request_table_data,
             'response_table_data' => $response_table_data,
             'presentation_table_data' => $presentation_table_data,
+            'tests_request_table_data' => $tests_request_table_data,
+            'tests_response_table_data' => $tests_response_table_data,
         ];
     }
 

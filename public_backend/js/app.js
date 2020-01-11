@@ -5082,25 +5082,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         edit: {
           index: -1,
           name: '',
-          type: '',
-          validation: '',
-          fillable: ''
+          property_type: '',
+          value: ''
         },
         columns: [{
           title: 'Name',
           slot: 'name',
           minWidth: 100
         }, {
-          title: 'Type',
-          slot: 'type',
+          title: 'Property Type',
+          slot: 'property_type',
           minWidth: 100
         }, {
-          title: 'Validation',
-          slot: 'validation',
-          minWidth: 100
-        }, {
-          title: 'Fillable',
-          slot: 'fillable',
+          title: 'Value',
+          slot: 'value',
           minWidth: 100
         }, {
           title: 'Action',
@@ -5114,15 +5109,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         edit: {
           index: -1,
           name: '',
-          resource: ''
+          property_type: '',
+          value: ''
         },
         columns: [{
           title: 'Name',
           slot: 'name',
           minWidth: 100
         }, {
-          title: 'Resource',
-          slot: 'resource',
+          title: 'property_type',
+          slot: 'property_type',
+          minWidth: 100
+        }, {
+          title: 'Value',
+          slot: 'value',
           minWidth: 100
         }, {
           title: 'Action',
@@ -5321,22 +5321,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.ajax().getDefaultValues(this.formValidate.definition_id).then(function (_ref3) {
         var data = _ref3.data;
-        _this2.request_table.data = data.request_table_data;
-        _this2.response_table.data = data.response_table_data;
+        _this2.request_table.data = data.tests_request_table_data;
+        _this2.response_table.data = data.tests_response_table_data;
       });
     },
     requestTableHandleEdit: function requestTableHandleEdit(row, index) {
       this.request_table.edit.name = row.name;
-      this.request_table.edit.type = row.type;
-      this.request_table.edit.validation = row.validation;
-      this.request_table.edit.fillable = row.fillable;
+      this.request_table.edit.property_type = row.property_type;
+      this.request_table.edit.value = row.value;
       this.request_table.edit.index = index;
     },
     requestTableHandleSave: function requestTableHandleSave(index) {
       this.request_table.data[index].name = this.request_table.edit.name;
-      this.request_table.data[index].type = this.request_table.edit.type;
-      this.request_table.data[index].validation = this.request_table.edit.validation;
-      this.request_table.data[index].fillable = this.request_table.edit.fillable;
+      this.request_table.data[index].property_type = this.request_table.edit.property_type;
+      this.request_table.data[index].value = this.request_table.edit.value;
       this.request_table.edit.index = -1;
     },
     requestTableHandleDelete: function requestTableHandleDelete(index) {
@@ -5344,12 +5342,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     responseTableHandleEdit: function responseTableHandleEdit(row, index) {
       this.response_table.edit.name = row.name;
-      this.response_table.edit.resource = row.resource;
+      this.response_table.edit.property_type = row.property_type;
+      this.response_table.edit.value = row.value;
       this.response_table.edit.index = index;
     },
     responseTableHandleSave: function responseTableHandleSave(index) {
       this.response_table.data[index].name = this.response_table.edit.name;
-      this.response_table.data[index].resource = this.response_table.edit.resource;
+      this.response_table.data[index].property_type = this.response_table.edit.property_type;
+      this.response_table.data[index].value = this.response_table.edit.value;
       this.response_table.edit.index = -1;
     },
     responseTableHandleDelete: function responseTableHandleDelete(index) {
@@ -90486,7 +90486,7 @@ var render = function() {
                         }
                       },
                       {
-                        key: "type",
+                        key: "property_type",
                         fn: function(ref) {
                           var row = ref.row
                           var index = ref.index
@@ -90495,23 +90495,24 @@ var render = function() {
                               ? _c("Input", {
                                   attrs: { type: "text" },
                                   model: {
-                                    value: _vm.request_table.edit.type,
+                                    value: _vm.request_table.edit.property_type,
                                     callback: function($$v) {
                                       _vm.$set(
                                         _vm.request_table.edit,
-                                        "type",
+                                        "property_type",
                                         $$v
                                       )
                                     },
-                                    expression: "request_table.edit.type"
+                                    expression:
+                                      "request_table.edit.property_type"
                                   }
                                 })
-                              : _c("span", [_vm._v(_vm._s(row.type))])
+                              : _c("span", [_vm._v(_vm._s(row.property_type))])
                           ]
                         }
                       },
                       {
-                        key: "validation",
+                        key: "value",
                         fn: function(ref) {
                           var row = ref.row
                           var index = ref.index
@@ -90520,43 +90521,18 @@ var render = function() {
                               ? _c("Input", {
                                   attrs: { type: "text" },
                                   model: {
-                                    value: _vm.request_table.edit.validation,
+                                    value: _vm.request_table.edit.value,
                                     callback: function($$v) {
                                       _vm.$set(
                                         _vm.request_table.edit,
-                                        "validation",
+                                        "value",
                                         $$v
                                       )
                                     },
-                                    expression: "request_table.edit.validation"
+                                    expression: "request_table.edit.value"
                                   }
                                 })
-                              : _c("span", [_vm._v(_vm._s(row.validation))])
-                          ]
-                        }
-                      },
-                      {
-                        key: "fillable",
-                        fn: function(ref) {
-                          var row = ref.row
-                          var index = ref.index
-                          return [
-                            _vm.request_table.edit.index === index
-                              ? _c("Input", {
-                                  attrs: { type: "text" },
-                                  model: {
-                                    value: _vm.request_table.edit.fillable,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.request_table.edit,
-                                        "fillable",
-                                        $$v
-                                      )
-                                    },
-                                    expression: "request_table.edit.fillable"
-                                  }
-                                })
-                              : _c("span", [_vm._v(_vm._s(row.fillable))])
+                              : _c("span", [_vm._v(_vm._s(row.value))])
                           ]
                         }
                       },
@@ -90741,7 +90717,7 @@ var render = function() {
                         }
                       },
                       {
-                        key: "resource",
+                        key: "property_type",
                         fn: function(ref) {
                           var row = ref.row
                           var index = ref.index
@@ -90750,18 +90726,45 @@ var render = function() {
                               ? _c("Input", {
                                   attrs: { type: "text" },
                                   model: {
-                                    value: _vm.response_table.edit.resource,
+                                    value:
+                                      _vm.response_table.edit.property_type,
                                     callback: function($$v) {
                                       _vm.$set(
                                         _vm.response_table.edit,
-                                        "resource",
+                                        "property_type",
                                         $$v
                                       )
                                     },
-                                    expression: "response_table.edit.resource"
+                                    expression:
+                                      "response_table.edit.property_type"
                                   }
                                 })
-                              : _c("span", [_vm._v(_vm._s(row.resource))])
+                              : _c("span", [_vm._v(_vm._s(row.property_type))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "value",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.response_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value: _vm.response_table.edit.value,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.response_table.edit,
+                                        "value",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "response_table.edit.value"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.value))])
                           ]
                         }
                       },
