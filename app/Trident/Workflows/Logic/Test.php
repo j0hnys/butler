@@ -151,7 +151,7 @@ class Test implements TestInterface
      */
     public function generate($request_struct, $id)
     {   
-        $model = $this->view_repository->with(['project','definition','entity'])->find($id);
+        $model = $this->test_repository->with(['project','definition','entity'])->find($id);
         
         $this->test_business->generate(
             $model->getAttributes(),
