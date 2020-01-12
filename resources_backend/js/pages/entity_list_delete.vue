@@ -32,6 +32,10 @@
                                 <div slot="prefix"><strong style="margin-bottom: 2px;">project_name: </strong></div>
                                 <Option v-for="item in filters.project_name.data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>
+                            <Select v-model="filters.name.selected" @on-change="onFilterSelected('name')" multiple style="width:260px" placeholder="--nothing selected--">
+                                <div slot="prefix"><strong style="margin-bottom: 2px;">name: </strong></div>
+                                <Option v-for="item in filters.name.data" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            </Select>
                         </div>
                     </Col>
                 </Row>
@@ -70,6 +74,10 @@
                 },
                 filters: {
                     project_name: {
+                        selected: [],
+                        data: [],
+                    },
+                    name: {
                         selected: [],
                         data: [],
                     },
@@ -220,18 +228,27 @@
             data: {
                 deep: true,
                 handler: function(value) {
-                    let tmp_table = [];
+                    let tmp_project_name_table = new Map();
+                    let tmp_name_table = new Map();
                     for (const i in value) {
                         if (value.hasOwnProperty(i)) {
                             const element = value[i];
-                            tmp_table.push({
+                            tmp_project_name_table.set(element.project_name, {
                                 'label': element.project_name,
                                 'value': element.project_name,
+                            });
+                            tmp_name_table.set(element.name, {
+                                'label': element.name,
+                                'value': element.name,
                             });
                         }
                     }
 
-                    this.filters.project_name.data = tmp_table;
+                    tmp_project_name_table = Array.from(tmp_project_name_table.values());
+                    tmp_name_table = Array.from(tmp_name_table.values());
+
+                    this.filters.project_name.data = tmp_project_name_table;
+                    this.filters.name.data = tmp_name_table;
                 }
             }
         },

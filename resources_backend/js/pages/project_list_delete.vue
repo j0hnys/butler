@@ -196,18 +196,18 @@ import { setTimeout } from 'timers';
             data: {
                 deep: true,
                 handler: function(value) {
-                    let tmp_table = [];
+                    let tmp_table = new Map();
                     for (const i in value) {
                         if (value.hasOwnProperty(i)) {
                             const element = value[i];
-                            tmp_table.push({
+                            tmp_table.set(element.name, {
                                 'label': element.name,
                                 'value': element.name,
                             });
                         }
                     }
 
-                    this.filters.name.data = tmp_table;
+                    this.filters.name.data = Array.from(tmp_table.values());
                 }
             }
         },

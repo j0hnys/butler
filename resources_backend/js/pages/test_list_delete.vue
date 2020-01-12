@@ -194,18 +194,18 @@
             data: {
                 deep: true,
                 handler: function(value) {
-                    let tmp_table = [];
+                    let tmp_table = new Map;
                     for (const i in value) {
                         if (value.hasOwnProperty(i)) {
                             const element = value[i];
-                            tmp_table.push({
+                            tmp_table.set(element.project_name, {
                                 'label': element.project_name,
                                 'value': element.project_name,
                             });
                         }
                     }
 
-                    this.filters.project_name.data = tmp_table;
+                    this.filters.project_name.data = Array.from(tmp_table.values());
                 }
             }
         },

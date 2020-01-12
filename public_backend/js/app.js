@@ -2522,19 +2522,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     data: {
       deep: true,
       handler: function handler(value) {
-        var tmp_table = [];
+        var tmp_table = new Map();
 
         for (var i in value) {
           if (value.hasOwnProperty(i)) {
             var element = value[i];
-            tmp_table.push({
+            tmp_table.set(element.project_name, {
               'label': element.project_name,
               'value': element.project_name
             });
           }
         }
 
-        this.filters.project_name.data = tmp_table;
+        this.filters.project_name.data = Array.from(tmp_table.values());
       }
     }
   },
@@ -3948,6 +3948,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3965,6 +3969,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       formValidate: {},
       filters: {
         project_name: {
+          selected: [],
+          data: []
+        },
+        name: {
           selected: [],
           data: []
         }
@@ -4103,19 +4111,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     data: {
       deep: true,
       handler: function handler(value) {
-        var tmp_table = [];
+        var tmp_project_name_table = new Map();
+        var tmp_name_table = new Map();
 
         for (var i in value) {
           if (value.hasOwnProperty(i)) {
             var element = value[i];
-            tmp_table.push({
+            tmp_project_name_table.set(element.project_name, {
               'label': element.project_name,
               'value': element.project_name
+            });
+            tmp_name_table.set(element.name, {
+              'label': element.name,
+              'value': element.name
             });
           }
         }
 
-        this.filters.project_name.data = tmp_table;
+        tmp_project_name_table = Array.from(tmp_project_name_table.values());
+        tmp_name_table = Array.from(tmp_name_table.values());
+        this.filters.project_name.data = tmp_project_name_table;
+        this.filters.name.data = tmp_name_table;
       }
     }
   },
@@ -5043,19 +5059,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     data: {
       deep: true,
       handler: function handler(value) {
-        var tmp_table = [];
+        var tmp_table = new Map();
 
         for (var i in value) {
           if (value.hasOwnProperty(i)) {
             var element = value[i];
-            tmp_table.push({
+            tmp_table.set(element.name, {
               'label': element.name,
               'value': element.name
             });
           }
         }
 
-        this.filters.name.data = tmp_table;
+        this.filters.name.data = Array.from(tmp_table.values());
       }
     }
   },
@@ -5727,19 +5743,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     data: {
       deep: true,
       handler: function handler(value) {
-        var tmp_table = [];
+        var tmp_table = new Map();
 
         for (var i in value) {
           if (value.hasOwnProperty(i)) {
             var element = value[i];
-            tmp_table.push({
+            tmp_table.set(element.project_name, {
               'label': element.project_name,
               'value': element.project_name
             });
           }
         }
 
-        this.filters.project_name.data = tmp_table;
+        this.filters.project_name.data = Array.from(tmp_table.values());
       }
     }
   },
@@ -6715,19 +6731,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     data: {
       deep: true,
       handler: function handler(value) {
-        var tmp_table = [];
+        var tmp_table = new Map();
 
         for (var i in value) {
           if (value.hasOwnProperty(i)) {
             var element = value[i];
-            tmp_table.push({
+            tmp_table.set(element.project_name, {
               'label': element.project_name,
               'value': element.project_name
             });
           }
         }
 
-        this.filters.project_name.data = tmp_table;
+        this.filters.project_name.data = Array.from(tmp_table.values());
       }
     }
   },
@@ -90553,6 +90569,54 @@ var render = function() {
                             })
                           ],
                           2
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "Select",
+                          {
+                            staticStyle: { width: "260px" },
+                            attrs: {
+                              multiple: "",
+                              placeholder: "--nothing selected--"
+                            },
+                            on: {
+                              "on-change": function($event) {
+                                return _vm.onFilterSelected("name")
+                              }
+                            },
+                            model: {
+                              value: _vm.filters.name.selected,
+                              callback: function($$v) {
+                                _vm.$set(_vm.filters.name, "selected", $$v)
+                              },
+                              expression: "filters.name.selected"
+                            }
+                          },
+                          [
+                            _c(
+                              "div",
+                              { attrs: { slot: "prefix" }, slot: "prefix" },
+                              [
+                                _c(
+                                  "strong",
+                                  { staticStyle: { "margin-bottom": "2px" } },
+                                  [_vm._v("name: ")]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.filters.name.data, function(item) {
+                              return _c(
+                                "Option",
+                                {
+                                  key: item.value,
+                                  attrs: { value: item.value }
+                                },
+                                [_vm._v(_vm._s(item.label))]
+                              )
+                            })
+                          ],
+                          2
                         )
                       ],
                       1
@@ -112216,6 +112280,10 @@ var state = {
   formValidate: {},
   filters: {
     project_name: {
+      selected: [],
+      data: []
+    },
+    name: {
       selected: [],
       data: []
     }
