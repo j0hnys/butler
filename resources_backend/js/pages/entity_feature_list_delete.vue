@@ -2,12 +2,9 @@
     .demo-spin-icon-load{
         animation: ani-demo-spin 1s linear infinite;
     }
-    .table-filters {
-        margin-bottom: 20px;
-    }
 </style>
 <template>
-    <div class="entity_list_delete">
+    <div class="entity_feature_list_delete">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
 
@@ -34,6 +31,12 @@
 </template>
 <script>
     export default {
+        props: {
+            parent_id: {
+                type: Number,
+                default: 15,
+            }
+        },
         data() {
             var local = {
                 table: {
@@ -47,16 +50,10 @@
             var state = {
                 formValidate: {
                 },
-                filters: {
-                    project_name: {
-                        selected: [],
-                        data: [],
-                    },
-                }
             };
-            if (this.$store.state.pages.entity_list_delete) 
+            if (this.$store.state.pages.entity_feature_list_delete) 
             {
-                state = this.$store.state.pages.entity_list_delete;
+                state = this.$store.state.pages.entity_feature_list_delete;
             }
 
 
@@ -101,7 +98,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.$router.push({ name: 'entity_update', params: { id: row.id } });
+                                            this.$router.push({ name: 'entity_feature_update', params: { id: row.id } });
                                         }
                                     }
                                 }, 'Edit'),
@@ -175,40 +172,20 @@
                 deep: true,
                 handler(value) 
                 {
-                    this.$store.commit('pages/entity_list_delete/setFormValidate', value);
+                    this.$store.commit('pages/entity_feature_list_delete/setFormValidate', value);
                 }
             },
-            filters: {
-                deep: true,
-                handler(value) 
-                {
-                    this.$store.commit('pages/entity_list_delete/setFilters', value);
-                }
-            },
-            data: {
-                deep: true,
-                handler: function(value) {
-                    let tmp_table = [];
-                    for (const i in value) {
-                        if (value.hasOwnProperty(i)) {
-                            const element = value[i];
-                            tmp_table.push({
-                                'label': element.project_name,
-                                'value': element.project_name,
-                            });
-                        }
-                    }
-
-                    this.filters.project_name.data = tmp_table;
-                }
-            }
         },
         methods: {
             ajax() {
                 var self = this;
                 return {
-                    get(id='') {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity'+id ).then(({ data }) => {
+                    get(parent_id=0) {
+                        let uri = '';
+                        if (parent_id !== 0) {
+                            uri = '/'+parent_id;
+                        }
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_get_parents'+uri ).then(({ data }) => {
                             self.server_data = data;
                             self.data = data;
                             self.table.loading.state = false;
@@ -242,25 +219,12 @@
                 }
             },
             onCreateButtonClicked() {
-                this.$router.push({ name: 'entity_create' });
-            },
-            onClearAllButtonClicked() {
-                let filters = this.filters;
-
-                for (const key in filters) {
-                    if (filters.hasOwnProperty(key)) {
-                        const element = filters[key];
-                        
-                        filters[key].selected = [];
-                    }
-                }
-
-                this.filters = filters;
+                this.$router.push({ name: 'entity_feature_create' });
             },
         },
         mounted() {
 
-            this.ajax().get();
+            this.ajax().get(this.parent_id);
 
         },
     }

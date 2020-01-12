@@ -226,8 +226,8 @@
             ajax() {
                 var self = this;
                 return {
-                    get(id='') {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity'+id ).then(({ data }) => {
+                    get() {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_get_parents' ).then(({ data }) => {
                             self.server_data = data;
                             self.data = data;
                             self.table.loading.state = false;

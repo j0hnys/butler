@@ -3015,132 +3015,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
+    var local = {
+      cascader_entity: [],
+      project_definitions_entities: []
+    };
     var state = {
       formValidate: {
-        project_id: '',
-        definition_id: '',
+        project_id: 0,
+        definition_id: [],
         name: '',
-        functionality_data: '',
-        request_data: '',
-        response_data: '',
-        db_table_name: '',
-        type: '',
-        parent_id: ''
+        functionality_data: '{}',
+        request_data: '[]',
+        response_data: '[]',
+        db_table_name: '{}',
+        type: 'feature',
+        parent_id: 0
       }
     };
 
-    if (this.$store.state.pages.entity_feature_create) {
-      state = this.$store.state.pages.entity_feature_create;
-    } //
+    if (this.$store.state.pages.entity_feature_create) {} // state = this.$store.state.pages.entity_create;
+    //
     //component state registration
 
 
-    return _objectSpread({}, state, {
+    return _objectSpread({}, local, {}, state, {
       ruleValidate: {
-        project_id: [{
-          required: true,
-          type: 'number',
-          trigger: 'blur',
-          message: 'The project_id cannot be empty'
-        }],
-        definition_id: [{
-          required: true,
-          type: 'number',
-          trigger: 'blur',
-          message: 'The definition_id cannot be empty'
-        }],
         name: [{
           required: true,
           type: 'string',
           trigger: 'blur',
           message: 'The name cannot be empty'
-        }],
-        functionality_data: [{
-          required: true,
-          type: 'string',
-          trigger: 'blur',
-          message: 'The functionality_data cannot be empty'
-        }],
-        request_data: [{
-          required: true,
-          type: 'string',
-          trigger: 'blur',
-          message: 'The request_data cannot be empty'
-        }],
-        response_data: [{
-          required: true,
-          type: 'string',
-          trigger: 'blur',
-          message: 'The response_data cannot be empty'
-        }],
-        db_table_name: [{
-          required: true,
-          type: 'string',
-          trigger: 'blur',
-          message: 'The db_table_name cannot be empty'
-        }],
-        type: [{
-          required: true,
-          type: 'string',
-          trigger: 'blur',
-          message: 'The type cannot be empty'
-        }],
-        parent_id: [{
-          required: true,
-          type: 'number',
-          trigger: 'blur',
-          message: 'The parent_id cannot be empty'
         }]
       }
     });
@@ -3157,7 +3063,63 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ajax: function ajax() {
       var self = this;
       return {
+        getProjectsWithDefinitionsEntities: function getProjectsWithDefinitionsEntities() {
+          window.axios.get("/butler/public_backend" + '/project_get_with_definitions_entities').then(function (_ref) {
+            var data = _ref.data;
+            var tmp_data = [];
+
+            for (var i in data) {
+              if (data.hasOwnProperty(i)) {
+                var element = data[i];
+                var tmp_definitions = [];
+
+                if (element.definitions.length > 0) {
+                  for (var j in element.definitions) {
+                    if (element.definitions.hasOwnProperty(j)) {
+                      var element_ = element.definitions[j];
+                      var tmp_entities = [];
+
+                      if (element_.entities.length > 0) {
+                        for (var k in element_.entities) {
+                          if (element_.entities.hasOwnProperty(k)) {
+                            var element__ = element_.entities[k];
+                            tmp_entities.push({
+                              value: element__.id,
+                              label: element__.name,
+                              data: element__
+                            });
+                          }
+                        }
+                      }
+
+                      tmp_definitions.push({
+                        value: element_.id,
+                        label: element_.namespace,
+                        data: element_,
+                        children: tmp_entities
+                      });
+                    }
+                  }
+                }
+
+                tmp_data.push({
+                  value: element.id,
+                  label: element.name,
+                  data: element,
+                  children: tmp_definitions
+                });
+              }
+            }
+
+            self.project_definitions_entities = tmp_data;
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        },
         create: function create(data) {
+          data.project_id = self.cascader_entity[0];
+          data.definition_id = self.cascader_entity[1];
+          data.parent_id = self.cascader_entity[2];
           var form_data = new FormData();
 
           for (var key in data) {
@@ -3173,7 +3135,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
 
           window.axios.post("/butler/public_backend" + '/trident/resource/entity', form_data).then(function (response) {
-            // Once AJAX resolves we can update the Crud with the new color
             self.$Message.success('Success!');
           })["catch"](function (error) {
             console.log(error);
@@ -3199,13 +3160,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   },
-  mounted: function mounted() {// console.log('test form mounted');
-    // console.log({
-    //     // 'this.$store': this.$store,
-    //     // 'this.$store.state': this.$store.state,
-    //     // 'this.$store.state.Index': this.$store.state.Index,
-    //     'this.$route': this.$route,
-    // });
+  mounted: function mounted() {
+    this.ajax().getProjectsWithDefinitionsEntities();
   }
 });
 
@@ -3257,10 +3213,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    parent_id: {
+      type: Number,
+      "default": 15
+    }
+  },
   data: function data() {
     var _this = this;
 
@@ -3273,17 +3232,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
     var state = {
-      formValidate: {},
-      filters: {
-        project_name: {
-          selected: [],
-          data: []
-        }
-      }
+      formValidate: {}
     };
 
-    if (this.$store.state.pages.entity_list_delete) {
-      state = this.$store.state.pages.entity_list_delete;
+    if (this.$store.state.pages.entity_feature_list_delete) {
+      state = this.$store.state.pages.entity_feature_list_delete;
     } //
     //component state registration
 
@@ -3320,7 +3273,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             on: {
               click: function click() {
                 _this.$router.push({
-                  name: 'entity_update',
+                  name: 'entity_feature_update',
                   params: {
                     id: row.id
                   }
@@ -3392,31 +3345,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     formValidate: {
       deep: true,
       handler: function handler(value) {
-        this.$store.commit('pages/entity_list_delete/setFormValidate', value);
-      }
-    },
-    filters: {
-      deep: true,
-      handler: function handler(value) {
-        this.$store.commit('pages/entity_list_delete/setFilters', value);
-      }
-    },
-    data: {
-      deep: true,
-      handler: function handler(value) {
-        var tmp_table = [];
-
-        for (var i in value) {
-          if (value.hasOwnProperty(i)) {
-            var element = value[i];
-            tmp_table.push({
-              'label': element.project_name,
-              'value': element.project_name
-            });
-          }
-        }
-
-        this.filters.project_name.data = tmp_table;
+        this.$store.commit('pages/entity_feature_list_delete/setFormValidate', value);
       }
     }
   },
@@ -3425,8 +3354,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var self = this;
       return {
         get: function get() {
-          var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-          window.axios.get("/butler/public_backend" + '/trident/resource/entity' + id).then(function (_ref) {
+          var parent_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+          var uri = '';
+
+          if (parent_id !== 0) {
+            uri = '/' + parent_id;
+          }
+
+          window.axios.get("/butler/public_backend" + '/entity_get_parents' + uri).then(function (_ref) {
             var data = _ref.data;
             self.server_data = data;
             self.data = data;
@@ -3465,24 +3400,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     onCreateButtonClicked: function onCreateButtonClicked() {
       this.$router.push({
-        name: 'entity_create'
+        name: 'entity_feature_create'
       });
-    },
-    onClearAllButtonClicked: function onClearAllButtonClicked() {
-      var filters = this.filters;
-
-      for (var key in filters) {
-        if (filters.hasOwnProperty(key)) {
-          var element = filters[key];
-          filters[key].selected = [];
-        }
-      }
-
-      this.filters = filters;
     }
   },
   mounted: function mounted() {
-    this.ajax().get();
+    this.ajax().get(this.parent_id);
   }
 });
 
@@ -3578,42 +3501,155 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    parent_id: {
+      type: Number,
+      "default": 15
+    }
+  },
   data: function data() {
+    var local = {
+      model: '',
+      cascader_entity: [],
+      project_definitions_entities: [],
+      loading_models: true,
+      database_tables: [],
+      request_table: {
+        edit: {
+          index: -1,
+          name: '',
+          type: '',
+          validation: '',
+          fillable: ''
+        },
+        columns: [{
+          title: 'Name',
+          slot: 'name',
+          minWidth: 100
+        }, {
+          title: 'Type',
+          slot: 'type',
+          minWidth: 100
+        }, {
+          title: 'Validation',
+          slot: 'validation',
+          minWidth: 100
+        }, {
+          title: 'Fillable',
+          slot: 'fillable',
+          minWidth: 100
+        }, {
+          title: 'Action',
+          slot: 'action',
+          width: 150,
+          align: 'center'
+        }],
+        data: []
+      },
+      response_table: {
+        edit: {
+          index: -1,
+          name: '',
+          resource: ''
+        },
+        columns: [{
+          title: 'Name',
+          slot: 'name',
+          minWidth: 100
+        }, {
+          title: 'Resource',
+          slot: 'resource',
+          minWidth: 100
+        }, {
+          title: 'Action',
+          slot: 'action',
+          width: 150,
+          align: 'center'
+        }],
+        data: []
+      }
+    };
     var state = {
       formValidate: {
         project_id: '',
         definition_id: '',
+        entity_id: '',
         name: '',
         functionality_data: '',
         request_data: '',
         response_data: '',
         db_table_name: '',
-        type: '',
-        parent_id: ''
+        type: 'feature',
+        parent_id: 0
       }
     };
 
-    if (this.$store.state.pages.entity_feature_update) {
-      state = this.$store.state.pages.entity_feature_update;
-    } //
+    if (this.$store.state.pages.entity_feature_update) {} // state = this.$store.state.pages.entity_update;
+    //
     //component state registration
 
 
-    return _objectSpread({}, state, {
+    return _objectSpread({}, local, {}, state, {
       ruleValidate: {
-        project_id: [{
-          required: true,
-          type: 'number',
-          trigger: 'blur',
-          message: 'The project_id cannot be empty'
-        }],
-        definition_id: [{
-          required: true,
-          type: 'number',
-          trigger: 'blur',
-          message: 'The definition_id cannot be empty'
-        }],
         name: [{
           required: true,
           type: 'string',
@@ -3643,18 +3679,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           type: 'string',
           trigger: 'blur',
           message: 'The db_table_name cannot be empty'
-        }],
-        type: [{
-          required: true,
-          type: 'string',
-          trigger: 'blur',
-          message: 'The type cannot be empty'
-        }],
-        parent_id: [{
-          required: true,
-          type: 'number',
-          trigger: 'blur',
-          message: 'The parent_id cannot be empty'
         }]
       }
     });
@@ -3671,12 +3695,86 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ajax: function ajax() {
       var self = this;
       return {
+        getProjectsWithDefinitionsEntities: function getProjectsWithDefinitionsEntities() {
+          window.axios.get("/butler/public_backend" + '/project_get_with_definitions_entities').then(function (_ref) {
+            var data = _ref.data;
+            var tmp_data = [];
+
+            for (var i in data) {
+              if (data.hasOwnProperty(i)) {
+                var element = data[i];
+                var tmp_definitions = [];
+
+                if (element.definitions.length > 0) {
+                  for (var j in element.definitions) {
+                    if (element.definitions.hasOwnProperty(j)) {
+                      var element_ = element.definitions[j];
+                      var tmp_entities = [];
+
+                      if (element_.entities.length > 0) {
+                        for (var k in element_.entities) {
+                          if (element_.entities.hasOwnProperty(k)) {
+                            var element__ = element_.entities[k];
+                            tmp_entities.push({
+                              value: element__.id,
+                              label: element__.name,
+                              data: element__
+                            });
+                          }
+                        }
+                      }
+
+                      tmp_definitions.push({
+                        value: element_.id,
+                        label: element_.namespace,
+                        data: element_,
+                        children: tmp_entities
+                      });
+                    }
+                  }
+                }
+
+                tmp_data.push({
+                  value: element.id,
+                  label: element.name,
+                  data: element,
+                  children: tmp_definitions
+                });
+              }
+            }
+
+            self.project_definitions_entities = tmp_data;
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        },
         get: function get() {
           var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-          window.axios.get("/butler/public_backend" + '/trident/resource/entity/' + id).then(function (_ref) {
-            var data = _ref.data;
+          return window.axios.get("/butler/public_backend" + '/trident/resource/entity/' + id).then(function (_ref2) {
+            var data = _ref2.data;
+            self.database_tables = [{
+              label: data.db_table_name,
+              value: data.db_table_name
+            }];
+            self.cascader_entity = [data.project_id, data.definition_id, data.id];
+            self.request_table.data = JSON.parse(data.request_data);
+            self.response_table.data = JSON.parse(data.response_data);
             self.formValidate = data;
           })["catch"](function (error) {
+            console.log(error);
+          });
+        },
+        getDefaultValues: function getDefaultValues(definition_id, db_table_name) {
+          return window.axios.get("/butler/public_backend" + '/definition_get/' + definition_id, {
+            params: {
+              db_table_name: db_table_name
+            }
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        },
+        getDatabaseTables: function getDatabaseTables(definition_id) {
+          return window.axios.get("/butler/public_backend" + '/definition_get_database_tables/' + definition_id)["catch"](function (error) {
             console.log(error);
           });
         },
@@ -3696,8 +3794,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           }
 
-          window.axios.post("/butler/public_backend" + '/trident/resource/entity/' + id, form_data).then(function (response) {
-            // Once AJAX resolves we can update the Crud with the new color
+          return window.axios.post("/butler/public_backend" + '/trident/resource/entity/' + id, form_data).then(function (response) {
             self.$Message.success('Success!');
           })["catch"](function (error) {
             console.log(error);
@@ -3715,22 +3812,67 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$refs[name].validate(function (valid) {
         if (valid) {
           var formValidate = _this.formValidate;
+          formValidate.request_data = JSON.stringify(_this.request_table.data);
+          formValidate.response_data = JSON.stringify(_this.response_table.data);
 
           _this.ajax().update(_this.$route.params.id, formValidate);
         } else {
           _this.$Message.error('Fail!');
         }
       });
+    },
+    onGenerateDefaultValuesClicked: function onGenerateDefaultValuesClicked() {
+      var _this2 = this;
+
+      this.ajax().getDefaultValues(this.formValidate.definition_id, this.formValidate.db_table_name).then(function (_ref3) {
+        var data = _ref3.data;
+        _this2.request_table.data = data.request_table_data;
+        _this2.response_table.data = data.response_table_data;
+      });
+    },
+    onModelSelectClicked: function onModelSelectClicked() {
+      var _this3 = this;
+
+      this.loading_models = true;
+      this.ajax().getDatabaseTables(this.formValidate.definition_id).then(function (_ref4) {
+        var data = _ref4.data;
+        _this3.database_tables = data.table_names;
+        _this3.loading_models = false;
+      });
+    },
+    requestTableHandleEdit: function requestTableHandleEdit(row, index) {
+      this.request_table.edit.name = row.name;
+      this.request_table.edit.type = row.type;
+      this.request_table.edit.validation = row.validation;
+      this.request_table.edit.fillable = row.fillable;
+      this.request_table.edit.index = index;
+    },
+    requestTableHandleSave: function requestTableHandleSave(index) {
+      this.request_table.data[index].name = this.request_table.edit.name;
+      this.request_table.data[index].type = this.request_table.edit.type;
+      this.request_table.data[index].validation = this.request_table.edit.validation;
+      this.request_table.data[index].fillable = this.request_table.edit.fillable;
+      this.request_table.edit.index = -1;
+    },
+    requestTableHandleDelete: function requestTableHandleDelete(index) {
+      this.request_table.data.splice(index, 1);
+    },
+    responseTableHandleEdit: function responseTableHandleEdit(row, index) {
+      this.response_table.edit.name = row.name;
+      this.response_table.edit.resource = row.resource;
+      this.response_table.edit.index = index;
+    },
+    responseTableHandleSave: function responseTableHandleSave(index) {
+      this.response_table.data[index].name = this.response_table.edit.name;
+      this.response_table.data[index].resource = this.response_table.edit.resource;
+      this.response_table.edit.index = -1;
+    },
+    responseTableHandleDelete: function responseTableHandleDelete(index) {
+      this.response_table.data.splice(index, 1);
     }
   },
   mounted: function mounted() {
-    // console.log('test form mounted');
-    // console.log({
-    //     // 'this.$store': this.$store,
-    //     // 'this.$store.state': this.$store.state,
-    //     // 'this.$store.state.Index': this.$store.state.Index,
-    //     'this.$route': this.$route,
-    // });
+    this.ajax().getProjectsWithDefinitionsEntities();
     this.ajax().get(this.$route.params.id);
   }
 });
@@ -3970,8 +4112,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var self = this;
       return {
         get: function get() {
-          var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-          window.axios.get("/butler/public_backend" + '/trident/resource/entity' + id).then(function (_ref) {
+          window.axios.get("/butler/public_backend" + '/entity_get_parents').then(function (_ref) {
             var data = _ref.data;
             self.server_data = data;
             self.data = data;
@@ -11586,25 +11727,6 @@ exports.push([module.i, "\n.demo-spin-icon-load[data-v-2891affe]{\n    -webkit-a
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources_backend/js/pages/entity_feature_create.vue?vue&type=style&index=0&id=77a4b5b3&scoped=true&lang=css&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources_backend/js/pages/entity_feature_create.vue?vue&type=style&index=0&id=77a4b5b3&scoped=true&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.index[data-v-77a4b5b3] {\n    width: 100%;\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    text-align: center;\n}\n.index h1[data-v-77a4b5b3] {\n        height: 150px;\n}\n.index h1 img[data-v-77a4b5b3] {\n            height: 100%;\n}\n.index h2[data-v-77a4b5b3] {\n        color: #666;\n        margin-bottom: 200px;\n}\n.index h2 p[data-v-77a4b5b3] {\n            margin: 0 0 50px;\n}\n.ivu-row-flex[data-v-77a4b5b3] {\n    height: 100%;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources_backend/js/pages/entity_feature_list_delete.vue?vue&type=style&index=0&id=04731c45&scoped=true&lang=css&":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources_backend/js/pages/entity_feature_list_delete.vue?vue&type=style&index=0&id=04731c45&scoped=true&lang=css& ***!
@@ -11617,7 +11739,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.demo-spin-icon-load[data-v-04731c45]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-04731c45] {\n    margin-bottom: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.demo-spin-icon-load[data-v-04731c45]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n", ""]);
 
 // exports
 
@@ -11636,7 +11758,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.index[data-v-14649f00] {\n    width: 100%;\n    position: absolute;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    text-align: center;\n}\n.index h1[data-v-14649f00] {\n        height: 150px;\n}\n.index h1 img[data-v-14649f00] {\n            height: 100%;\n}\n.index h2[data-v-14649f00] {\n        color: #666;\n        margin-bottom: 200px;\n}\n.index h2 p[data-v-14649f00] {\n            margin: 0 0 50px;\n}\n.ivu-row-flex[data-v-14649f00] {\n    height: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.entity_update[data-v-14649f00] {\n    height: 100vh;\n}\n", ""]);
 
 // exports
 
@@ -87301,36 +87423,6 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources_backend/js/pages/entity_feature_create.vue?vue&type=style&index=0&id=77a4b5b3&scoped=true&lang=css&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources_backend/js/pages/entity_feature_create.vue?vue&type=style&index=0&id=77a4b5b3&scoped=true&lang=css& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--7-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/vue-loader/lib??vue-loader-options!./entity_feature_create.vue?vue&type=style&index=0&id=77a4b5b3&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources_backend/js/pages/entity_feature_create.vue?vue&type=style&index=0&id=77a4b5b3&scoped=true&lang=css&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources_backend/js/pages/entity_feature_list_delete.vue?vue&type=style&index=0&id=04731c45&scoped=true&lang=css&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources_backend/js/pages/entity_feature_list_delete.vue?vue&type=style&index=0&id=04731c45&scoped=true&lang=css& ***!
@@ -89431,7 +89523,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "entity_feature_create" },
+    { staticClass: "entity_create" },
     [
       _c(
         "Row",
@@ -89441,7 +89533,7 @@ var render = function() {
             "Col",
             { attrs: { span: "24" } },
             [
-              _c("h1", [_vm._v("\n                test\n            ")]),
+              _c("h1", [_vm._v("Create")]),
               _vm._v(" "),
               _c(
                 "Form",
@@ -89456,36 +89548,19 @@ var render = function() {
                 [
                   _c(
                     "FormItem",
-                    { attrs: { label: "project_id", prop: "project_id" } },
+                    { attrs: { label: "entity_id", prop: "entity_id" } },
                     [
-                      _c("InputNumber", {
-                        attrs: { placeholder: "Enter your project_id" },
+                      _c("Cascader", {
+                        attrs: {
+                          data: _vm.project_definitions_entities,
+                          placeholder: "---NOTHING SELECTED---"
+                        },
                         model: {
-                          value: _vm.formValidate.project_id,
+                          value: _vm.cascader_entity,
                           callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "project_id", $$v)
+                            _vm.cascader_entity = $$v
                           },
-                          expression: "formValidate.project_id"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
-                    {
-                      attrs: { label: "definition_id", prop: "definition_id" }
-                    },
-                    [
-                      _c("InputNumber", {
-                        attrs: { placeholder: "Enter your definition_id" },
-                        model: {
-                          value: _vm.formValidate.definition_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "definition_id", $$v)
-                          },
-                          expression: "formValidate.definition_id"
+                          expression: "cascader_entity"
                         }
                       })
                     ],
@@ -89504,127 +89579,6 @@ var render = function() {
                             _vm.$set(_vm.formValidate, "name", $$v)
                           },
                           expression: "formValidate.name"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
-                    {
-                      attrs: {
-                        label: "functionality_data",
-                        prop: "functionality_data"
-                      }
-                    },
-                    [
-                      _c("Input", {
-                        attrs: { placeholder: "Enter your functionality_data" },
-                        model: {
-                          value: _vm.formValidate.functionality_data,
-                          callback: function($$v) {
-                            _vm.$set(
-                              _vm.formValidate,
-                              "functionality_data",
-                              $$v
-                            )
-                          },
-                          expression: "formValidate.functionality_data"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
-                    { attrs: { label: "request_data", prop: "request_data" } },
-                    [
-                      _c("Input", {
-                        attrs: { placeholder: "Enter your request_data" },
-                        model: {
-                          value: _vm.formValidate.request_data,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "request_data", $$v)
-                          },
-                          expression: "formValidate.request_data"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
-                    {
-                      attrs: { label: "response_data", prop: "response_data" }
-                    },
-                    [
-                      _c("Input", {
-                        attrs: { placeholder: "Enter your response_data" },
-                        model: {
-                          value: _vm.formValidate.response_data,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "response_data", $$v)
-                          },
-                          expression: "formValidate.response_data"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
-                    {
-                      attrs: { label: "db_table_name", prop: "db_table_name" }
-                    },
-                    [
-                      _c("Input", {
-                        attrs: { placeholder: "Enter your db_table_name" },
-                        model: {
-                          value: _vm.formValidate.db_table_name,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "db_table_name", $$v)
-                          },
-                          expression: "formValidate.db_table_name"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
-                    { attrs: { label: "type", prop: "type" } },
-                    [
-                      _c("Input", {
-                        attrs: { placeholder: "Enter your type" },
-                        model: {
-                          value: _vm.formValidate.type,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "type", $$v)
-                          },
-                          expression: "formValidate.type"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
-                    { attrs: { label: "parent_id", prop: "parent_id" } },
-                    [
-                      _c("InputNumber", {
-                        attrs: { placeholder: "Enter your parent_id" },
-                        model: {
-                          value: _vm.formValidate.parent_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "parent_id", $$v)
-                          },
-                          expression: "formValidate.parent_id"
                         }
                       })
                     ],
@@ -89686,7 +89640,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "entity_list_delete" },
+    { staticClass: "entity_feature_list_delete" },
     [
       _c(
         "Row",
@@ -89798,7 +89752,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "entity_feature_update" },
+    { staticClass: "entity_update" },
     [
       _c(
         "Row",
@@ -89808,7 +89762,7 @@ var render = function() {
             "Col",
             { attrs: { span: "24" } },
             [
-              _c("h1", [_vm._v("\n                test update\n            ")]),
+              _c("h1", [_vm._v("Update")]),
               _vm._v(" "),
               _c(
                 "Form",
@@ -89823,36 +89777,20 @@ var render = function() {
                 [
                   _c(
                     "FormItem",
-                    { attrs: { label: "project_id", prop: "project_id" } },
+                    { attrs: { label: "entity_id", prop: "entity_id" } },
                     [
-                      _c("InputNumber", {
-                        attrs: { placeholder: "Enter your project_id" },
+                      _c("Cascader", {
+                        attrs: {
+                          disabled: true,
+                          data: _vm.project_definitions_entities,
+                          placeholder: "---NOTHING SELECTED---"
+                        },
                         model: {
-                          value: _vm.formValidate.project_id,
+                          value: _vm.cascader_entity,
                           callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "project_id", $$v)
+                            _vm.cascader_entity = $$v
                           },
-                          expression: "formValidate.project_id"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
-                    {
-                      attrs: { label: "definition_id", prop: "definition_id" }
-                    },
-                    [
-                      _c("InputNumber", {
-                        attrs: { placeholder: "Enter your definition_id" },
-                        model: {
-                          value: _vm.formValidate.definition_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "definition_id", $$v)
-                          },
-                          expression: "formValidate.definition_id"
+                          expression: "cascader_entity"
                         }
                       })
                     ],
@@ -89877,39 +89815,315 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
+                  _c("h1", [_vm._v("Functionality")]),
+                  _vm._v(" "),
+                  _c("Divider"),
+                  _vm._v(" "),
                   _c(
                     "FormItem",
                     {
-                      attrs: {
-                        label: "functionality_data",
-                        prop: "functionality_data"
-                      }
+                      attrs: { label: "db_table_name", prop: "db_table_name" }
                     },
                     [
-                      _c("Input", {
-                        attrs: { placeholder: "Enter your functionality_data" },
-                        model: {
-                          value: _vm.formValidate.functionality_data,
-                          callback: function($$v) {
-                            _vm.$set(
-                              _vm.formValidate,
-                              "functionality_data",
-                              $$v
-                            )
+                      _c(
+                        "Select",
+                        {
+                          staticStyle: { width: "200px" },
+                          attrs: {
+                            loading: _vm.loading_models,
+                            "loading-text": "loading...",
+                            placeholder: "-select db table-"
                           },
-                          expression: "formValidate.functionality_data"
-                        }
-                      })
+                          on: { "on-open-change": _vm.onModelSelectClicked },
+                          model: {
+                            value: _vm.formValidate.db_table_name,
+                            callback: function($$v) {
+                              _vm.$set(_vm.formValidate, "db_table_name", $$v)
+                            },
+                            expression: "formValidate.db_table_name"
+                          }
+                        },
+                        _vm._l(_vm.database_tables, function(item) {
+                          return _c(
+                            "Option",
+                            { key: item.value, attrs: { value: item.value } },
+                            [_vm._v(_vm._s(item.label))]
+                          )
+                        }),
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "Button",
+                        {
+                          attrs: { type: "primary" },
+                          on: { click: _vm.onGenerateDefaultValuesClicked }
+                        },
+                        [_vm._v("Generate Default Values")]
+                      )
                     ],
                     1
                   ),
                   _vm._v(" "),
+                  _c("FormItem"),
+                  _vm._v(" "),
+                  _c(
+                    "h1",
+                    [
+                      _vm._v(
+                        "\n                    Request\n                    "
+                      ),
+                      _c(
+                        "Tooltip",
+                        { attrs: { content: "", "max-width": "600" } },
+                        [
+                          _c("Icon", {
+                            staticStyle: { "font-size": "0.7em" },
+                            attrs: { type: "ios-information-circle" }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { attrs: { slot: "content" }, slot: "content" },
+                            [
+                              _c("strong", [_vm._v("T::*")]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _c("i", [
+                                  _vm._v(
+                                    "where `*` is `string()`, `integer()`, `bool()`, `nullable()`, \n                    `array()`, `float()`, `double()` "
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c("strong", [
+                                _vm._v("laravel_validation_rule_string")
+                              ]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _c("i", [
+                                  _vm._v(
+                                    'is the native laravel validation string. e.x. "required | string"  '
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("Divider"),
+                  _vm._v(" "),
+                  _c("Table", {
+                    attrs: {
+                      border: "",
+                      columns: _vm.request_table.columns,
+                      data: _vm.request_table.data,
+                      "no-data-text": "-no data-"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "name",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.request_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value: _vm.request_table.edit.name,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.request_table.edit,
+                                        "name",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "request_table.edit.name"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.name))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "type",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.request_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value: _vm.request_table.edit.type,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.request_table.edit,
+                                        "type",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "request_table.edit.type"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.type))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "validation",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.request_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value: _vm.request_table.edit.validation,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.request_table.edit,
+                                        "validation",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "request_table.edit.validation"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.validation))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "fillable",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.request_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value: _vm.request_table.edit.fillable,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.request_table.edit,
+                                        "fillable",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "request_table.edit.fillable"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.fillable))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "action",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.request_table.edit.index === index
+                              ? _c(
+                                  "div",
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "success",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.requestTableHandleSave(
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Save")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "warning",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.request_table.edit.index = -1
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Cancel")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _c(
+                                  "div",
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "primary",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.requestTableHandleEdit(
+                                              row,
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Edit")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: { type: "error", size: "small" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.requestTableHandleDelete(
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Delete")]
+                                    )
+                                  ],
+                                  1
+                                )
+                          ]
+                        }
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
                   _c(
                     "FormItem",
-                    { attrs: { label: "request_data", prop: "request_data" } },
                     [
                       _c("Input", {
-                        attrs: { placeholder: "Enter your request_data" },
+                        attrs: { hidden: "", placeholder: "" },
                         model: {
                           value: _vm.formValidate.request_data,
                           callback: function($$v) {
@@ -89923,13 +90137,198 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c(
-                    "FormItem",
-                    {
-                      attrs: { label: "response_data", prop: "response_data" }
+                    "h1",
+                    [
+                      _vm._v(
+                        "\n                    Response\n                    "
+                      ),
+                      _c(
+                        "Tooltip",
+                        { attrs: { content: "", "max-width": "600" } },
+                        [
+                          _c("Icon", {
+                            staticStyle: { "font-size": "0.7em" },
+                            attrs: { type: "ios-information-circle" }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { attrs: { slot: "content" }, slot: "content" },
+                            [
+                              _c("strong", [_vm._v("T::*")]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _c("i", [
+                                  _vm._v(
+                                    "where `*` is `string()`, `integer()`, `bool()`, `nullable()`, \n                    `array()`, `float()`, `double()` "
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("Divider"),
+                  _vm._v(" "),
+                  _c("Table", {
+                    attrs: {
+                      border: "",
+                      columns: _vm.response_table.columns,
+                      data: _vm.response_table.data,
+                      "no-data-text": "-no data-"
                     },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "name",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.response_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value: _vm.response_table.edit.name,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.response_table.edit,
+                                        "name",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "response_table.edit.name"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.name))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "resource",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.response_table.edit.index === index
+                              ? _c("Input", {
+                                  attrs: { type: "text" },
+                                  model: {
+                                    value: _vm.response_table.edit.resource,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.response_table.edit,
+                                        "resource",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "response_table.edit.resource"
+                                  }
+                                })
+                              : _c("span", [_vm._v(_vm._s(row.resource))])
+                          ]
+                        }
+                      },
+                      {
+                        key: "action",
+                        fn: function(ref) {
+                          var row = ref.row
+                          var index = ref.index
+                          return [
+                            _vm.response_table.edit.index === index
+                              ? _c(
+                                  "div",
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "success",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.responseTableHandleSave(
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Save")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "warning",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.response_table.edit.index = -1
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Cancel")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _c(
+                                  "div",
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          type: "primary",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.responseTableHandleEdit(
+                                              row,
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Edit")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: { type: "error", size: "small" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.responseTableHandleDelete(
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Delete")]
+                                    )
+                                  ],
+                                  1
+                                )
+                          ]
+                        }
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
                     [
                       _c("Input", {
-                        attrs: { placeholder: "Enter your response_data" },
+                        attrs: { hidden: "", placeholder: "" },
                         model: {
                           value: _vm.formValidate.response_data,
                           callback: function($$v) {
@@ -89940,84 +90339,38 @@ var render = function() {
                       })
                     ],
                     1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
-                    {
-                      attrs: { label: "db_table_name", prop: "db_table_name" }
-                    },
-                    [
-                      _c("Input", {
-                        attrs: { placeholder: "Enter your db_table_name" },
-                        model: {
-                          value: _vm.formValidate.db_table_name,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "db_table_name", $$v)
-                          },
-                          expression: "formValidate.db_table_name"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
-                    { attrs: { label: "type", prop: "type" } },
-                    [
-                      _c("Input", {
-                        attrs: { placeholder: "Enter your type" },
-                        model: {
-                          value: _vm.formValidate.type,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "type", $$v)
-                          },
-                          expression: "formValidate.type"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
-                    { attrs: { label: "parent_id", prop: "parent_id" } },
-                    [
-                      _c("InputNumber", {
-                        attrs: { placeholder: "Enter your parent_id" },
-                        model: {
-                          value: _vm.formValidate.parent_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.formValidate, "parent_id", $$v)
-                          },
-                          expression: "formValidate.parent_id"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "FormItem",
-                    [
-                      _c(
-                        "Button",
-                        {
-                          attrs: { type: "primary" },
-                          on: {
-                            click: function($event) {
-                              return _vm.handleSubmit("formValidate")
-                            }
-                          }
-                        },
-                        [_vm._v("Submit")]
-                      )
-                    ],
-                    1
                   )
                 ],
                 1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "Row",
+        {
+          staticStyle: { "margin-top": "25px", "margin-bottom": "15px" },
+          attrs: { type: "flex", justify: "end", align: "middle" }
+        },
+        [
+          _c(
+            "Col",
+            [
+              _c(
+                "Button",
+                {
+                  attrs: { type: "primary" },
+                  on: {
+                    click: function($event) {
+                      return _vm.handleSubmit("formValidate")
+                    }
+                  }
+                },
+                [_vm._v("Submit")]
               )
             ],
             1
@@ -110026,9 +110379,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _entity_feature_create_vue_vue_type_template_id_77a4b5b3_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./entity_feature_create.vue?vue&type=template&id=77a4b5b3&scoped=true& */ "./resources_backend/js/pages/entity_feature_create.vue?vue&type=template&id=77a4b5b3&scoped=true&");
 /* harmony import */ var _entity_feature_create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./entity_feature_create.vue?vue&type=script&lang=js& */ "./resources_backend/js/pages/entity_feature_create.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _entity_feature_create_vue_vue_type_style_index_0_id_77a4b5b3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./entity_feature_create.vue?vue&type=style&index=0&id=77a4b5b3&scoped=true&lang=css& */ "./resources_backend/js/pages/entity_feature_create.vue?vue&type=style&index=0&id=77a4b5b3&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -110036,7 +110387,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _entity_feature_create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _entity_feature_create_vue_vue_type_template_id_77a4b5b3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _entity_feature_create_vue_vue_type_template_id_77a4b5b3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -110065,22 +110416,6 @@ component.options.__file = "resources_backend/js/pages/entity_feature_create.vue
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_entity_feature_create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./entity_feature_create.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources_backend/js/pages/entity_feature_create.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_entity_feature_create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources_backend/js/pages/entity_feature_create.vue?vue&type=style&index=0&id=77a4b5b3&scoped=true&lang=css&":
-/*!***********************************************************************************************************************!*\
-  !*** ./resources_backend/js/pages/entity_feature_create.vue?vue&type=style&index=0&id=77a4b5b3&scoped=true&lang=css& ***!
-  \***********************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_entity_feature_create_vue_vue_type_style_index_0_id_77a4b5b3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--7-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/vue-loader/lib??vue-loader-options!./entity_feature_create.vue?vue&type=style&index=0&id=77a4b5b3&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources_backend/js/pages/entity_feature_create.vue?vue&type=style&index=0&id=77a4b5b3&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_entity_feature_create_vue_vue_type_style_index_0_id_77a4b5b3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_entity_feature_create_vue_vue_type_style_index_0_id_77a4b5b3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_entity_feature_create_vue_vue_type_style_index_0_id_77a4b5b3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_entity_feature_create_vue_vue_type_style_index_0_id_77a4b5b3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_entity_feature_create_vue_vue_type_style_index_0_id_77a4b5b3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

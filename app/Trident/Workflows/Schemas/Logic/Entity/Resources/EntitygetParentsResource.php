@@ -17,11 +17,9 @@ class EntitygetParentsResource extends JsonResource
         return [
             'id' => $this->id,
             'project_id' => $this->project_id,
-            'project_name' => $this->project_name,
+            'project_name' => $this->project->name,
             'definition_id' => $this->definition_id,
-            'definition_namespace' => $this->definition_namespace,
-            'entity_id' => $this->entity_id,
-            'entity_name' => $this->entity_name,
+            'definition_namespace' => $this->definition->namespace,
             'parent_id' => $this->parent_id,
             'name' => $this->name,
             'type' => $this->type,

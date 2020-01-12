@@ -1,75 +1,26 @@
 <style scoped>
-    .index {
-        width: 100%;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        text-align: center;
-    }
-        .index h1 {
-            height: 150px;
-        }
-            .index h1 img {
-                height: 100%;
-            }
-        .index h2 {
-            color: #666;
-            margin-bottom: 200px;
-        }
-            .index h2 p {
-                margin: 0 0 50px;
-            }
-    .ivu-row-flex {
-        height: 100%;
-    }
+
 </style>
 <template>
-    <div class="entity_feature_create">
+    <div class="entity_create">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
-                <h1>
-                    test
-                </h1>
-
+                <h1>Create</h1>
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
                     
+                    <FormItem label="entity_id" prop="entity_id">
+                        <Cascader v-model="cascader_entity" :data="project_definitions_entities" placeholder="---NOTHING SELECTED---"></Cascader>
+                    </FormItem>
 
-                    <FormItem label="project_id" prop="project_id">
-                        <InputNumber v-model="formValidate.project_id" placeholder="Enter your project_id"></InputNumber>
-                    </FormItem>
-                    <FormItem label="definition_id" prop="definition_id">
-                        <InputNumber v-model="formValidate.definition_id" placeholder="Enter your definition_id"></InputNumber>
-                    </FormItem>
                     <FormItem label="name" prop="name">
                         <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
                     </FormItem>
-                    <FormItem label="functionality_data" prop="functionality_data">
-                        <Input v-model="formValidate.functionality_data" placeholder="Enter your functionality_data"></Input>
-                    </FormItem>
-                    <FormItem label="request_data" prop="request_data">
-                        <Input v-model="formValidate.request_data" placeholder="Enter your request_data"></Input>
-                    </FormItem>
-                    <FormItem label="response_data" prop="response_data">
-                        <Input v-model="formValidate.response_data" placeholder="Enter your response_data"></Input>
-                    </FormItem>
-                    <FormItem label="db_table_name" prop="db_table_name">
-                        <Input v-model="formValidate.db_table_name" placeholder="Enter your db_table_name"></Input>
-                    </FormItem>
-                    <FormItem label="type" prop="type">
-                        <Input v-model="formValidate.type" placeholder="Enter your type"></Input>
-                    </FormItem>
-                    <FormItem label="parent_id" prop="parent_id">
-                        <InputNumber v-model="formValidate.parent_id" placeholder="Enter your parent_id"></InputNumber>
-                    </FormItem>
-                    
-                    
+                                        
                     <FormItem>
                         <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
                     </FormItem>
                 </Form>
-
 
             </Col>
         </Row>
@@ -78,100 +29,42 @@
 <script>
     export default {
         data() {
+
+            var local = {
+                cascader_entity: [],
+                project_definitions_entities: [],
+            };
+
             var state = {
                 formValidate: {
-                    project_id: '',
-                    definition_id: '',
+                    project_id: 0,
+                    definition_id: [],
                     name: '',
-                    functionality_data: '',
-                    request_data: '',
-                    response_data: '',
-                    db_table_name: '',
-                    type: '',
-                    parent_id: '',
+                    functionality_data: '{}',
+                    request_data: '[]',
+                    response_data: '[]',
+                    db_table_name: '{}',
+                    type: 'feature',
+                    parent_id: 0,
                 },
             };
             if (this.$store.state.pages.entity_feature_create) 
             {
-                state = this.$store.state.pages.entity_feature_create;
+                // state = this.$store.state.pages.entity_create;
             }
 
             //
             //component state registration
             return {
+                ...local,
                 ...state,
                 ruleValidate: {
-
-                    project_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The project_id cannot be empty', 
-                        }
-                    ],
-                    definition_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The definition_id cannot be empty', 
-                        }
-                    ],
                     name: [
                         { 
                             required: true, 
                             type: 'string', 
                             trigger: 'blur',
                             message: 'The name cannot be empty', 
-                        }
-                    ],
-                    functionality_data: [
-                        { 
-                            required: true, 
-                            type: 'string', 
-                            trigger: 'blur',
-                            message: 'The functionality_data cannot be empty', 
-                        }
-                    ],
-                    request_data: [
-                        { 
-                            required: true, 
-                            type: 'string', 
-                            trigger: 'blur',
-                            message: 'The request_data cannot be empty', 
-                        }
-                    ],
-                    response_data: [
-                        { 
-                            required: true, 
-                            type: 'string', 
-                            trigger: 'blur',
-                            message: 'The response_data cannot be empty', 
-                        }
-                    ],
-                    db_table_name: [
-                        { 
-                            required: true, 
-                            type: 'string', 
-                            trigger: 'blur',
-                            message: 'The db_table_name cannot be empty', 
-                        }
-                    ],
-                    type: [
-                        { 
-                            required: true, 
-                            type: 'string', 
-                            trigger: 'blur',
-                            message: 'The type cannot be empty', 
-                        }
-                    ],
-                    parent_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The parent_id cannot be empty', 
                         }
                     ],
 
@@ -192,7 +85,65 @@
             ajax() {
                 var self = this;
                 return {
+                    getProjectsWithDefinitionsEntities() {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_get_with_definitions_entities' ).then(({ data }) => {
+                            let tmp_data = [];
+                            for (const i in data) {
+                                if (data.hasOwnProperty(i)) {
+                                    const element = data[i];
+                                    
+                                    let tmp_definitions = [];
+
+                                    if (element.definitions.length > 0) {
+                                        for (const j in element.definitions) {
+                                            if (element.definitions.hasOwnProperty(j)) {
+                                                const element_ = element.definitions[j];
+                                                
+                                                let tmp_entities = [];
+
+                                                if (element_.entities.length > 0) {
+                                                    for (const k in element_.entities) {
+                                                        if (element_.entities.hasOwnProperty(k)) {
+                                                            const element__ = element_.entities[k];
+                                                            
+                                                            tmp_entities.push({
+                                                                value: element__.id,
+                                                                label: element__.name,
+                                                                data: element__
+                                                            });
+                                                        }
+                                                    }
+                                                }
+
+                                                tmp_definitions.push({
+                                                    value: element_.id,
+                                                    label: element_.namespace,
+                                                    data: element_,
+                                                    children: tmp_entities
+                                                });
+                                            }
+                                        }
+                                    }
+
+                                    tmp_data.push({
+                                        value: element.id,
+                                        label: element.name,
+                                        data: element,
+                                        children: tmp_definitions
+                                    });
+
+                                }
+                            }
+                    
+                            self.project_definitions_entities = tmp_data;
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    },
                     create(data) {
+                        data.project_id = self.cascader_entity[0];
+                        data.definition_id = self.cascader_entity[1];
+                        data.parent_id = self.cascader_entity[2];
 
                         var form_data = new FormData();
                         
@@ -209,7 +160,6 @@
                         }
 
                         window.axios.post( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/entity',  form_data ).then((response) => {
-                            // Once AJAX resolves we can update the Crud with the new color
                             self.$Message.success('Success!');
                         }).catch(error => {
                             console.log(error);
@@ -236,13 +186,9 @@
             },
         },
         mounted() {
-            // console.log('test form mounted');
-            // console.log({
-            //     // 'this.$store': this.$store,
-            //     // 'this.$store.state': this.$store.state,
-            //     // 'this.$store.state.Index': this.$store.state.Index,
-            //     'this.$route': this.$route,
-            // });
+            
+            this.ajax().getProjectsWithDefinitionsEntities();
+
         },
     }
 </script>
