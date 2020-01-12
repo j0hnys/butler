@@ -273,7 +273,9 @@ import { setTimeout } from 'timers';
                 let filters = this.filters;
 
                 for (const key in filters) {
-                    this.onFilterSelected(key);
+                    if (filters[key].selected.length > 0) {
+                        this.onFilterSelected(key);
+                    }
                 }
             },
             onFilterSelected(column_name) {

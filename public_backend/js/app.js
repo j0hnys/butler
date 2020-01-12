@@ -2585,7 +2585,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var filters = this.filters;
 
       for (var key in filters) {
-        this.onFilterSelected(key);
+        if (filters[key].selected.length > 0) {
+          this.onFilterSelected(key);
+        }
       }
     },
     onFilterSelected: function onFilterSelected(column_name) {
@@ -4199,7 +4201,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var filters = this.filters;
 
       for (var key in filters) {
-        this.onFilterSelected(key);
+        if (filters[key].selected.length > 0) {
+          this.onFilterSelected(key);
+        }
       }
     },
     onFilterSelected: function onFilterSelected(column_name) {
@@ -5140,7 +5144,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var filters = this.filters;
 
       for (var key in filters) {
-        this.onFilterSelected(key);
+        if (filters[key].selected.length > 0) {
+          this.onFilterSelected(key);
+        }
       }
     },
     onFilterSelected: function onFilterSelected(column_name) {
@@ -5814,7 +5820,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var filters = this.filters;
 
       for (var key in filters) {
-        this.onFilterSelected(key);
+        if (filters[key].selected.length > 0) {
+          this.onFilterSelected(key);
+        }
       }
     },
     onFilterSelected: function onFilterSelected(column_name) {
@@ -6802,7 +6810,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var filters = this.filters;
 
       for (var key in filters) {
-        this.onFilterSelected(key);
+        if (filters[key].selected.length > 0) {
+          this.onFilterSelected(key);
+        }
       }
     },
     onFilterSelected: function onFilterSelected(column_name) {
