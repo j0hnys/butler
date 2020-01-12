@@ -1,0 +1,21 @@
+{
+    "type": "json",
+    "data": {
+        "id": {
+            "type": "T::nullable(T::int())",
+            "validation": {
+                "rule": "required",
+                "message": ""
+            },
+            "fillable": true
+        },
+        "user_id": {
+            "type": "T::nullable(T::int())",
+            "validation": {
+                "rule": "integer",
+                "message": ""
+            },
+            "fillable": true
+        }
+    }
+}

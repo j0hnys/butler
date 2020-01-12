@@ -3217,7 +3217,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: {
     parent_id: {
       type: Number,
-      "default": 15
+      "default": 0
     }
   },
   data: function data() {
@@ -3379,7 +3379,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         },
         generate: function generate(id) {
-          return window.axios.get("/butler/public_backend" + '/entity_generate/' + id).then(function (_ref3) {
+          return window.axios.get("/butler/public_backend" + '/entity_generate_feature/' + id).then(function (_ref3) {
             var data = _ref3.data;
             self.$Message.success('Success!');
           })["catch"](function (error) {
@@ -3388,7 +3388,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         },
         updateResource: function updateResource(id) {
-          return window.axios.get("/butler/public_backend" + '/entity_update_schemas/' + id).then(function (_ref4) {
+          return window.axios.get("/butler/public_backend" + '/entity_refresh_feature/' + id).then(function (_ref4) {
             var data = _ref4.data;
             self.$Message.success('Success!');
           })["catch"](function (error) {
@@ -3563,7 +3563,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: {
     parent_id: {
       type: Number,
-      "default": 15
+      "default": 0
     }
   },
   data: function data() {
@@ -3888,6 +3888,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _entity_feature_list_delete_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./entity_feature_list_delete.vue */ "./resources_backend/js/pages/entity_feature_list_delete.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3947,6 +3948,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _this = this;
@@ -3977,6 +3979,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     return _objectSpread({}, local, {}, state, {
       columns: [{
+        type: 'expand',
+        width: 50,
+        render: function render(h, params) {
+          return h(_entity_feature_list_delete_vue__WEBPACK_IMPORTED_MODULE_0__["default"], {
+            props: {
+              parent_id: params.row.id
+            }
+          });
+        }
+      }, {
         title: 'project_name',
         key: 'project_name',
         minWidth: 100
@@ -89523,7 +89535,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "entity_create" },
+    { staticClass: "entity_feature_create" },
     [
       _c(
         "Row",
@@ -89752,7 +89764,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "entity_update" },
+    { staticClass: "entity_feature_update" },
     [
       _c(
         "Row",

@@ -33,6 +33,8 @@ Route::get('/definition_get_database_tables/{id}', 'Trident\DefinitionController
 Route::get('/entity_generate/{id}', 'Trident\EntityController@generate');
 Route::get('/entity_update_schemas/{id}', 'Trident\EntityController@updateResource');
 Route::get('/entity_get_parents/{id?}', 'Trident\EntityController@getParents');
+Route::get('/entity_generate_feature/{id}', 'Trident\EntityController@generateFeature');
+Route::get('/entity_refresh_feature/{id}', 'Trident\EntityController@refreshFeature');
 Route::get('/view_generate/{id}', 'Trident\ViewController@generate');
 Route::get('/test_generate/{id}', 'Trident\TestController@generate');
 

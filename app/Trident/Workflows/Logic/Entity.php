@@ -14,6 +14,8 @@ use App\Trident\Workflows\Schemas\Logic\Entity\Resources\EntityResource;
 use App\Trident\Workflows\Schemas\Logic\Entity\Resources\EntityResourceCollection;
 use App\Trident\Workflows\Schemas\Logic\Entity\Resources\EntityupdateResourceResource;
 use App\Trident\Workflows\Schemas\Logic\Entity\Resources\EntitygetParentsResourceCollection;
+use App\Trident\Workflows\Schemas\Logic\Entity\Resources\EntitygenerateFeatureResource;
+use App\Trident\Workflows\Schemas\Logic\Entity\Resources\EntityrefreshFeatureResource;
 
 class Entity implements EntityInterface
 {
@@ -160,7 +162,6 @@ class Entity implements EntityInterface
     }
 
 
-
     /**
      * @var array
      * @return array
@@ -179,7 +180,6 @@ class Entity implements EntityInterface
     }
 
 
-
     /**
      * @var array
      * @return array
@@ -196,6 +196,53 @@ class Entity implements EntityInterface
         }
 
         return new EntitygetParentsResourceCollection( $model );
+    }
+
+
+    /**
+     * @var array
+     * @return array
+     */
+    public function generateFeature($request_struct, $id)
+    {   
+        $model = $this->entity_repository->with(['project','definition'])->find($id);
+        $model_attributes = $model->getAttributes();
+        $parent_model = $this->entity_repository->with(['project','definition'])->get()->where('id', $model_attributes['parent_id']);
+
+        $this->entity_business->generateFeature(
+            $model_attributes,
+            $model->getRelations()['project']->getAttributes(),
+            $model->getRelations()['definition']->getAttributes(),
+            array_first($parent_model->toArray())
+        );
+
+        return new EntitygenerateFeatureResource( $model );
+    }
+
+
+
+
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function refreshFeature($request_struct, $id)
+    {   
+        $model = $this->entity_repository->with(['project','definition'])->find($id);
+        $model_attributes = $model->getAttributes();
+        $parent_model = $this->entity_repository->with(['project','definition'])->get()->where('id', $model_attributes['parent_id']);
+
+        $this->entity_business->refreshFeature(
+            $model_attributes,
+            $model->getRelations()['project']->getAttributes(),
+            $model->getRelations()['definition']->getAttributes(),
+            array_first($parent_model->toArray())
+        );
+
+        return new EntityrefreshFeatureResource( $model );
     }
 
 

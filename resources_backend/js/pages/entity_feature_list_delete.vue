@@ -34,7 +34,7 @@
         props: {
             parent_id: {
                 type: Number,
-                default: 15,
+                default: 0,
             }
         },
         data() {
@@ -201,7 +201,7 @@
                         });
                     },
                     generate(id) {
-                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_generate/'+id ).then(({ data }) => {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_generate_feature/'+id ).then(({ data }) => {
                             self.$Message.success('Success!');
                         }).catch(error => {
                             console.log(error);
@@ -209,7 +209,7 @@
                         });
                     },
                     updateResource(id) {
-                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_update_schemas/'+id ).then(({ data }) => {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_refresh_feature/'+id ).then(({ data }) => {
                             self.$Message.success('Success!');
                         }).catch(error => {
                             console.log(error);

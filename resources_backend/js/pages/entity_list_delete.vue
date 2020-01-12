@@ -52,6 +52,8 @@
     </div>
 </template>
 <script>
+    import entityFeatures from './entity_feature_list_delete.vue';
+
     export default {
         data() {
             var local = {
@@ -85,6 +87,17 @@
                 ...local,
                 ...state,
                 columns: [
+                    {
+                        type: 'expand',
+                        width: 50,
+                        render: (h, params) => {
+                            return h(entityFeatures, {
+                                props: {
+                                    parent_id: params.row.id
+                                }
+                            })
+                        }
+                    },
                     {
                         title: 'project_name',
                         key: 'project_name',

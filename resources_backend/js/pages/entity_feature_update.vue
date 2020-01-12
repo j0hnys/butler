@@ -4,7 +4,7 @@
     }
 </style>
 <template>
-    <div class="entity_update">
+    <div class="entity_feature_update">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
                 <h1>Update</h1>
@@ -136,7 +136,7 @@
         props: {
             parent_id: {
                 type: Number,
-                default: 15,
+                default: 0,
             }
         },
         data() {

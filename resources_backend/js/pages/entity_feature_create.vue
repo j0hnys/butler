@@ -2,7 +2,7 @@
 
 </style>
 <template>
-    <div class="entity_create">
+    <div class="entity_feature_create">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
                 <h1>Create</h1>

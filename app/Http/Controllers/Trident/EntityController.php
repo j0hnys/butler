@@ -16,6 +16,11 @@ use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructStoreEntity;
 use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructUpdateEntity;
 use App\Trident\Workflows\Validations\EntityGetParentsRequest;
 use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructGetParentsEntity;
+use App\Trident\Workflows\Validations\EntityGenerateFeatureRequest;
+use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructGenerateFeatureEntity;
+use App\Trident\Workflows\Validations\EntityRefreshFeatureRequest;
+use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructRefreshFeatureEntity;
+
         
 class EntityController extends Controller
 {
@@ -184,6 +189,36 @@ class EntityController extends Controller
         $structgetParentsEntity = new StructGetParentsEntity($request_all);    
         $entitygetParentsResource = $this->entity_workflow->getParents( $structgetParentsEntity ,$id);
         return response()->json( $entitygetParentsResource );
+    }
+
+
+    /**
+     * @param  EntitygenerateFeatureRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function generateFeature(EntityGenerateFeatureRequest $request, $id)
+    {   
+        $this->authorize('generateFeature', [$this->entity_repository,$id]);
+        $request_all = $request->all();
+        $request_all['id'] = (int)$id;
+        $structgenerateFeatureEntity = new StructGenerateFeatureEntity($request_all);    
+        $entitygenerateFeatureResource = $this->entity_workflow->generateFeature( $structgenerateFeatureEntity ,$id);
+        return response()->json( $entitygenerateFeatureResource );
+    }
+
+
+    /**
+     * @param  EntityrefreshFeatureRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function refreshFeature(EntityRefreshFeatureRequest $request, $id)
+    {   
+        $this->authorize('refreshFeature', [$this->entity_repository,$id]);
+        $request_all = $request->all();
+        $request_all['id'] = (int)$id;
+        $structrefreshFeatureEntity = new StructRefreshFeatureEntity($request_all);    
+        $entityrefreshFeatureResource = $this->entity_workflow->refreshFeature( $structrefreshFeatureEntity ,$id);
+        return response()->json( $entityrefreshFeatureResource );
     }
 
 
