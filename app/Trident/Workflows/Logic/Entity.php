@@ -13,6 +13,7 @@ use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructUpdateEntity;
 use App\Trident\Workflows\Schemas\Logic\Entity\Resources\EntityResource;
 use App\Trident\Workflows\Schemas\Logic\Entity\Resources\EntityResourceCollection;
 use App\Trident\Workflows\Schemas\Logic\Entity\Resources\EntityupdateResourceResource;
+use App\Trident\Workflows\Schemas\Logic\Entity\Resources\EntitygetParentsResourceCollection;
 
 class Entity implements EntityInterface
 {
@@ -175,6 +176,26 @@ class Entity implements EntityInterface
         );
 
         return new EntityupdateResourceResource( $model );
+    }
+
+
+
+    /**
+     * @var array
+     * @return array
+     */
+    public function getParents($request_struct, $id)
+    {   
+        $data = $request_struct->getFilledValues();
+        $model = [];
+
+        if ($id) {
+            $model = $this->entity_repository->get()->where('parent_id', $id);
+        } else {
+            $model = $this->entity_repository->get()->where('parent_id', 0);
+        }
+
+        return new EntitygetParentsResourceCollection( $model );
     }
 
 

@@ -14,7 +14,9 @@ use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructUpdateResourceEntity;
 use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructIndexEntity;
 use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructStoreEntity;
 use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructUpdateEntity;
-
+use App\Trident\Workflows\Validations\EntityGetParentsRequest;
+use App\Trident\Workflows\Schemas\Logic\Entity\Typed\StructGetParentsEntity;
+        
 class EntityController extends Controller
 {
     
@@ -141,9 +143,6 @@ class EntityController extends Controller
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     // RESTFUL CRUD END
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-
-
     
 
     /**
@@ -158,8 +157,6 @@ class EntityController extends Controller
     }
 
 
-
-
     /**
      * @param  EntityupdateResourceRequest
      * @return \Illuminate\Http\Response
@@ -170,6 +167,23 @@ class EntityController extends Controller
         $structupdateResourceEntity = new StructUpdateResourceEntity($request->all());    
         $entityupdateResourceResource = $this->entity_workflow->updateResource( $structupdateResourceEntity ,$id);
         return response()->json( $entityupdateResourceResource );
+    }
+
+
+    /**
+     * *enter description here.*
+     *
+     * @param  EntitygetParentsRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function getParents(EntityGetParentsRequest $request, $id = 0)
+    {   
+        $this->authorize('getParents', [$this->entity_repository,$id]);
+        $request_all = $request->all();
+        $request_all['id'] = (int)$request_all['id'];
+        $structgetParentsEntity = new StructGetParentsEntity($request_all);    
+        $entitygetParentsResource = $this->entity_workflow->getParents( $structgetParentsEntity ,$id);
+        return response()->json( $entitygetParentsResource );
     }
 
 
