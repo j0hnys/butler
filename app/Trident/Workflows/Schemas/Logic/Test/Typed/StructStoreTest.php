@@ -15,6 +15,7 @@ class StructstoreTest extends StructOptionalValues
             'project_id' => T::nullable(T::int()),
             'definition_id' => T::nullable(T::int()),
             'entity_id' => T::nullable(T::int()),
+            'parent_id' => T::nullable(T::int()),
             'name' => T::nullable(T::string()),
             'type' => T::nullable(T::string()),
             'functionality_data' => T::nullable(T::string()),

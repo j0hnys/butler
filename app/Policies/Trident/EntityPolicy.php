@@ -105,8 +105,6 @@ class EntityPolicy
     }
 
 
-
-
     /**
      * Determine whether the user can permanently updateResource the trident super_test.
      *
@@ -115,6 +113,48 @@ class EntityPolicy
      * @return mixed
      */
     public function updateResource(User $user, Entity $entity, int $id)
+    {
+        return $user->id == $entity->findOrFail($id)->user_id;
+    }
+
+
+    /**
+     * Determine whether the user can permanently getParents the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\EntityRepository $Entity
+     * @return mixed
+     */
+    public function getParents(User $user, Entity $entity, int $id)
+    {
+        if ($id === 0) {
+            return \Auth::check();
+        }
+        return $user->id == $entity->findOrFail($id)->user_id;
+    }
+
+
+    /**
+     * Determine whether the user can permanently generateFeature the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\EntityRepository $Entity
+     * @return mixed
+     */
+    public function generateFeature(User $user, Entity $entity, int $id)
+    {
+        return $user->id == $entity->findOrFail($id)->user_id;
+    }
+
+
+    /**
+     * Determine whether the user can permanently refreshFeature the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\EntityRepository $Entity
+     * @return mixed
+     */
+    public function refreshFeature(User $user, Entity $entity, int $id)
     {
         return $user->id == $entity->findOrFail($id)->user_id;
     }

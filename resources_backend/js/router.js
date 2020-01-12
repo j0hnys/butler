@@ -149,5 +149,32 @@ const routers = [
             submenu: null,
         }
     },
+    { // add "import entity_feature_list_delete from './pages/entity_feature_list_delete.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_feature_list',
+        title: 'otinanai',
+        name: 'entity_feature_list_delete',
+        component: routes.entity_feature_list_delete,
+        meta: {
+            submenu: null,
+        }
+    },
+    { // add "import entity_feature_create from './pages/entity_feature_create.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_feature_create',
+        title: 'otinanai',
+        name: 'entity_feature_create',
+        component: routes.entity_feature_create,
+        meta: {
+            submenu: null,
+        }
+    },
+    { // add "import entity_feature_update from './pages/entity_feature_update.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/entity_feature_update/:id',
+        title: 'otinanai',
+        name: 'entity_feature_update',
+        component: routes.entity_feature_update,
+        meta: {
+            submenu: null,
+        }
+    },
 ];
 export default routers;

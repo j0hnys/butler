@@ -41,6 +41,14 @@
             },
             "fillable": true
         },
+        "parent_id": {
+            "type": "T::nullable(T::int())",
+            "validation": {
+                "rule": "required | integer",
+                "message": "parent_id is required"
+            },
+            "fillable": true
+        },
         "name": {
             "type": "T::nullable(T::string())",
             "validation": {

@@ -160,7 +160,9 @@ class Project implements ProjectInterface
      */
     public function getWithDefinitionsEntities($request_data)
     {
-        $model = $this->project_repository->with(['definitions','definitions.entities'])->get();
+        $model = $this->project_repository->with(['definitions','definitions.entities' => function($q) {
+            $q->where('parent_id', 0);
+        }])->get();
 
         return $model;
     }

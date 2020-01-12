@@ -23,6 +23,8 @@ $factory->define(App\Models\Entity::class, function (Faker $faker) {
         'request_data' => $faker->text,
         'response_data' => $faker->text,
         'db_table_name' => $faker->word,
+        'parent_id' => $faker->randomNumber(),
+        'type' => $faker->word,
     ];
 });
 

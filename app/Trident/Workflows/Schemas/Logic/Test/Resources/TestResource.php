@@ -22,6 +22,7 @@ class TestResource extends JsonResource
             'definition_namespace' => $this->definition->namespace,
             'entity_id' => $this->entity_id,
             'entity_name' => $this->entity->name,
+            'parent_id' => $this->parent_id,
             'name' => $this->name,
             'type' => $this->type,
             'functionality_data' => $this->functionality_data,

@@ -35,6 +35,8 @@ class EntityStoreRequest extends FormRequest
             'request_data' => 'required | string',
             'response_data' => 'required | string',
             'db_table_name' => 'required | string',
+            'type' => 'required | string',
+            'parent_id' => 'required | integer',
         ];
     }
 
@@ -55,6 +57,8 @@ class EntityStoreRequest extends FormRequest
             'request_data' => 'request_data is required',
             'response_data' => 'response_data is required',
             'db_table_name' => 'db_table_name is required',
+            'type' => 'type is required',
+            'parent_id' => 'parent_id is required',
         ];
     }
 

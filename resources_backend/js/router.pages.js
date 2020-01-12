@@ -26,3 +26,6 @@ exports.view_update = require("./pages/view_update.vue").default;
 exports.test_list_delete = require("./pages/test_list_delete.vue").default;
 exports.test_create = require("./pages/test_create.vue").default;
 exports.test_update = require("./pages/test_update.vue").default;
+exports.entity_feature_list_delete = require("./pages/entity_feature_list_delete.vue").default;
+exports.entity_feature_create = require("./pages/entity_feature_create.vue").default;
+exports.entity_feature_update = require("./pages/entity_feature_update.vue").default;

@@ -6,6 +6,10 @@ var state = {
             selected: [],
             data: [],
         },
+        name: {
+            selected: [],
+            data: [],
+        },
     }
 };
 
