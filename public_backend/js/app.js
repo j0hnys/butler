@@ -4383,6 +4383,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var local = {
@@ -4614,6 +4616,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         }
       };
+    },
+    onAddPropertyButtonClicked: function onAddPropertyButtonClicked(table_name) {
+      var new_line = JSON.parse(JSON.stringify(this[table_name].data[this[table_name].data.length - 1]));
+
+      for (var key in new_line) {
+        if (new_line.hasOwnProperty(key)) {
+          var element = new_line[key];
+          new_line[key] = '---';
+        }
+      }
+
+      this[table_name].data.push(new_line);
     },
     handleUpload: function handleUpload(file) {
       this.formValidate.file = file;
@@ -4964,20 +4978,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       columns: [{
         title: 'name',
         key: 'name',
-        minWidth: 100
+        minWidth: 100,
+        maxWidth: 200
       }, {
         title: 'root_folder',
         key: 'root_folder',
-        minWidth: 100
+        minWidth: 100,
+        maxWidth: 200
       }, {
         title: 'relative_schemas_folder',
         key: 'relative_schemas_folder',
-        minWidth: 100
+        minWidth: 100,
+        maxWidth: 200
       }, {
         title: 'db_connection_name',
         key: 'db_connection_name',
         minWidth: 200,
-        maxWidth: 300
+        maxWidth: 200
       }, {
         title: 'Action',
         key: 'action',
@@ -5652,7 +5669,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       columns: [{
         title: 'project_name',
         key: 'project_name',
-        minWidth: 150
+        minWidth: 150,
+        maxWidth: 150
       }, {
         title: 'definition_namespace',
         key: 'definition_namespace',
@@ -5660,19 +5678,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         title: 'entity_name',
         key: 'entity_name',
-        minWidth: 150
+        minWidth: 150,
+        maxWidth: 150
       }, {
         title: 'name',
         key: 'name',
-        minWidth: 100
+        minWidth: 100,
+        maxWidth: 100
       }, {
         title: 'type',
         key: 'type',
-        minWidth: 100
+        minWidth: 100,
+        maxWidth: 100
       }, {
         title: 'Action',
         key: 'action',
-        width: 150,
+        minwidth: 250,
+        maxwidth: 250,
         align: 'center',
         render: function render(h, params) {
           var row = params.row;
@@ -5698,6 +5720,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             props: {
               type: 'error',
               size: 'small'
+            },
+            style: {
+              marginRight: '5px'
             },
             on: {
               click: function click() {
@@ -5869,6 +5894,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -6244,6 +6271,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         }
       };
+    },
+    onAddPropertyButtonClicked: function onAddPropertyButtonClicked(table_name) {
+      var new_line = JSON.parse(JSON.stringify(this[table_name].data[this[table_name].data.length - 1]));
+
+      for (var key in new_line) {
+        if (new_line.hasOwnProperty(key)) {
+          var element = new_line[key];
+          new_line[key] = '---';
+        }
+      }
+
+      this[table_name].data.push(new_line);
     },
     handleUpload: function handleUpload(file) {
       this.formValidate.file = file;
@@ -6634,31 +6673,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       columns: [{
         title: 'project_name',
         key: 'project_name',
+        minWidth: 150,
         maxWidth: 150
       }, {
         title: 'definition_namespace',
         key: 'definition_namespace',
+        minWidth: 190,
         maxWidth: 190
       }, {
         title: 'entity_name',
         key: 'entity_name',
+        minWidth: 150,
         maxWidth: 150
       }, {
         title: 'name',
         key: 'name',
+        minWidth: 100,
         maxWidth: 100
       }, {
         title: 'type',
         key: 'type',
+        minWidth: 100,
         maxWidth: 100
       }, {
         title: 'vista_resource_folder_name',
         key: 'vista_resource_folder_name',
-        minWidth: 100
+        minWidth: 100,
+        maxWidth: 200
       }, {
         title: 'Action',
         key: 'action',
-        maxWidth: 300,
+        minWidth: 200,
+        maxWidth: 200,
         align: 'center',
         render: function render(h, params) {
           var row = params.row;
@@ -6859,6 +6905,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
 //
 //
 //
@@ -7200,6 +7249,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         }
       };
+    },
+    onAddPropertyButtonClicked: function onAddPropertyButtonClicked(table_name) {
+      var new_line = JSON.parse(JSON.stringify(this[table_name].data[this[table_name].data.length - 1]));
+
+      for (var key in new_line) {
+        if (new_line.hasOwnProperty(key)) {
+          var element = new_line[key];
+          new_line[key] = '---';
+        }
+      }
+
+      this[table_name].data.push(new_line);
     },
     handleUpload: function handleUpload(file) {
       this.formValidate.file = file;
@@ -90876,6 +90937,21 @@ var render = function() {
                           )
                         ],
                         1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "Button",
+                        {
+                          attrs: { type: "primary", ghost: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.onAddPropertyButtonClicked(
+                                "request_table"
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Add property")]
                       )
                     ],
                     1
@@ -91131,6 +91207,21 @@ var render = function() {
                           )
                         ],
                         1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "Button",
+                        {
+                          attrs: { type: "primary", ghost: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.onAddPropertyButtonClicked(
+                                "response_table"
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Add property")]
                       )
                     ],
                     1
@@ -92424,6 +92515,21 @@ var render = function() {
                           )
                         ],
                         1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "Button",
+                        {
+                          attrs: { type: "primary", ghost: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.onAddPropertyButtonClicked(
+                                "request_table"
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Add property")]
                       )
                     ],
                     1
@@ -92655,6 +92761,21 @@ var render = function() {
                           )
                         ],
                         1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "Button",
+                        {
+                          attrs: { type: "primary", ghost: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.onAddPropertyButtonClicked(
+                                "response_table"
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Add property")]
                       )
                     ],
                     1
@@ -93533,7 +93654,29 @@ var render = function() {
                   _vm._v(" "),
                   _c("FormItem"),
                   _vm._v(" "),
-                  _c("h1", [_vm._v("Presentation")]),
+                  _c(
+                    "h1",
+                    [
+                      _vm._v(
+                        "\n                    Presentation\n                    "
+                      ),
+                      _c(
+                        "Button",
+                        {
+                          attrs: { type: "primary", ghost: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.onAddPropertyButtonClicked(
+                                "presentation_table"
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Add property")]
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("Divider"),
                   _vm._v(" "),
