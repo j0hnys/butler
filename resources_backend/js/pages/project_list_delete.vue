@@ -90,22 +90,25 @@ import { setTimeout } from 'timers';
                         title: 'name',
                         key: 'name',
                         minWidth: 100,
+                        maxWidth: 200,
                     },
                     {
                         title: 'root_folder',
                         key: 'root_folder',
                         minWidth: 100,
+                        maxWidth: 200,
                     },
                     {
                         title: 'relative_schemas_folder',
                         key: 'relative_schemas_folder',
                         minWidth: 100,
+                        maxWidth: 200,
                     },
                     {
                         title: 'db_connection_name',
                         key: 'db_connection_name',
                         minWidth: 200,
-                        maxWidth: 300,
+                        maxWidth: 200,
                     },
                     {
                         title: 'Action',

@@ -88,37 +88,44 @@
                     {
                         title: 'project_name',
                         key: 'project_name',
+                        minWidth: 150,
                         maxWidth: 150,
                     },
                     {
                         title: 'definition_namespace',
                         key: 'definition_namespace',
+                        minWidth: 190,
                         maxWidth: 190,
                     },
                     {
                         title: 'entity_name',
                         key: 'entity_name',
+                        minWidth: 150,
                         maxWidth: 150,
                     },
                     {
                         title: 'name',
                         key: 'name',
+                        minWidth: 100,
                         maxWidth: 100,
                     },
                     {
                         title: 'type',
                         key: 'type',
+                        minWidth: 100,
                         maxWidth: 100,
                     },
                     {
                         title: 'vista_resource_folder_name',
                         key: 'vista_resource_folder_name',
                         minWidth: 100,
+                        maxWidth: 200,
                     },
                     {
                         title: 'Action',
                         key: 'action',
-                        maxWidth: 300,
+                        minWidth: 200,
+                        maxWidth: 200,
                         align: 'center',
                         render: (h, params) => {
                             var row = params.row;

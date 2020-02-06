@@ -69,7 +69,10 @@
 
                     <FormItem></FormItem>
 
-                    <h1>Presentation</h1>
+                    <h1>
+                        Presentation
+                        <Button type="primary" ghost @click="onAddPropertyButtonClicked('presentation_table')">Add property</Button>
+                    </h1>
                     <Divider />
                     <Table border :columns="presentation_table.columns" :data="presentation_table.data" no-data-text="-no data-">
                         <template slot-scope="{ row, index }" slot="column_name">
@@ -369,6 +372,17 @@
                         });
                     },
                 }
+            },
+            onAddPropertyButtonClicked(table_name) {
+                let new_line = JSON.parse(JSON.stringify(this[table_name].data[ this[table_name].data.length-1 ]));
+                for (const key in new_line) {
+                    if (new_line.hasOwnProperty(key)) {
+                        const element = new_line[key];
+                        
+                        new_line[key] = '---';
+                    }
+                }
+                this[table_name].data.push(new_line);
             },
             handleUpload (file) {
                 this.formValidate.file = file;

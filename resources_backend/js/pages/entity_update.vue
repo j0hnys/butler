@@ -45,6 +45,7 @@
                                 <p><i>is the native laravel validation string. e.x. "required | string"  </i></p>
                             </div>
                         </Tooltip>
+                        <Button type="primary" ghost @click="onAddPropertyButtonClicked('request_table')">Add property</Button>
                     </h1>
                     <Divider />
                     <Table border :columns="request_table.columns" :data="request_table.data" no-data-text="-no data-">
@@ -93,6 +94,7 @@
                         `array()`, `float()`, `double()` </i></p>
                             </div>
                         </Tooltip>
+                        <Button type="primary" ghost @click="onAddPropertyButtonClicked('response_table')">Add property</Button>
                     </h1>
                     <Divider />
                     <Table border :columns="response_table.columns" :data="response_table.data" no-data-text="-no data-">
@@ -405,6 +407,17 @@
                         });
                     },
                 }
+            },
+            onAddPropertyButtonClicked(table_name) {
+                let new_line = JSON.parse(JSON.stringify(this[table_name].data[ this[table_name].data.length-1 ]));
+                for (const key in new_line) {
+                    if (new_line.hasOwnProperty(key)) {
+                        const element = new_line[key];
+                        
+                        new_line[key] = '---';
+                    }
+                }
+                this[table_name].data.push(new_line);
             },
             handleUpload (file) {
                 this.formValidate.file = file;

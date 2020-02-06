@@ -89,6 +89,7 @@
                         title: 'project_name',
                         key: 'project_name',
                         minWidth: 150,
+                        maxWidth: 150,
                     },
                     {
                         title: 'definition_namespace',
@@ -99,21 +100,25 @@
                         title: 'entity_name',
                         key: 'entity_name',
                         minWidth: 150,
+                        maxWidth: 150,
                     },
                     {
                         title: 'name',
                         key: 'name',
                         minWidth: 100,
+                        maxWidth: 100,
                     },
                     {
                         title: 'type',
                         key: 'type',
                         minWidth: 100,
+                        maxWidth: 100,
                     },
                     {
                         title: 'Action',
                         key: 'action',
-                        width: 150,
+                        minwidth: 250,
+                        maxwidth: 250,
                         align: 'center',
                         render: (h, params) => {
                             var row = params.row;
@@ -137,6 +142,9 @@
                                     props: {
                                         type: 'error',
                                         size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
                                     },
                                     on: {
                                         click: () => {
