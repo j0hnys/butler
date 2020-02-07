@@ -13,6 +13,7 @@ use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructUpdateTest;
 use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestResource;
 use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestResourceCollection;
 use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestgenerateResource;
+use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestgetParentsResource;
 
 class Test implements TestInterface
 {
@@ -161,6 +162,28 @@ class Test implements TestInterface
         );
 
         return new TestgenerateResource( $model );
+    }
+
+
+
+    /**
+     * *description goes here*.
+     *
+     * @var array
+     * @return array
+     */
+    public function getParents($request_struct, $id)
+    {   
+        $data = $request_struct->getFilledValues();
+        $model = [];
+        
+        if ($id) {
+            $model = $this->test_repository->get()->where('parent_id', $id);
+        } else {
+            $model = $this->test_repository->get()->where('parent_id', 0);
+        }
+
+        return new TestgetParentsResource( $model );
     }
 
 

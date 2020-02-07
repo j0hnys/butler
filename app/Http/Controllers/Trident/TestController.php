@@ -13,7 +13,8 @@ use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructStoreTest;
 use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructUpdateTest;
 use App\Trident\Workflows\Validations\TestGenerateRequest;
 use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructGenerateTest;
-
+use App\Trident\Workflows\Validations\TestGetParentsRequest;
+use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructGetParentsTest;
 
 class TestController extends Controller
 {
@@ -157,6 +158,21 @@ class TestController extends Controller
         $structgenerateTest = new StructGenerateTest($request->all());    
         $testgenerateResource = $this->test_workflow->generate( $structgenerateTest ,$id);
         return response()->json( $testgenerateResource );
+    }
+
+
+    /**
+     * @param  TestgetParentsRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function getParents(TestGetParentsRequest $request, $id)
+    {   
+        $this->authorize('getParents', [$this->test_repository,$id]);
+        $request_all = $request->all();
+        $request_all['id'] = (int)$request_all['id'];
+        $structgetParentsTest = new StructGetParentsTest($request_all);    
+        $testgetParentsResource = $this->test_workflow->getParents( $structgetParentsTest ,$id);
+        return response()->json( $testgetParentsResource );
     }
 
 

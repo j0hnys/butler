@@ -47,6 +47,9 @@ const store = new Vuex.Store({
                 entity_feature_list_delete: stores.entity_feature_list_delete,
                 entity_feature_create: stores.entity_feature_create,
                 entity_feature_update: stores.entity_feature_update,
+                test_feature_list_delete: stores.test_feature_list_delete,
+                test_feature_create: stores.test_feature_create,
+                test_feature_update: stores.test_feature_update,
             }
         },
     },

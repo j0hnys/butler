@@ -176,5 +176,32 @@ const routers = [
             submenu: null,
         }
     },
+    { // add "import test_feature_list_delete from './pages/test_feature_list_delete.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_feature_list',
+        title: 'otinanai',
+        name: 'test_feature_list_delete',
+        component: routes.test_feature_list_delete,
+        meta: {
+            submenu: null,
+        }
+    },
+    { // add "import test_feature_create from './pages/test_feature_create.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_feature_create',
+        title: 'otinanai',
+        name: 'test_feature_create',
+        component: routes.test_feature_create,
+        meta: {
+            submenu: null,
+        }
+    },
+    { // add "import test_feature_update from './pages/test_feature_update.vue';" at the top
+        path: process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_feature_update/:id',
+        title: 'otinanai',
+        name: 'test_feature_update',
+        component: routes.test_feature_update,
+        meta: {
+            submenu: null,
+        }
+    },
 ];
 export default routers;

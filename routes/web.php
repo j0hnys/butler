@@ -37,6 +37,7 @@ Route::get('/entity_generate_feature/{id}', 'Trident\EntityController@generateFe
 Route::get('/entity_refresh_feature/{id}', 'Trident\EntityController@refreshFeature');
 Route::get('/view_generate/{id}', 'Trident\ViewController@generate');
 Route::get('/test_generate/{id}', 'Trident\TestController@generate');
+Route::get('/test_get_parents/{id?}', 'Trident\TestController@getParents');
 
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');
