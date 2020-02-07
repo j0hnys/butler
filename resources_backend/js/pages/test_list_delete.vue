@@ -32,6 +32,10 @@
                                 <div slot="prefix"><strong style="margin-bottom: 2px;">project_name: </strong></div>
                                 <Option v-for="item in filters.project_name.data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>
+                            <Select v-model="filters.entity_name.selected" @on-change="onFilterSelected('entity_name')" multiple style="width:260px" placeholder="--nothing selected--">
+                                <div slot="prefix"><strong style="margin-bottom: 2px;">name: </strong></div>
+                                <Option v-for="item in filters.entity_name.data" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            </Select>
                         </div>
                     </Col>
                 </Row>
@@ -68,6 +72,10 @@
                 },
                 filters: {
                     project_name: {
+                        selected: [],
+                        data: [],
+                    },
+                    entity_name: {
                         selected: [],
                         data: [],
                     },
@@ -179,6 +187,7 @@
                         }
                     }
                 ],
+                server_data: [],
                 data: []
 
 
@@ -202,18 +211,24 @@
             data: {
                 deep: true,
                 handler: function(value) {
-                    let tmp_table = new Map;
+                    let tmp_project_name_table = new Map();
+                    let tmp_entity_name_table = new Map();
                     for (const i in value) {
                         if (value.hasOwnProperty(i)) {
                             const element = value[i];
-                            tmp_table.set(element.project_name, {
+                            tmp_project_name_table.set(element.project_name, {
                                 'label': element.project_name,
                                 'value': element.project_name,
+                            });
+                            tmp_entity_name_table.set(element.entity_name, {
+                                'label': element.entity_name,
+                                'value': element.entity_name,
                             });
                         }
                     }
 
-                    this.filters.project_name.data = Array.from(tmp_table.values());
+                    this.filters.project_name.data = Array.from(tmp_project_name_table.values());
+                    this.filters.entity_name.data = Array.from(tmp_entity_name_table.values());
                 }
             }
         },

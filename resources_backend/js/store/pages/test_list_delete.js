@@ -6,6 +6,10 @@ var state = {
             selected: [],
             data: [],
         },
+        entity_name: {
+            selected: [],
+            data: [],
+        },
     }
 };
 
