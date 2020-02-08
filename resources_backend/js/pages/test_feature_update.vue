@@ -1,137 +1,239 @@
 <style scoped>
-    .index {
-        width: 100%;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        text-align: center;
-    }
-        .index h1 {
-            height: 150px;
-        }
-            .index h1 img {
-                height: 100%;
-            }
-        .index h2 {
-            color: #666;
-            margin-bottom: 200px;
-        }
-            .index h2 p {
-                margin: 0 0 50px;
-            }
-    .ivu-row-flex {
-        height: 100%;
+    .test_feature_update {
+        height: 100vh;
     }
 </style>
 <template>
     <div class="test_feature_update">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
-                <h1>
-                    test update
-                </h1>
+                <h1>Update</h1>
 
 
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
 
-                    <FormItem label="project_id" prop="project_id">
-                        <InputNumber v-model="formValidate.project_id" placeholder="Enter your project_id"></InputNumber>
+                    <FormItem label="test_id" prop="test_id">
+                        <Cascader :disabled="true" v-model="cascader_test" :data="project_definitions_entities_tests" placeholder="---NOTHING SELECTED---"></Cascader>
                     </FormItem>
-                    <FormItem label="definition_id" prop="definition_id">
-                        <InputNumber v-model="formValidate.definition_id" placeholder="Enter your definition_id"></InputNumber>
-                    </FormItem>
-                    <FormItem label="entity_id" prop="entity_id">
-                        <InputNumber v-model="formValidate.entity_id" placeholder="Enter your entity_id"></InputNumber>
-                    </FormItem>
-                    <FormItem label="parent_id" prop="parent_id">
-                        <InputNumber v-model="formValidate.parent_id" placeholder="Enter your parent_id"></InputNumber>
-                    </FormItem>
+
                     <FormItem label="name" prop="name">
                         <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
                     </FormItem>
                     <FormItem label="type" prop="type">
-                        <Input v-model="formValidate.type" placeholder="Enter your type"></Input>
-                    </FormItem>
-                    <FormItem label="functionality_data" prop="functionality_data">
-                        <Input v-model="formValidate.functionality_data" placeholder="Enter your functionality_data"></Input>
-                    </FormItem>
-                    <FormItem label="request_data" prop="request_data">
-                        <Input v-model="formValidate.request_data" placeholder="Enter your request_data"></Input>
-                    </FormItem>
-                    <FormItem label="response_data" prop="response_data">
-                        <Input v-model="formValidate.response_data" placeholder="Enter your response_data"></Input>
+                        <Input readonly v-model="formValidate.type" placeholder="Enter your type"></Input>
                     </FormItem>
 
                     <FormItem>
-                        <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
+                        <Button type="primary" @click="onGenerateDefaultValuesClicked">Generate Default Values</Button>
+                    </FormItem>
+
+                    <FormItem></FormItem>
+
+                    <h1>
+                        Request
+                        <Tooltip content="" max-width="600">
+                            <Icon type="ios-information-circle" style="font-size:0.7em;" />
+                            <div slot="content">
+                                <strong>Property Type</strong>
+                                <p><i>values: `default`, `auto_id` </i></p>
+                                <br>
+                                <strong>Value</strong>
+                                <p><i>string or integer</i></p>
+                            </div>
+                        </Tooltip>
+                        <Button type="primary" ghost @click="onAddPropertyButtonClicked('request_table')">Add property</Button>
+                    </h1>
+                    <Divider />
+                    <Table border :columns="request_table.columns" :data="request_table.data" no-data-text="-no data-">
+                        <template slot-scope="{ row, index }" slot="name">
+                            <Input type="text" v-model="request_table.edit.name" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.name }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="property_type">
+                            <Input type="text" v-model="request_table.edit.property_type" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.property_type }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="value">
+                            <Input type="text" v-model="request_table.edit.value" v-if="request_table.edit.index === index" />
+                            <span v-else>{{ row.value }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="action">
+                            <div v-if="request_table.edit.index === index">
+                                <Button type="success" size="small" @click="requestTableHandleSave(index)">Save</Button>
+                                <Button type="warning" size="small" @click="request_table.edit.index = -1">Cancel</Button>
+                            </div>
+                            <div v-else>
+                                <Button type="primary" size="small" @click="requestTableHandleEdit(row, index)">Edit</Button>
+                                <Button type="error" size="small" @click="requestTableHandleDelete(index)">Delete</Button>
+                            </div>
+                        </template>
+                    </Table>
+                    <FormItem>
+                        <Input hidden v-model="formValidate.request_data" placeholder=""></Input>
+                    </FormItem>
+
+                    <h1>
+                        Response
+                        <Tooltip content="" max-width="600">
+                            <Icon type="ios-information-circle" style="font-size:0.7em;" />
+                            <div slot="content">
+                                <strong>Property Type</strong>
+                                <p><i>values: `default`, `auto_id` </i></p>
+                                <br>
+                                <strong>Value</strong>
+                                <p><i>string or integer</i></p>
+                            </div>
+                        </Tooltip>
+                        <Button type="primary" ghost @click="onAddPropertyButtonClicked('response_table')">Add property</Button>
+                    </h1>
+                    <Divider />
+                    <Table border :columns="response_table.columns" :data="response_table.data" no-data-text="-no data-">
+                        <template slot-scope="{ row, index }" slot="name">
+                            <Input type="text" v-model="response_table.edit.name" v-if="response_table.edit.index === index" />
+                            <span v-else>{{ row.name }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="property_type">
+                            <Input type="text" v-model="response_table.edit.property_type" v-if="response_table.edit.index === index" />
+                            <span v-else>{{ row.property_type }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="value">
+                            <Input type="text" v-model="response_table.edit.value" v-if="response_table.edit.index === index" />
+                            <span v-else>{{ row.value }}</span>
+                        </template>
+
+                        <template slot-scope="{ row, index }" slot="action">
+                            <div v-if="response_table.edit.index === index">
+                                <Button type="success" size="small" @click="responseTableHandleSave(index)">Save</Button>
+                                <Button type="warning" size="small" @click="response_table.edit.index = -1">Cancel</Button>
+                            </div>
+                            <div v-else>
+                                <Button type="primary" size="small" @click="responseTableHandleEdit(row, index)">Edit</Button>
+                                <Button type="error" size="small" @click="responseTableHandleDelete(index)">Delete</Button>
+                            </div>
+                        </template>    
+                    </Table>    
+                    <FormItem>
+                        <Input hidden v-model="formValidate.response_data" placeholder=""></Input>                
                     </FormItem>
                 </Form>
-
-
+            </Col>
+        </Row>
+        <Row type="flex" justify="end" align="middle" style="margin-top: 25px; margin-bottom: 15px;">
+            <Col>
+                <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
             </Col>
         </Row>
     </div>
 </template>
 <script>
     export default {
+        props: {
+            parent_id: {
+                type: Number,
+                default: 0,
+            }
+        },
         data() {
+            var local = {
+                cascader_test: [],
+                project_definitions_entities_tests: [],
+                loading_models: true,
+                request_table: {
+                    edit: {
+                        index: -1,
+                        name: '',
+                        property_type: '',
+                        value: '',
+                    },
+                    columns: [
+                        {
+                            title: 'Name',
+                            slot: 'name',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Property Type',
+                            slot: 'property_type',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Value',
+                            slot: 'value',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Action',
+                            slot: 'action',
+                            width: 150,
+                            align: 'center',
+                        }
+                    ],
+                    data: []
+                },
+                response_table: {
+                    edit: {
+                        index: -1,
+                        name: '',
+                        property_type: '',
+                        value: '',
+                    },
+                    columns: [
+                        {
+                            title: 'Name',
+                            slot: 'name',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'property_type',
+                            slot: 'property_type',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Value',
+                            slot: 'value',
+                            minWidth: 100,
+                        },
+                        {
+                            title: 'Action',
+                            slot: 'action',
+                            width: 150,
+                            align: 'center',
+                        }
+                    ],
+                    data: []
+                }                
+            }
+
             var state = {
                 formValidate: {
                     project_id: '',
                     definition_id: '',
                     entity_id: '',
-                    parent_id: '',
+                    test_id: '',
                     name: '',
                     type: '',
                     functionality_data: '',
                     request_data: '',
                     response_data: '',
+                    parent_id: 0,
                 },
             };
-            if (this.$store.state.pages.test_feature_update) 
+            if (this.$store.state.pages.test_update) 
             {
-                state = this.$store.state.pages.test_feature_update;
+                // state = this.$store.state.pages.test_update;
             }
 
             //
             //component state registration
             return {
+                ...local,
                 ...state,
-                ruleValidate: {                   
-
-                    project_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The project_id cannot be empty', 
-                        }
-                    ],
-                    definition_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The definition_id cannot be empty', 
-                        }
-                    ],
-                    entity_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The entity_id cannot be empty', 
-                        }
-                    ],
-                    parent_id: [
-                        { 
-                            required: true, 
-                            type: 'number', 
-                            trigger: 'blur',
-                            message: 'The parent_id cannot be empty', 
-                        }
-                    ],
+                ruleValidate: {
                     name: [
                         { 
                             required: true, 
@@ -172,7 +274,6 @@
                             message: 'The response_data cannot be empty', 
                         }
                     ],
-
                 },
 
             };
@@ -190,9 +291,96 @@
             ajax() {
                 var self = this;
                 return {
+                    getProjectsWithDefinitionsEntitiesTests() {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_get_with_definitions_entities_tests' ).then(({ data }) => {
+                            let tmp_data = [];
+                            for (const i in data) {
+                                if (data.hasOwnProperty(i)) {
+                                    const element = data[i];
+                                    
+                                    let tmp_definitions = [];
+
+                                    if (element.definitions.length > 0) {
+                                        for (const j in element.definitions) {
+                                            if (element.definitions.hasOwnProperty(j)) {
+                                                const element_ = element.definitions[j];
+                                                
+                                                let tmp_entities = [];
+
+                                                if (element_.entities.length > 0) {
+                                                    for (const k in element_.entities) {
+                                                        if (element_.entities.hasOwnProperty(k)) {
+                                                            const element__ = element_.entities[k];
+
+                                                            let tmp_tests = [];
+
+                                                            if (element__.tests.length > 0) {
+                                                                for (const l in element__.tests) {
+                                                                    if (element__.tests.hasOwnProperty(l)) {
+                                                                        const element___ = element__.tests[l];
+                                                                        
+                                                                        tmp_tests.push({
+                                                                            value: element___.id,
+                                                                            label: element___.name,
+                                                                            data: element___,
+                                                                        });
+
+                                                                    }
+                                                                }
+                                                            }
+                                                            
+                                                            tmp_entities.push({
+                                                                value: element__.id,
+                                                                label: element__.name,
+                                                                data: element__,
+                                                                children: tmp_tests
+                                                            });
+                                                        }
+                                                    }
+                                                }
+
+                                                tmp_definitions.push({
+                                                    value: element_.id,
+                                                    label: element_.namespace,
+                                                    data: element_,
+                                                    children: tmp_entities
+                                                });
+                                            }
+                                        }
+                                    }
+
+                                    tmp_data.push({
+                                        value: element.id,
+                                        label: element.name,
+                                        data: element,
+                                        children: tmp_definitions
+                                    });
+
+                                }
+                            }
+                    
+                            self.project_definitions_entities_tests = tmp_data;
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    },
                     get(id='') {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/test/'+id ).then(({ data }) => {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/test/'+id ).then(({ data }) => {
                             self.formValidate = data;
+
+                            self.cascader_test = [
+                                data.project_id,
+                                data.definition_id,
+                                data.entity_id,
+                                data.id
+                            ];
+
+                            console.log({
+                                'self.cascader_test': self.cascader_test,
+                            });
+
+                            self.request_table.data = JSON.parse(data.request_data);
+                            self.response_table.data = JSON.parse(data.response_data);
                         }).catch(error => {
                             console.log(error);
                         });
@@ -221,7 +409,27 @@
                             console.log(error);
                         });
                     },
+                    getDefaultValues(definition_id) {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/definition_get_by_entity_id/'+definition_id, {
+                            params: {
+                                entity_id: self.formValidate.entity_id
+                            }
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    },
                 }
+            },
+            onAddPropertyButtonClicked(table_name) {
+                let new_line = JSON.parse(JSON.stringify(this[table_name].data[ this[table_name].data.length-1 ]));
+                for (const key in new_line) {
+                    if (new_line.hasOwnProperty(key)) {
+                        const element = new_line[key];
+                        
+                        new_line[key] = '---';
+                    }
+                }
+                this[table_name].data.push(new_line);
             },
             handleUpload (file) {
                 this.formValidate.file = file;
@@ -232,6 +440,8 @@
                     if (valid) {
 
                         var formValidate = this.formValidate;
+                        formValidate.request_data = JSON.stringify(this.request_table.data);
+                        formValidate.response_data = JSON.stringify(this.response_table.data);
 
                         this.ajax().update(this.$route.params.id, formValidate);
 
@@ -239,18 +449,51 @@
                         this.$Message.error('Fail!');
                     }
                 })
+            },
+            onGenerateDefaultValuesClicked() {
+                this.ajax().getDefaultValues(
+                    this.formValidate.definition_id
+                ).then(({data}) => {
+                    this.request_table.data = data.tests_request_table_data;
+                    this.response_table.data = data.tests_response_table_data;
+                });
+            },
+            requestTableHandleEdit (row, index) {
+                this.request_table.edit.name = row.name;
+                this.request_table.edit.property_type = row.property_type;
+                this.request_table.edit.value = row.value;
+                this.request_table.edit.index = index;
+            },
+            requestTableHandleSave (index) {
+                this.request_table.data[index].name = this.request_table.edit.name;
+                this.request_table.data[index].property_type = this.request_table.edit.property_type;
+                this.request_table.data[index].value = this.request_table.edit.value;
+                this.request_table.edit.index = -1;
+            },
+            requestTableHandleDelete (index) {
+                this.request_table.data.splice(index, 1);
+            },
+            responseTableHandleEdit (row, index) {
+                this.response_table.edit.name = row.name;
+                this.response_table.edit.property_type = row.property_type;
+                this.response_table.edit.value = row.value;
+                this.response_table.edit.index = index;
+            },
+            responseTableHandleSave (index) {
+                this.response_table.data[index].name = this.response_table.edit.name;
+                this.response_table.data[index].property_type = this.response_table.edit.property_type;
+                this.response_table.data[index].value = this.response_table.edit.value;
+                this.response_table.edit.index = -1;
+            },
+            responseTableHandleDelete (index) {
+                this.response_table.data.splice(index, 1);
             }
         },
         mounted() {
-            // console.log('test form mounted');
-            // console.log({
-            //     // 'this.$store': this.$store,
-            //     // 'this.$store.state': this.$store.state,
-            //     // 'this.$store.state.Index': this.$store.state.Index,
-            //     'this.$route': this.$route,
-            // });
-
-            this.ajax().get(this.$route.params.id);
+            
+            this.ajax().getProjectsWithDefinitionsEntitiesTests().then(() => {
+                return this.ajax().get(this.$route.params.id);
+            });
 
         },
     }

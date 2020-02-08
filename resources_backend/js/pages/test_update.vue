@@ -1,27 +1,6 @@
 <style scoped>
-    .index {
-        width: 100%;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        text-align: center;
-    }
-        .index h1 {
-            height: 150px;
-        }
-            .index h1 img {
-                height: 100%;
-            }
-        .index h2 {
-            color: #666;
-            margin-bottom: 200px;
-        }
-            .index h2 p {
-                margin: 0 0 50px;
-            }
-    .ivu-row-flex {
-        height: 100%;
+    .test_update {
+        height: 100vh;
     }
 </style>
 <template>
@@ -55,12 +34,11 @@
                         <Tooltip content="" max-width="600">
                             <Icon type="ios-information-circle" style="font-size:0.7em;" />
                             <div slot="content">
-                                <strong>T::*</strong>
-                                <p><i>where `*` is `string()`, `integer()`, `bool()`, `nullable()`, 
-                        `array()`, `float()`, `double()` </i></p>
+                                <strong>Property Type</strong>
+                                <p><i>values: `default`, `auto_id` </i></p>
                                 <br>
-                                <strong>laravel_validation_rule_string</strong>
-                                <p><i>is the native laravel validation string. e.x. "required | string"  </i></p>
+                                <strong>Value</strong>
+                                <p><i>string or integer</i></p>
                             </div>
                         </Tooltip>
                         <Button type="primary" ghost @click="onAddPropertyButtonClicked('request_table')">Add property</Button>
@@ -102,9 +80,11 @@
                         <Tooltip content="" max-width="600">
                             <Icon type="ios-information-circle" style="font-size:0.7em;" />
                             <div slot="content">
-                                <strong>T::*</strong>
-                                <p><i>where `*` is `string()`, `integer()`, `bool()`, `nullable()`, 
-                        `array()`, `float()`, `double()` </i></p>
+                                <strong>Property Type</strong>
+                                <p><i>values: `default`, `auto_id` </i></p>
+                                <br>
+                                <strong>Value</strong>
+                                <p><i>string or integer</i></p>
                             </div>
                         </Tooltip>
                         <Button type="primary" ghost @click="onAddPropertyButtonClicked('response_table')">Add property</Button>

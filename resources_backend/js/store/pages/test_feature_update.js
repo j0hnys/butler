@@ -3,6 +3,7 @@ var state = {
         project_id: '',
         definition_id: '',
         entity_id: '',
+        test_id: '',
         parent_id: '',
         name: '',
         type: '',

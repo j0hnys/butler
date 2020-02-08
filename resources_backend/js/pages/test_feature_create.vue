@@ -175,6 +175,7 @@
                         data.project_id = self.cascader_test[0];
                         data.definition_id = self.cascader_test[1];
                         data.entity_id = self.cascader_test[2];
+                        data.parent_id = self.cascader_test[3];
 
                         var form_data = new FormData();
                         
