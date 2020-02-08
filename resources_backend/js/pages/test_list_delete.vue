@@ -116,6 +116,7 @@
                         title: 'definition_namespace',
                         key: 'definition_namespace',
                         minWidth: 190,
+                        maxWidth: 190,
                     },
                     {
                         title: 'entity_name',
@@ -249,8 +250,8 @@
             ajax() {
                 var self = this;
                 return {
-                    get(id='') {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/test'+id ).then(({ data }) => {
+                    get() {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_get_parents' ).then(({ data }) => {
                             self.server_data = data;
                             self.data = data;
                             self.table.loading.state = false;

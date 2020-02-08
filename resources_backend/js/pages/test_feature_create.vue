@@ -11,7 +11,7 @@
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
                     
                     <FormItem label="test_id" prop="test_id">
-                        <Cascader v-model="cascader_test" :data="project_definitions_entities" placeholder="---NOTHING SELECTED---"></Cascader>
+                        <Cascader v-model="cascader_test" :data="project_definitions_entities_tests" placeholder="---NOTHING SELECTED---"></Cascader>
                     </FormItem>
 
                     <FormItem label="name" prop="name">
@@ -37,7 +37,7 @@
         data() {
             var local = {
                 cascader_test: [],
-                project_definitions_entities: [],
+                project_definitions_entities_tests: [],
             };
 
             var state = {
@@ -118,11 +118,29 @@
                                                     for (const k in element_.entities) {
                                                         if (element_.entities.hasOwnProperty(k)) {
                                                             const element__ = element_.entities[k];
+
+                                                            let tmp_tests = [];
+
+                                                            if (element__.tests.length > 0) {
+                                                                for (const l in element__.tests) {
+                                                                    if (element__.tests.hasOwnProperty(l)) {
+                                                                        const element___ = element__.tests[l];
+                                                                        
+                                                                        tmp_tests.push({
+                                                                            value: element___.id,
+                                                                            label: element___.name,
+                                                                            data: element___,
+                                                                        });
+
+                                                                    }
+                                                                }
+                                                            }
                                                             
                                                             tmp_entities.push({
                                                                 value: element__.id,
                                                                 label: element__.name,
-                                                                data: element__
+                                                                data: element__,
+                                                                children: tmp_tests
                                                             });
                                                         }
                                                     }
@@ -148,7 +166,7 @@
                                 }
                             }
                     
-                            self.project_definitions_entities = tmp_data;
+                            self.project_definitions_entities_tests = tmp_data;
                         }).catch(error => {
                             console.log(error);
                         });

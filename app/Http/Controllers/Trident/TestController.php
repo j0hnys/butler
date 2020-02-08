@@ -165,13 +165,13 @@ class TestController extends Controller
      * @param  TestgetParentsRequest
      * @return \Illuminate\Http\Response
      */
-    public function getParents(TestGetParentsRequest $request, $id)
+    public function getParents(TestGetParentsRequest $request, $id = 0)
     {   
         $this->authorize('getParents', [$this->test_repository,$id]);
         $request_all = $request->all();
         $request_all['id'] = (int)$request_all['id'];
         $structgetParentsTest = new StructGetParentsTest($request_all);    
-        $testgetParentsResource = $this->test_workflow->getParents( $structgetParentsTest ,$id);
+        $testgetParentsResource = $this->test_workflow->getParents( $structgetParentsTest, $id);
         return response()->json( $testgetParentsResource );
     }
 

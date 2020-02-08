@@ -116,6 +116,9 @@ class TestPolicy
      */
     public function getParents(User $user, Test $test, int $id)
     {
+        if ($id === 0) {
+            return \Auth::check();
+        }
         return $user->id == $test->findOrFail($id)->user_id;
     }
 

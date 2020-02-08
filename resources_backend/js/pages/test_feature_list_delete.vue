@@ -73,12 +73,13 @@
                         title: 'definition_namespace',
                         key: 'definition_namespace',
                         minWidth: 190,
+                        maxWidth: 190,
                     },
                     {
                         title: 'entity_name',
                         key: 'entity_name',
-                        minWidth: 150,
-                        maxWidth: 150,
+                        minWidth: 120,
+                        maxWidth: 120,
                     },
                     {
                         title: 'name',
@@ -89,8 +90,8 @@
                     {
                         title: 'type',
                         key: 'type',
-                        minWidth: 100,
-                        maxWidth: 100,
+                        minWidth: 80,
+                        maxWidth: 80,
                     },
                     {
                         title: 'Action',
@@ -181,7 +182,7 @@
                         if (parent_id !== 0) {
                             uri = '/'+parent_id;
                         }
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_get_parents'+parent_id ).then(({ data }) => {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_get_parents'+uri ).then(({ data }) => {
                             self.server_data = data;
                             self.data = data;
                             self.table.loading.state = false;

@@ -5622,7 +5622,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     var local = {
       cascader_test: [],
-      project_definitions_entities: []
+      project_definitions_entities_tests: []
     };
     var state = {
       formValidate: {
@@ -5692,10 +5692,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                         for (var k in element_.entities) {
                           if (element_.entities.hasOwnProperty(k)) {
                             var element__ = element_.entities[k];
+                            var tmp_tests = [];
+
+                            if (element__.tests.length > 0) {
+                              for (var l in element__.tests) {
+                                if (element__.tests.hasOwnProperty(l)) {
+                                  var element___ = element__.tests[l];
+                                  tmp_tests.push({
+                                    value: element___.id,
+                                    label: element___.name,
+                                    data: element___
+                                  });
+                                }
+                              }
+                            }
+
                             tmp_entities.push({
                               value: element__.id,
                               label: element__.name,
-                              data: element__
+                              data: element__,
+                              children: tmp_tests
                             });
                           }
                         }
@@ -5720,7 +5736,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               }
             }
 
-            self.project_definitions_entities = tmp_data;
+            self.project_definitions_entities_tests = tmp_data;
           })["catch"](function (error) {
             console.log(error);
           });
@@ -5862,12 +5878,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         title: 'definition_namespace',
         key: 'definition_namespace',
-        minWidth: 190
+        minWidth: 190,
+        maxWidth: 190
       }, {
         title: 'entity_name',
         key: 'entity_name',
-        minWidth: 150,
-        maxWidth: 150
+        minWidth: 120,
+        maxWidth: 120
       }, {
         title: 'name',
         key: 'name',
@@ -5876,8 +5893,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         title: 'type',
         key: 'type',
-        minWidth: 100,
-        maxWidth: 100
+        minWidth: 80,
+        maxWidth: 80
       }, {
         title: 'Action',
         key: 'action',
@@ -5967,7 +5984,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             uri = '/' + parent_id;
           }
 
-          window.axios.get("/butler/public_backend" + '/test_get_parents' + parent_id).then(function (_ref) {
+          window.axios.get("/butler/public_backend" + '/test_get_parents' + uri).then(function (_ref) {
             var data = _ref.data;
             self.server_data = data;
             self.data = data;
@@ -6381,7 +6398,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         title: 'definition_namespace',
         key: 'definition_namespace',
-        minWidth: 190
+        minWidth: 190,
+        maxWidth: 190
       }, {
         title: 'entity_name',
         key: 'entity_name',
@@ -6509,8 +6527,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var self = this;
       return {
         get: function get() {
-          var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-          window.axios.get("/butler/public_backend" + '/trident/resource/test' + id).then(function (_ref) {
+          window.axios.get("/butler/public_backend" + '/test_get_parents').then(function (_ref) {
             var data = _ref.data;
             self.server_data = data;
             self.data = data;
@@ -92991,7 +93008,7 @@ var render = function() {
                     [
                       _c("Cascader", {
                         attrs: {
-                          data: _vm.project_definitions_entities,
+                          data: _vm.project_definitions_entities_tests,
                           placeholder: "---NOTHING SELECTED---"
                         },
                         model: {

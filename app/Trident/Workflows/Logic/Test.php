@@ -13,7 +13,7 @@ use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructUpdateTest;
 use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestResource;
 use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestResourceCollection;
 use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestgenerateResource;
-use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestgetParentsResource;
+use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestgetParentsResourceCollection;
 
 class Test implements TestInterface
 {
@@ -183,7 +183,7 @@ class Test implements TestInterface
             $model = $this->test_repository->get()->where('parent_id', 0);
         }
 
-        return new TestgetParentsResource( $model );
+        return new TestgetParentsResourceCollection( $model );
     }
 
 
