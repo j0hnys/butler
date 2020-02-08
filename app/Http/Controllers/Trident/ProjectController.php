@@ -15,6 +15,8 @@ use App\Trident\Workflows\Schemas\Logic\Project\Typed\StructMakeProject;
 use App\Trident\Workflows\Schemas\Logic\Project\Typed\StructIndexProject;
 use App\Trident\Workflows\Schemas\Logic\Project\Typed\StructStoreProject;
 use App\Trident\Workflows\Schemas\Logic\Project\Typed\StructUpdateProject;
+use App\Trident\Workflows\Validations\ProjectGetWithDefinitionsEntitiesTestsRequest;
+use App\Trident\Workflows\Schemas\Logic\Project\Typed\StructGetWithDefinitionsEntitiesTestsProject;
 
 class ProjectController extends Controller
 {
@@ -173,6 +175,19 @@ class ProjectController extends Controller
         $structmakeProject = new StructMakeProject($request->all());    
         $projectmakeResource = $this->project_workflow->make( $structmakeProject ,$id);
         return response()->json( $projectmakeResource );
+    }
+
+
+    /**
+     * @param  ProjectgetWithDefinitionsEntitiesTestsRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function getWithDefinitionsEntitiesTests(ProjectGetWithDefinitionsEntitiesTestsRequest $request)
+    {   
+        $this->authorize('getWithDefinitionsEntitiesTests', [$this->project_repository]);
+        $structgetWithDefinitionsEntitiesTestsProject = new StructGetWithDefinitionsEntitiesTestsProject($request->all());    
+        $projectgetWithDefinitionsEntitiesTestsResource = $this->project_workflow->getWithDefinitionsEntitiesTests( $structgetWithDefinitionsEntitiesTestsProject);
+        return response()->json( $projectgetWithDefinitionsEntitiesTestsResource );
     }
 
 

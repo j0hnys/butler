@@ -136,4 +136,19 @@ class ProjectPolicy
 
 
 
+
+    /**
+     * Determine whether the user can permanently getWithDefinitionsEntitiesTests the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\ProjectRepository $Project
+     * @return mixed
+     */
+    public function getWithDefinitionsEntitiesTests(User $user, Project $project)
+    {
+        return \Auth::check();
+    }
+
+
+
 }

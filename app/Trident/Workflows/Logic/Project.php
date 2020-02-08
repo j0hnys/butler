@@ -13,6 +13,7 @@ use App\Trident\Workflows\Schemas\Logic\Project\Typed\StructUpdateProject;
 use App\Trident\Workflows\Schemas\Logic\Project\Resources\ProjectResource;
 use App\Trident\Workflows\Schemas\Logic\Project\Resources\ProjectResourceCollection;
 use App\Trident\Workflows\Schemas\Logic\Project\Resources\ProjectmakeResource;
+use App\Trident\Workflows\Schemas\Logic\Project\Resources\ProjectgetWithDefinitionsEntitiesTestsResource;
 
 class Project implements ProjectInterface
 {
@@ -183,6 +184,21 @@ class Project implements ProjectInterface
         );
 
         return new ProjectmakeResource( $model );
+    }
+
+
+    /**
+     * @var array
+     * @return array
+     */
+    public function getWithDefinitionsEntitiesTests($request_struct)
+    {   
+        $data = $request_struct->getFilledValues();
+        $model = $this->project_repository->with(['definitions','definitions.entities.tests' => function($q) {
+            $q->where('parent_id', 0);
+        }])->get();
+
+        return new ProjectgetWithDefinitionsEntitiesTestsResource( $model );
     }
 
 

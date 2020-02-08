@@ -5630,7 +5630,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         definition_id: '',
         entity_id: '',
         name: '',
-        type: 'resource',
+        type: 'feature',
         functionality_data: '{}',
         request_data: '[]',
         response_data: '[]',
@@ -5672,8 +5672,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ajax: function ajax() {
       var self = this;
       return {
-        getProjectsWithDefinitionsEntities: function getProjectsWithDefinitionsEntities() {
-          window.axios.get("/butler/public_backend" + '/project_get_with_definitions_entities').then(function (_ref) {
+        getProjectsWithDefinitionsEntitiesTests: function getProjectsWithDefinitionsEntitiesTests() {
+          window.axios.get("/butler/public_backend" + '/project_get_with_definitions_entities_tests').then(function (_ref) {
             var data = _ref.data;
             var tmp_data = [];
 
@@ -5773,7 +5773,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    this.ajax().getProjectsWithDefinitionsEntities();
+    this.ajax().getProjectsWithDefinitionsEntitiesTests();
   }
 });
 

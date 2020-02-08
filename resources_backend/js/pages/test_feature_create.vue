@@ -46,7 +46,7 @@
                     definition_id: '',
                     entity_id: '',
                     name: '',
-                    type: 'resource',
+                    type: 'feature',
                     functionality_data: '{}',
                     request_data: '[]',
                     response_data: '[]',
@@ -98,8 +98,8 @@
             ajax() {
                 var self = this;
                 return {
-                    getProjectsWithDefinitionsEntities() {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_get_with_definitions_entities' ).then(({ data }) => {
+                    getProjectsWithDefinitionsEntitiesTests() {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_get_with_definitions_entities_tests' ).then(({ data }) => {
                             let tmp_data = [];
                             for (const i in data) {
                                 if (data.hasOwnProperty(i)) {
@@ -203,7 +203,7 @@
         },
         mounted() {
             
-            this.ajax().getProjectsWithDefinitionsEntities();
+            this.ajax().getProjectsWithDefinitionsEntitiesTests();
 
         },
     }

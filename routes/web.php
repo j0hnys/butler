@@ -25,6 +25,7 @@ Route::get('/logout', function () {
 
 Route::get('/project_get_with_definitions', 'Trident\ProjectController@getWithDefinitions');
 Route::get('/project_get_with_definitions_entities', 'Trident\ProjectController@getWithDefinitionsEntities');
+Route::get('/project_get_with_definitions_entities_tests', 'Trident\ProjectController@getWithDefinitionsEntitiesTests');
 Route::get('/project_make/{id}', 'Trident\ProjectController@make');
 Route::get('/definition_get/{id}', 'Trident\DefinitionController@get');
 Route::get('/definition_get_by_entity_id/{id}', 'Trident\DefinitionController@getByEntityId');
