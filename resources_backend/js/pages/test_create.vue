@@ -167,8 +167,6 @@
                                 
                                 if (key == 'file') {
                                     form_data.append(key, data[key], data[key].name);
-                                } else if (key == 'functionality_data' || key == 'request_data' || key == 'response_data') {
-                                    form_data.append(key, '{}');
                                 } else {
                                     form_data.append(key, data[key]);
                                 }
