@@ -47,7 +47,7 @@
                     entity_id: '',
                     name: '',
                     type: 'feature',
-                    functionality_data: '{}',
+                    functionality_data: '{"model":{"db_name":""},"endpoint":{"uri":"/","group":"","type":"read"}}',
                     request_data: '[]',
                     response_data: '[]',
                     parent_id: 0,

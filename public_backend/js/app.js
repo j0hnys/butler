@@ -5435,7 +5435,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         entity_id: '',
         name: '',
         type: 'resource',
-        functionality_data: '{}',
+        functionality_data: '{"model":{"db_name":""}}',
         request_data: '[]',
         response_data: '[]',
         parent_id: 0
@@ -5645,7 +5645,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         entity_id: '',
         name: '',
         type: 'feature',
-        functionality_data: '{}',
+        functionality_data: '{"model":{"db_name":""},"endpoint":{"uri":"/","group":"","type":"read"}}',
         request_data: '[]',
         response_data: '[]',
         parent_id: 0
@@ -6186,6 +6186,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     parent_id: {
@@ -6198,6 +6228,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       cascader_test: [],
       project_definitions_entities_tests: [],
       loading_models: true,
+      database_tables: [],
       request_table: {
         edit: {
           index: -1,
@@ -6251,6 +6282,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           align: 'center'
         }],
         data: []
+      },
+      functionality_data: {
+        model: {
+          db_name: ''
+        },
+        endpoint: {
+          uri: '/',
+          group: '',
+          type: ''
+        }
       }
     };
     var state = {
@@ -6395,9 +6436,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             var data = _ref2.data;
             self.formValidate = data;
             self.cascader_test = [data.project_id, data.definition_id, data.entity_id, data.id];
-            console.log({
-              'self.cascader_test': self.cascader_test
-            });
+            self.functionality_data = JSON.parse(data.functionality_data);
             self.request_table.data = JSON.parse(data.request_data);
             self.response_table.data = JSON.parse(data.response_data);
           })["catch"](function (error) {
@@ -6435,6 +6474,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           })["catch"](function (error) {
             console.log(error);
           });
+        },
+        getDatabaseTables: function getDatabaseTables(definition_id) {
+          return window.axios.get("/butler/public_backend" + '/definition_get_database_tables/' + definition_id)["catch"](function (error) {
+            console.log(error);
+          });
         }
       };
     },
@@ -6460,6 +6504,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$refs[name].validate(function (valid) {
         if (valid) {
           var formValidate = _this.formValidate;
+          formValidate.functionality_data = JSON.stringify(_this.functionality_data);
           formValidate.request_data = JSON.stringify(_this.request_table.data);
           formValidate.response_data = JSON.stringify(_this.response_table.data);
 
@@ -6476,6 +6521,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var data = _ref3.data;
         _this2.request_table.data = data.tests_request_table_data;
         _this2.response_table.data = data.tests_response_table_data;
+      });
+    },
+    onModelSelectClicked: function onModelSelectClicked() {
+      var _this3 = this;
+
+      this.loading_models = true;
+      this.ajax().getDatabaseTables(this.formValidate.definition_id).then(function (_ref4) {
+        var data = _ref4.data;
+        _this3.database_tables = data.table_names;
+        _this3.loading_models = false;
       });
     },
     requestTableHandleEdit: function requestTableHandleEdit(row, index) {
@@ -6510,10 +6565,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this4 = this;
 
     this.ajax().getProjectsWithDefinitionsEntitiesTests().then(function () {
-      return _this3.ajax().get(_this3.$route.params.id);
+      return _this4.ajax().get(_this4.$route.params.id);
+    }).then(function () {
+      _this4.onModelSelectClicked();
     });
   }
 });
@@ -7004,12 +7061,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var local = {
       cascader_entity: [],
       project_definitions_entities: [],
       loading_models: true,
+      database_tables: [],
       request_table: {
         edit: {
           index: -1,
@@ -7063,6 +7131,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           align: 'center'
         }],
         data: []
+      },
+      functionality_data: {
+        model: {
+          db_name: ''
+        }
       }
     };
     var state = {
@@ -7132,7 +7205,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var self = this;
       return {
         getProjectsWithDefinitionsEntities: function getProjectsWithDefinitionsEntities() {
-          window.axios.get("/butler/public_backend" + '/project_get_with_definitions_entities').then(function (_ref) {
+          return window.axios.get("/butler/public_backend" + '/project_get_with_definitions_entities').then(function (_ref) {
             var data = _ref.data;
             var tmp_data = [];
 
@@ -7186,10 +7259,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         },
         get: function get() {
           var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-          window.axios.get("/butler/public_backend" + '/trident/resource/test/' + id).then(function (_ref2) {
+          return window.axios.get("/butler/public_backend" + '/trident/resource/test/' + id).then(function (_ref2) {
             var data = _ref2.data;
             self.formValidate = data;
             self.cascader_entity = [data.project_id, data.definition_id, data.entity_id];
+            self.functionality_data = JSON.parse(data.functionality_data);
             self.request_table.data = JSON.parse(data.request_data);
             self.response_table.data = JSON.parse(data.response_data);
           })["catch"](function (error) {
@@ -7227,6 +7301,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           })["catch"](function (error) {
             console.log(error);
           });
+        },
+        getDatabaseTables: function getDatabaseTables(definition_id) {
+          return window.axios.get("/butler/public_backend" + '/definition_get_database_tables/' + definition_id)["catch"](function (error) {
+            console.log(error);
+          });
         }
       };
     },
@@ -7252,6 +7331,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$refs[name].validate(function (valid) {
         if (valid) {
           var formValidate = _this.formValidate;
+          formValidate.functionality_data = JSON.stringify(_this.functionality_data);
           formValidate.request_data = JSON.stringify(_this.request_table.data);
           formValidate.response_data = JSON.stringify(_this.response_table.data);
 
@@ -7268,6 +7348,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var data = _ref3.data;
         _this2.request_table.data = data.tests_request_table_data;
         _this2.response_table.data = data.tests_response_table_data;
+      });
+    },
+    onModelSelectClicked: function onModelSelectClicked() {
+      var _this3 = this;
+
+      this.loading_models = true;
+      this.ajax().getDatabaseTables(this.formValidate.definition_id).then(function (_ref4) {
+        var data = _ref4.data;
+        _this3.database_tables = data.table_names;
+        _this3.loading_models = false;
       });
     },
     requestTableHandleEdit: function requestTableHandleEdit(row, index) {
@@ -7302,8 +7392,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    this.ajax().getProjectsWithDefinitionsEntities();
-    this.ajax().get(this.$route.params.id);
+    var _this4 = this;
+
+    this.ajax().getProjectsWithDefinitionsEntities().then(function () {
+      return _this4.ajax().get(_this4.$route.params.id);
+    }).then(function () {
+      _this4.onModelSelectClicked();
+    });
   }
 });
 
@@ -93585,6 +93680,160 @@ var render = function() {
                     "h1",
                     [
                       _vm._v(
+                        "\n                    Functionality\n                    "
+                      ),
+                      _c(
+                        "Tooltip",
+                        { attrs: { content: "", "max-width": "600" } },
+                        [
+                          _c("Icon", {
+                            staticStyle: { "font-size": "0.7em" },
+                            attrs: { type: "ios-information-circle" }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { attrs: { slot: "content" }, slot: "content" },
+                            [
+                              _c("strong", [_vm._v("endpoint uri")]),
+                              _vm._v(" "),
+                              _c("p", [_c("i", [_vm._v("string")])]),
+                              _vm._v(" "),
+                              _c("strong", [_vm._v("endpoint group")]),
+                              _vm._v(" "),
+                              _c("p", [_c("i", [_vm._v("null or `auth`")])]),
+                              _vm._v(" "),
+                              _c("strong", [_vm._v("endpoint type")]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _c("i", [
+                                  _vm._v(
+                                    "valued: `create`, `read`, `update`, `delete`"
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("Divider"),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    { attrs: { label: "db_table_name" } },
+                    [
+                      _c(
+                        "Select",
+                        {
+                          staticStyle: { width: "200px" },
+                          attrs: {
+                            loading: _vm.loading_models,
+                            "loading-text": "loading...",
+                            placeholder: "-select db table-"
+                          },
+                          on: { "on-open-change": _vm.onModelSelectClicked },
+                          model: {
+                            value: _vm.functionality_data.model.db_name,
+                            callback: function($$v) {
+                              _vm.$set(
+                                _vm.functionality_data.model,
+                                "db_name",
+                                $$v
+                              )
+                            },
+                            expression: "functionality_data.model.db_name"
+                          }
+                        },
+                        _vm._l(_vm.database_tables, function(item) {
+                          return _c(
+                            "Option",
+                            { key: item.value, attrs: { value: item.value } },
+                            [_vm._v(_vm._s(item.label))]
+                          )
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    { attrs: { label: "endpoint uri" } },
+                    [
+                      _c("Input", {
+                        attrs: { placeholder: "Enter your uri" },
+                        model: {
+                          value: _vm.functionality_data.endpoint.uri,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.functionality_data.endpoint,
+                              "uri",
+                              $$v
+                            )
+                          },
+                          expression: "functionality_data.endpoint.uri"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    { attrs: { label: "endpoint group" } },
+                    [
+                      _c("Input", {
+                        attrs: { placeholder: "Enter your uri" },
+                        model: {
+                          value: _vm.functionality_data.endpoint.group,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.functionality_data.endpoint,
+                              "group",
+                              $$v
+                            )
+                          },
+                          expression: "functionality_data.endpoint.group"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    { attrs: { label: "endpoint type" } },
+                    [
+                      _c("Input", {
+                        attrs: { placeholder: "Enter your uri" },
+                        model: {
+                          value: _vm.functionality_data.endpoint.type,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.functionality_data.endpoint,
+                              "type",
+                              $$v
+                            )
+                          },
+                          expression: "functionality_data.endpoint.type"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("FormItem"),
+                  _vm._v(" "),
+                  _c(
+                    "h1",
+                    [
+                      _vm._v(
                         "\n                    Request\n                    "
                       ),
                       _c(
@@ -93607,8 +93856,6 @@ var render = function() {
                                   _vm._v("values: `default`, `auto_id` ")
                                 ])
                               ]),
-                              _vm._v(" "),
-                              _c("br"),
                               _vm._v(" "),
                               _c("strong", [_vm._v("Value")]),
                               _vm._v(" "),
@@ -93857,8 +94104,6 @@ var render = function() {
                                   _vm._v("values: `default`, `auto_id` ")
                                 ])
                               ]),
-                              _vm._v(" "),
-                              _c("br"),
                               _vm._v(" "),
                               _c("strong", [_vm._v("Value")]),
                               _vm._v(" "),
@@ -94520,6 +94765,55 @@ var render = function() {
                   _vm._v(" "),
                   _c("FormItem"),
                   _vm._v(" "),
+                  _c("h1", [
+                    _vm._v(
+                      "\n                    Functionality\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("Divider"),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    { attrs: { label: "db_table_name" } },
+                    [
+                      _c(
+                        "Select",
+                        {
+                          staticStyle: { width: "200px" },
+                          attrs: {
+                            loading: _vm.loading_models,
+                            "loading-text": "loading...",
+                            placeholder: "-select db table-"
+                          },
+                          on: { "on-open-change": _vm.onModelSelectClicked },
+                          model: {
+                            value: _vm.functionality_data.model.db_name,
+                            callback: function($$v) {
+                              _vm.$set(
+                                _vm.functionality_data.model,
+                                "db_name",
+                                $$v
+                              )
+                            },
+                            expression: "functionality_data.model.db_name"
+                          }
+                        },
+                        _vm._l(_vm.database_tables, function(item) {
+                          return _c(
+                            "Option",
+                            { key: item.value, attrs: { value: item.value } },
+                            [_vm._v(_vm._s(item.label))]
+                          )
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("FormItem"),
+                  _vm._v(" "),
                   _c(
                     "h1",
                     [
@@ -94546,8 +94840,6 @@ var render = function() {
                                   _vm._v("values: `default`, `auto_id` ")
                                 ])
                               ]),
-                              _vm._v(" "),
-                              _c("br"),
                               _vm._v(" "),
                               _c("strong", [_vm._v("Value")]),
                               _vm._v(" "),
@@ -94796,8 +95088,6 @@ var render = function() {
                                   _vm._v("values: `default`, `auto_id` ")
                                 ])
                               ]),
-                              _vm._v(" "),
-                              _c("br"),
                               _vm._v(" "),
                               _c("strong", [_vm._v("Value")]),
                               _vm._v(" "),

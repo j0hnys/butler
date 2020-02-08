@@ -47,7 +47,7 @@
                     entity_id: '',
                     name: '',
                     type: 'resource',
-                    functionality_data: '{}',
+                    functionality_data: '{"model":{"db_name":""}}',
                     request_data: '[]',
                     response_data: '[]',
                     parent_id: 0,
