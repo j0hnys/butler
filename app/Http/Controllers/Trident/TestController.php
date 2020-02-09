@@ -15,6 +15,8 @@ use App\Trident\Workflows\Validations\TestGenerateRequest;
 use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructGenerateTest;
 use App\Trident\Workflows\Validations\TestGetParentsRequest;
 use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructGetParentsTest;
+use App\Trident\Workflows\Validations\TestRefreshRequest;
+use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructRefreshTest;
 
 class TestController extends Controller
 {
@@ -173,6 +175,19 @@ class TestController extends Controller
         $structgetParentsTest = new StructGetParentsTest($request_all);    
         $testgetParentsResource = $this->test_workflow->getParents( $structgetParentsTest, $id);
         return response()->json( $testgetParentsResource );
+    }
+
+
+    /**
+     * @param  TestrefreshRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function refresh(TestRefreshRequest $request, $id)
+    {   
+        $this->authorize('refresh', [$this->test_repository,$id]);
+        $structrefreshTest = new StructRefreshTest($request->all());    
+        $testrefreshResource = $this->test_workflow->refresh( $structrefreshTest ,$id);
+        return response()->json( $testrefreshResource );
     }
 
 

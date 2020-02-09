@@ -14,6 +14,7 @@ use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestResource;
 use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestResourceCollection;
 use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestgenerateResource;
 use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestgetParentsResourceCollection;
+use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestrefreshResource;
 
 class Test implements TestInterface
 {
@@ -145,8 +146,6 @@ class Test implements TestInterface
     }
 
     /**
-     * *description goes here*.
-     *
      * @var array
      * @return array
      */
@@ -167,8 +166,6 @@ class Test implements TestInterface
 
 
     /**
-     * *description goes here*.
-     *
      * @var array
      * @return array
      */
@@ -184,6 +181,26 @@ class Test implements TestInterface
         }
 
         return new TestgetParentsResourceCollection( $model );
+    }
+
+
+
+    /**
+     * @var array
+     * @return array
+     */
+    public function refresh($request_struct, $id)
+    {   
+        $model = $this->test_repository->with(['project','definition','entity'])->find($id);
+        
+        $this->test_business->refresh(
+            $model->getAttributes(),
+            $model->getRelations()['project']->getAttributes(),
+            $model->getRelations()['definition']->getAttributes(),
+            $model->getRelations()['entity']->getAttributes(),
+        );
+
+        return new TestrefreshResource( $model );
     }
 
 
