@@ -5766,8 +5766,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               if (key == 'file') {
                 form_data.append(key, data[key], data[key].name);
-              } else if (key == 'functionality_data' || key == 'request_data' || key == 'response_data') {
-                form_data.append(key, '{}');
               } else {
                 form_data.append(key, data[key]);
               }
@@ -6015,7 +6013,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         },
         generate: function generate(id) {
-          return window.axios.get("/butler/public_backend" + '/test_generate/' + id).then(function (_ref3) {
+          return window.axios.get("/butler/public_backend" + '/test_generate_feature/' + id).then(function (_ref3) {
             var data = _ref3.data;
             self.$Message.success('Success!');
           })["catch"](function (error) {

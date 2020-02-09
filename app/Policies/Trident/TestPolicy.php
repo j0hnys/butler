@@ -138,5 +138,18 @@ class TestPolicy
     }
 
 
+    /**
+     * Determine whether the user can permanently generateFeature the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\TestRepository $Test
+     * @return mixed
+     */
+    public function generateFeature(User $user, Test $test, int $id)
+    {
+        return $user->id == $test->findOrFail($id)->user_id;
+    }
+
+
 
 }

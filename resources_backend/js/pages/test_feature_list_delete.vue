@@ -198,7 +198,7 @@
                         });
                     },
                     generate(id) {
-                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_generate/'+id ).then(({ data }) => {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_generate_feature/'+id ).then(({ data }) => {
                             self.$Message.success('Success!');
                         }).catch(error => {
                             console.log(error);

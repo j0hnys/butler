@@ -2,7 +2,7 @@
 
 namespace App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Tests;
 
-use App\Trident\Base\Typed\Definitions\Definition;
+use j0hnys\Definitions\Definition;
 
 final class Functionality extends Definition
 {
