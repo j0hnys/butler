@@ -41,6 +41,7 @@ Route::get('/test_generate/{id}', 'Trident\TestController@generate');
 Route::get('/test_get_parents/{id?}', 'Trident\TestController@getParents');
 Route::get('/test_refresh/{id}', 'Trident\TestController@refresh');
 Route::get('/test_generate_feature/{id}', 'Trident\TestController@generateFeature');
+Route::get('/test_refresh_feature/{id}', 'Trident\TestController@refreshFeature');
 
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

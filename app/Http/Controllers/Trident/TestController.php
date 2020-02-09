@@ -19,6 +19,8 @@ use App\Trident\Workflows\Validations\TestRefreshRequest;
 use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructRefreshTest;
 use App\Trident\Workflows\Validations\TestGenerateFeatureRequest;
 use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructGenerateFeatureTest;
+use App\Trident\Workflows\Validations\TestRefreshFeatureRequest;
+use App\Trident\Workflows\Schemas\Logic\Test\Typed\StructRefreshFeatureTest;
 
 class TestController extends Controller
 {
@@ -203,6 +205,19 @@ class TestController extends Controller
         $structgenerateFeatureTest = new StructGenerateFeatureTest($request->all());    
         $testgenerateFeatureResource = $this->test_workflow->generateFeature( $structgenerateFeatureTest ,$id);
         return response()->json( $testgenerateFeatureResource );
+    }
+
+
+    /**
+     * @param  TestrefreshFeatureRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function refreshFeature(TestRefreshFeatureRequest $request, $id)
+    {   
+        $this->authorize('refreshFeature', [$this->test_repository,$id]);
+        $structrefreshFeatureTest = new StructRefreshFeatureTest($request->all());    
+        $testrefreshFeatureResource = $this->test_workflow->refreshFeature( $structrefreshFeatureTest ,$id);
+        return response()->json( $testrefreshFeatureResource );
     }
 
 

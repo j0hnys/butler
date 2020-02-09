@@ -5902,11 +5902,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         minWidth: 100,
         maxWidth: 100
       }, {
-        title: 'type',
-        key: 'type',
-        minWidth: 80,
-        maxWidth: 80
-      }, {
         title: 'Action',
         key: 'action',
         minwidth: 250,
@@ -5958,6 +5953,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               type: 'success',
               size: 'small'
             },
+            style: {
+              marginRight: '5px'
+            },
             on: {
               click: function click() {
                 _this.table.loading.state = true;
@@ -5968,7 +5966,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 });
               }
             }
-          }, 'Generate')]);
+          }, 'Generate'), h('Button', {
+            props: {
+              type: 'warning',
+              size: 'small'
+            },
+            on: {
+              click: function click() {
+                _this.table.loading.state = true;
+                _this.table.loading.text = 'updating...';
+
+                _this.ajax().updateFeature(row.id).then(function () {
+                  _this.table.loading.state = false;
+                });
+              }
+            }
+          }, 'Update')]);
         }
       }],
       server_data: [],
@@ -6018,6 +6031,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             self.$Message.success('Success!');
           })["catch"](function (error) {
             console.log(error);
+          });
+        },
+        updateFeature: function updateFeature(id) {
+          return window.axios.get("/butler/public_backend" + '/test_refresh_feature/' + id).then(function (_ref4) {
+            var data = _ref4.data;
+            self.$Message.success('Success!');
+          })["catch"](function (error) {
+            console.log(error);
+            self.$Message.error('could not update, see network');
           });
         }
       };

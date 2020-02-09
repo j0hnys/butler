@@ -88,12 +88,6 @@
                         maxWidth: 100,
                     },
                     {
-                        title: 'type',
-                        key: 'type',
-                        minWidth: 80,
-                        maxWidth: 80,
-                    },
-                    {
                         title: 'Action',
                         key: 'action',
                         minwidth: 250,
@@ -144,6 +138,9 @@
                                         type: 'success',
                                         size: 'small'
                                     },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
                                     on: {
                                         click: () => {
                                             this.table.loading.state = true;
@@ -153,7 +150,22 @@
                                             });
                                         }
                                     }
-                                }, 'Generate')
+                                }, 'Generate'),
+                                h('Button', {
+                                    props: {
+                                        type: 'warning',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.table.loading.state = true;
+                                            this.table.loading.text = 'updating...';
+                                            this.ajax().updateFeature(row.id).then(() => {
+                                                this.table.loading.state = false;
+                                            });
+                                        }
+                                    }
+                                }, 'Update')
                             ]);
                         }
                     }
@@ -202,6 +214,14 @@
                             self.$Message.success('Success!');
                         }).catch(error => {
                             console.log(error);
+                        });
+                    },
+                    updateFeature(id) {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_refresh_feature/'+id ).then(({ data }) => {
+                            self.$Message.success('Success!');
+                        }).catch(error => {
+                            console.log(error);
+                            self.$Message.error('could not update, see network');
                         });
                     }
                 }

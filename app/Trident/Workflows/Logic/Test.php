@@ -16,6 +16,7 @@ use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestgenerateResource;
 use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestgetParentsResourceCollection;
 use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestrefreshResource;
 use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestgenerateFeatureResource;
+use App\Trident\Workflows\Schemas\Logic\Test\Resources\TestrefreshFeatureResource;
 
 class Test implements TestInterface
 {
@@ -212,18 +213,34 @@ class Test implements TestInterface
     public function generateFeature($request_struct, $id)
     {   
         $model = $this->test_repository->with(['project','definition','entity'])->find($id);
-        $model_attributes = $model->getAttributes();
-        $parent_model = $this->test_repository->with(['project','definition','entity'])->get()->where('id', $model_attributes['parent_id']);
         
         $this->test_business->generateFeature(
             $model->getAttributes(),
             $model->getRelations()['project']->getAttributes(),
             $model->getRelations()['definition']->getAttributes(),
-            $model->getRelations()['entity']->getAttributes(),
-            array_first($parent_model->toArray())
+            $model->getRelations()['entity']->getAttributes()
         );        
 
         return new TestgenerateFeatureResource( $model );
+    }
+
+
+    /**
+     * @var array
+     * @return array
+     */
+    public function refreshFeature($request_struct, $id)
+    {   
+        $model = $this->test_repository->with(['project','definition','entity'])->find($id);
+        
+        $this->test_business->refreshFeature(
+            $model->getAttributes(),
+            $model->getRelations()['project']->getAttributes(),
+            $model->getRelations()['definition']->getAttributes(),
+            $model->getRelations()['entity']->getAttributes()
+        );
+
+        return new TestrefreshFeatureResource( $model );
     }
 
 
