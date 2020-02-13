@@ -198,6 +198,7 @@ class Entity implements EntityInterface
         $response_schema_definition = app()->make($response_schema_namespace);
         
         //model data
+        $functionality_data = json_decode($model['functionality_data'], true);
         $request_data = json_decode($model['request_data'], true);
         $response_data = json_decode($model['response_data'], true);
 
@@ -205,10 +206,16 @@ class Entity implements EntityInterface
         //functionality json
         $functionality_json = [
             'model' => [
-                'db_name' => $model['db_table_name'],
+                'db_name' => $functionality_data['model']['db_name'],
+            ],
+            'endpoint' => [
+                'uri' => $functionality_data['endpoint']['uri'],
+                'group' => $functionality_data['endpoint']['group'],
+                'type' => $functionality_data['endpoint']['type'],
             ]
         ];
         $functionality_schema_definition->check($functionality_json);
+        $functionality_schema_definition->check($functionality_json, 'endpoint');
 
         //request json
         $request_json = [];
@@ -285,6 +292,7 @@ class Entity implements EntityInterface
         $response_schema_definition = app()->make($response_schema_namespace);
         
         //model data
+        $functionality_data = json_decode($model['functionality_data'], true);
         $request_data = json_decode($model['request_data'], true);
         $response_data = json_decode($model['response_data'], true);
 
@@ -292,10 +300,16 @@ class Entity implements EntityInterface
         //functionality json
         $functionality_json = [
             'model' => [
-                'db_name' => $model['db_table_name'],
+                'db_name' => $functionality_data['model']['db_name'],
+            ],
+            'endpoint' => [
+                'uri' => $functionality_data['endpoint']['uri'],
+                'group' => $functionality_data['endpoint']['group'],
+                'type' => $functionality_data['endpoint']['type'],
             ]
         ];
         $functionality_schema_definition->check($functionality_json);
+        $functionality_schema_definition->check($functionality_json, 'endpoint');
 
         //request json
         $request_json = [];

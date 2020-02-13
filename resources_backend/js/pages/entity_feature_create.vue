@@ -40,7 +40,7 @@
                     project_id: 0,
                     definition_id: [],
                     name: '',
-                    functionality_data: '{}',
+                    functionality_data: '{"model":{"db_name":""},"endpoint":{"uri":"/","group":"","type":"read"}}',
                     request_data: '[]',
                     response_data: '[]',
                     db_table_name: '{}',

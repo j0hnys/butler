@@ -3028,7 +3028,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         project_id: 0,
         definition_id: [],
         name: '',
-        functionality_data: '{}',
+        functionality_data: '{"model":{"db_name":""},"endpoint":{"uri":"/","group":"","type":"read"}}',
         request_data: '[]',
         response_data: '[]',
         db_table_name: '{}',
@@ -3563,6 +3563,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     parent_id: {
@@ -3630,6 +3650,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           align: 'center'
         }],
         data: []
+      },
+      functionality_data: {
+        model: {
+          db_name: ''
+        },
+        endpoint: {
+          uri: '/',
+          group: '',
+          type: ''
+        }
       }
     };
     var state = {
@@ -3677,12 +3707,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           type: 'string',
           trigger: 'blur',
           message: 'The response_data cannot be empty'
-        }],
-        db_table_name: [{
-          required: true,
-          type: 'string',
-          trigger: 'blur',
-          message: 'The db_table_name cannot be empty'
         }]
       }
     });
@@ -3700,7 +3724,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var self = this;
       return {
         getProjectsWithDefinitionsEntities: function getProjectsWithDefinitionsEntities() {
-          window.axios.get("/butler/public_backend" + '/project_get_with_definitions_entities').then(function (_ref) {
+          return window.axios.get("/butler/public_backend" + '/project_get_with_definitions_entities').then(function (_ref) {
             var data = _ref.data;
             var tmp_data = [];
 
@@ -3761,6 +3785,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               value: data.db_table_name
             }];
             self.cascader_entity = [data.project_id, data.definition_id, data.id];
+            self.functionality_data = JSON.parse(data.functionality_data);
             self.request_table.data = JSON.parse(data.request_data);
             self.response_table.data = JSON.parse(data.response_data);
             self.formValidate = data;
@@ -3828,6 +3853,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$refs[name].validate(function (valid) {
         if (valid) {
           var formValidate = _this.formValidate;
+          formValidate.functionality_data = JSON.stringify(_this.functionality_data);
           formValidate.request_data = JSON.stringify(_this.request_table.data);
           formValidate.response_data = JSON.stringify(_this.response_table.data);
 
@@ -3888,8 +3914,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    this.ajax().getProjectsWithDefinitionsEntities();
-    this.ajax().get(this.$route.params.id);
+    var _this4 = this;
+
+    this.ajax().getProjectsWithDefinitionsEntities().then(function () {
+      return _this4.ajax().get(_this4.$route.params.id);
+    }).then(function () {
+      _this4.onModelSelectClicked();
+    });
   }
 });
 
@@ -91105,15 +91136,56 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c("h1", [_vm._v("Functionality")]),
+                  _c(
+                    "h1",
+                    [
+                      _vm._v(
+                        "\n                    Functionality\n                    "
+                      ),
+                      _c(
+                        "Tooltip",
+                        { attrs: { content: "", "max-width": "600" } },
+                        [
+                          _c("Icon", {
+                            staticStyle: { "font-size": "0.7em" },
+                            attrs: { type: "ios-information-circle" }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { attrs: { slot: "content" }, slot: "content" },
+                            [
+                              _c("strong", [_vm._v("endpoint uri")]),
+                              _vm._v(" "),
+                              _c("p", [_c("i", [_vm._v("string")])]),
+                              _vm._v(" "),
+                              _c("strong", [_vm._v("endpoint group")]),
+                              _vm._v(" "),
+                              _c("p", [_c("i", [_vm._v("null or `auth`")])]),
+                              _vm._v(" "),
+                              _c("strong", [_vm._v("endpoint type")]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _c("i", [
+                                  _vm._v(
+                                    "valued: `create`, `read`, `update`, `delete`"
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("Divider"),
                   _vm._v(" "),
                   _c(
                     "FormItem",
-                    {
-                      attrs: { label: "db_table_name", prop: "db_table_name" }
-                    },
+                    { attrs: { label: "db_table_name" } },
                     [
                       _c(
                         "Select",
@@ -91126,11 +91198,15 @@ var render = function() {
                           },
                           on: { "on-open-change": _vm.onModelSelectClicked },
                           model: {
-                            value: _vm.formValidate.db_table_name,
+                            value: _vm.functionality_data.model.db_name,
                             callback: function($$v) {
-                              _vm.$set(_vm.formValidate, "db_table_name", $$v)
+                              _vm.$set(
+                                _vm.functionality_data.model,
+                                "db_name",
+                                $$v
+                              )
                             },
-                            expression: "formValidate.db_table_name"
+                            expression: "functionality_data.model.db_name"
                           }
                         },
                         _vm._l(_vm.database_tables, function(item) {
@@ -91141,16 +91217,73 @@ var render = function() {
                           )
                         }),
                         1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "Button",
-                        {
-                          attrs: { type: "primary" },
-                          on: { click: _vm.onGenerateDefaultValuesClicked }
-                        },
-                        [_vm._v("Generate Default Values")]
                       )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    { attrs: { label: "endpoint uri" } },
+                    [
+                      _c("Input", {
+                        attrs: { placeholder: "Enter your uri" },
+                        model: {
+                          value: _vm.functionality_data.endpoint.uri,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.functionality_data.endpoint,
+                              "uri",
+                              $$v
+                            )
+                          },
+                          expression: "functionality_data.endpoint.uri"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    { attrs: { label: "endpoint group" } },
+                    [
+                      _c("Input", {
+                        attrs: { placeholder: "Enter your uri" },
+                        model: {
+                          value: _vm.functionality_data.endpoint.group,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.functionality_data.endpoint,
+                              "group",
+                              $$v
+                            )
+                          },
+                          expression: "functionality_data.endpoint.group"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    { attrs: { label: "endpoint type" } },
+                    [
+                      _c("Input", {
+                        attrs: { placeholder: "Enter your uri" },
+                        model: {
+                          value: _vm.functionality_data.endpoint.type,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.functionality_data.endpoint,
+                              "type",
+                              $$v
+                            )
+                          },
+                          expression: "functionality_data.endpoint.type"
+                        }
+                      })
                     ],
                     1
                   ),

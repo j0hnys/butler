@@ -2,7 +2,7 @@
 
 namespace App\Trident\Business\Schemas\Logic\Definition\Typed;
 
-use App\Trident\Base\Typed\Definitions\Definition;
+use j0hnys\Definitions\Definition;
 
 final class SchemaHierarchy extends Definition
 {
