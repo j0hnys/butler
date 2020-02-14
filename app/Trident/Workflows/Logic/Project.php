@@ -194,9 +194,16 @@ class Project implements ProjectInterface
     public function getWithDefinitionsEntitiesTests($request_struct)
     {   
         $data = $request_struct->getFilledValues();
-        $model = $this->project_repository->with(['definitions','definitions.entities.tests' => function($q) {
-            $q->where('parent_id', 0);
-        }])->get();
+        $model = $this->project_repository->with([
+            'definitions',
+            'definitions.entities' => function($q) {
+                $q->where('parent_id', 0);
+            },
+            'definitions.entities.tests' => function($q) {
+                $q->where('parent_id', 0);
+            }
+        ]
+        )->get();
 
         return new ProjectgetWithDefinitionsEntitiesTestsResource( $model );
     }
