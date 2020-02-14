@@ -29,3 +29,6 @@ exports.test_update = require("./store/pages/test_update.js").default;
 exports.entity_feature_list_delete = require("./store/pages/entity_feature_list_delete.js").default;
 exports.entity_feature_create = require("./store/pages/entity_feature_create.js").default;
 exports.entity_feature_update = require("./store/pages/entity_feature_update.js").default;
+exports.test_feature_list_delete = require("./store/pages/test_feature_list_delete.js").default;
+exports.test_feature_create = require("./store/pages/test_feature_create.js").default;
+exports.test_feature_update = require("./store/pages/test_feature_update.js").default;

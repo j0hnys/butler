@@ -19,16 +19,39 @@
                         <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
                     </FormItem>
 
-                    
-                    <h1>Functionality</h1>
-                    <Divider />
-                    <FormItem label="db_table_name" prop="db_table_name">
-                        <Select v-model="formValidate.db_table_name" style="width:200px" :loading="loading_models" loading-text="loading..." @on-open-change="onModelSelectClicked" placeholder="-select db table-">
-                            <Option v-for="item in database_tables" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                        </Select>
+                    <FormItem>
                         <Button type="primary" @click="onGenerateDefaultValuesClicked">Generate Default Values</Button>
                     </FormItem>
 
+                    <h1>
+                        Functionality
+                        <Tooltip content="" max-width="600">
+                            <Icon type="ios-information-circle" style="font-size:0.7em;" />
+                            <div slot="content">
+                                <strong>endpoint uri</strong>
+                                <p><i>string</i></p>
+                                <strong>endpoint group</strong>
+                                <p><i>null or `auth`</i></p>
+                                <strong>endpoint type</strong>
+                                <p><i>valued: `create`, `read`, `update`, `delete`</i></p>
+                            </div>
+                        </Tooltip>
+                    </h1>
+                    <Divider />
+                    <FormItem label="db_table_name">
+                        <Select v-model="functionality_data.model.db_name" style="width:200px" :loading="loading_models" loading-text="loading..." @on-open-change="onModelSelectClicked" placeholder="-select db table-">
+                            <Option v-for="item in database_tables" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                        </Select>
+                    </FormItem>
+                    <FormItem label="endpoint uri">
+                        <Input v-model="functionality_data.endpoint.uri" placeholder="Enter your uri"></Input>
+                    </FormItem>
+                    <FormItem label="endpoint group">
+                        <Input v-model="functionality_data.endpoint.group" placeholder="Enter your uri"></Input>
+                    </FormItem>
+                    <FormItem label="endpoint type">
+                        <Input v-model="functionality_data.endpoint.type" placeholder="Enter your uri"></Input>
+                    </FormItem>
                     
                     <FormItem></FormItem>
 
@@ -45,6 +68,7 @@
                                 <p><i>is the native laravel validation string. e.x. "required | string"  </i></p>
                             </div>
                         </Tooltip>
+                        <Button type="primary" ghost @click="onAddPropertyButtonClicked('request_table')">Add property</Button>
                     </h1>
                     <Divider />
                     <Table border :columns="request_table.columns" :data="request_table.data" no-data-text="-no data-">
@@ -93,6 +117,7 @@
                         `array()`, `float()`, `double()` </i></p>
                             </div>
                         </Tooltip>
+                        <Button type="primary" ghost @click="onAddPropertyButtonClicked('response_table')">Add property</Button>
                     </h1>
                     <Divider />
                     <Table border :columns="response_table.columns" :data="response_table.data" no-data-text="-no data-">
@@ -140,7 +165,6 @@
             }
         },
         data() {
-
             var local = {
                 model: '',
                 cascader_entity: [],
@@ -210,6 +234,16 @@
                         }
                     ],
                     data: []
+                },
+                functionality_data: {
+                    model: {
+                        db_name: '',
+                    },
+                    endpoint: {
+                        uri: '/',
+                        group: '',
+                        type: ''
+                    }
                 }
             };
 
@@ -270,15 +304,6 @@
                             message: 'The response_data cannot be empty', 
                         }
                     ],
-                    db_table_name: [
-                        { 
-                            required: true, 
-                            type: 'string', 
-                            trigger: 'blur',
-                            message: 'The db_table_name cannot be empty', 
-                        }
-                    ],
-
                 },
 
             };
@@ -297,7 +322,7 @@
                 var self = this;
                 return {
                     getProjectsWithDefinitionsEntities() {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_get_with_definitions_entities' ).then(({ data }) => {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_get_with_definitions_entities' ).then(({ data }) => {
                             let tmp_data = [];
                             for (const i in data) {
                                 if (data.hasOwnProperty(i)) {
@@ -366,11 +391,11 @@
                                 data.id,
                             ];
 
+                            self.functionality_data = JSON.parse(data.functionality_data);
                             self.request_table.data = JSON.parse(data.request_data);
                             self.response_table.data = JSON.parse(data.response_data);
 
                             self.formValidate = data;
-
                         }).catch(error => {
                             console.log(error);
                         });
@@ -414,6 +439,17 @@
                     },
                 }
             },
+            onAddPropertyButtonClicked(table_name) {
+                let new_line = JSON.parse(JSON.stringify(this[table_name].data[ this[table_name].data.length-1 ]));
+                for (const key in new_line) {
+                    if (new_line.hasOwnProperty(key)) {
+                        const element = new_line[key];
+                        
+                        new_line[key] = '---';
+                    }
+                }
+                this[table_name].data.push(new_line);
+            },
             handleUpload (file) {
                 this.formValidate.file = file;
                 return false;
@@ -423,6 +459,7 @@
                     if (valid) {
 
                         var formValidate = this.formValidate;
+                        formValidate.functionality_data = JSON.stringify(this.functionality_data);
                         formValidate.request_data = JSON.stringify(this.request_table.data);
                         formValidate.response_data = JSON.stringify(this.response_table.data);
 
@@ -436,7 +473,7 @@
             onGenerateDefaultValuesClicked() {
                 this.ajax().getDefaultValues(
                     this.formValidate.definition_id,
-                    this.formValidate.db_table_name
+                    this.functionality_data.model.db_name
                 ).then(({data}) => {
                     this.request_table.data = data.request_table_data;
                     this.response_table.data = data.response_table_data;
@@ -485,8 +522,11 @@
         },
         mounted() {
 
-            this.ajax().getProjectsWithDefinitionsEntities();
-            this.ajax().get(this.$route.params.id);
+            this.ajax().getProjectsWithDefinitionsEntities().then(() => {
+                return this.ajax().get(this.$route.params.id);
+            }).then(() => {
+                this.onModelSelectClicked();
+            });
 
         },
     }

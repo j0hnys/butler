@@ -32,6 +32,10 @@
                                 <div slot="prefix"><strong style="margin-bottom: 2px;">project_name: </strong></div>
                                 <Option v-for="item in filters.project_name.data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>
+                            <Select v-model="filters.entity_name.selected" @on-change="onFilterSelected('entity_name')" multiple style="width:260px" placeholder="--nothing selected--">
+                                <div slot="prefix"><strong style="margin-bottom: 2px;">name: </strong></div>
+                                <Option v-for="item in filters.entity_name.data" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            </Select>
                         </div>
                     </Col>
                 </Row>
@@ -52,6 +56,8 @@
     </div>
 </template>
 <script>
+    import testFeatures from './test_feature_list_delete.vue';
+
     export default {
         data() {
             var local = {
@@ -71,6 +77,10 @@
                         selected: [],
                         data: [],
                     },
+                    entity_name: {
+                        selected: [],
+                        data: [],
+                    },
                 }
             };
             if (this.$store.state.pages.test_list_delete) 
@@ -86,6 +96,17 @@
                 ...state,
                 columns: [
                     {
+                        type: 'expand',
+                        width: 50,
+                        render: (h, params) => {
+                            return h(testFeatures, {
+                                props: {
+                                    parent_id: params.row.id
+                                }
+                            })
+                        }
+                    },
+                    {
                         title: 'project_name',
                         key: 'project_name',
                         minWidth: 150,
@@ -95,6 +116,7 @@
                         title: 'definition_namespace',
                         key: 'definition_namespace',
                         minWidth: 190,
+                        maxWidth: 190,
                     },
                     {
                         title: 'entity_name',
@@ -105,12 +127,6 @@
                     {
                         title: 'name',
                         key: 'name',
-                        minWidth: 100,
-                        maxWidth: 100,
-                    },
-                    {
-                        title: 'type',
-                        key: 'type',
                         minWidth: 100,
                         maxWidth: 100,
                     },
@@ -165,6 +181,9 @@
                                         type: 'success',
                                         size: 'small'
                                     },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
                                     on: {
                                         click: () => {
                                             this.table.loading.state = true;
@@ -174,11 +193,27 @@
                                             });
                                         }
                                     }
-                                }, 'Generate')
+                                }, 'Generate'),
+                                h('Button', {
+                                    props: {
+                                        type: 'warning',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.table.loading.state = true;
+                                            this.table.loading.text = 'updating...';
+                                            this.ajax().updateResource(row.id).then(() => {
+                                                this.table.loading.state = false;
+                                            });
+                                        }
+                                    }
+                                }, 'Update')
                             ]);
                         }
                     }
                 ],
+                server_data: [],
                 data: []
 
 
@@ -202,18 +237,24 @@
             data: {
                 deep: true,
                 handler: function(value) {
-                    let tmp_table = new Map;
+                    let tmp_project_name_table = new Map();
+                    let tmp_entity_name_table = new Map();
                     for (const i in value) {
                         if (value.hasOwnProperty(i)) {
                             const element = value[i];
-                            tmp_table.set(element.project_name, {
+                            tmp_project_name_table.set(element.project_name, {
                                 'label': element.project_name,
                                 'value': element.project_name,
+                            });
+                            tmp_entity_name_table.set(element.entity_name, {
+                                'label': element.entity_name,
+                                'value': element.entity_name,
                             });
                         }
                     }
 
-                    this.filters.project_name.data = Array.from(tmp_table.values());
+                    this.filters.project_name.data = Array.from(tmp_project_name_table.values());
+                    this.filters.entity_name.data = Array.from(tmp_entity_name_table.values());
                 }
             }
         },
@@ -221,8 +262,8 @@
             ajax() {
                 var self = this;
                 return {
-                    get(id='') {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/test'+id ).then(({ data }) => {
+                    get() {
+                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_get_parents' ).then(({ data }) => {
                             self.server_data = data;
                             self.data = data;
                             self.table.loading.state = false;
@@ -243,6 +284,14 @@
                             self.$Message.success('Success!');
                         }).catch(error => {
                             console.log(error);
+                        });
+                    },
+                    updateResource(id) {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/test_refresh/'+id ).then(({ data }) => {
+                            self.$Message.success('Success!');
+                        }).catch(error => {
+                            console.log(error);
+                            self.$Message.error('could not update, see network');
                         });
                     }
                 }

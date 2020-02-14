@@ -25,6 +25,7 @@ Route::get('/logout', function () {
 
 Route::get('/project_get_with_definitions', 'Trident\ProjectController@getWithDefinitions');
 Route::get('/project_get_with_definitions_entities', 'Trident\ProjectController@getWithDefinitionsEntities');
+Route::get('/project_get_with_definitions_entities_tests', 'Trident\ProjectController@getWithDefinitionsEntitiesTests');
 Route::get('/project_make/{id}', 'Trident\ProjectController@make');
 Route::get('/definition_get/{id}', 'Trident\DefinitionController@get');
 Route::get('/definition_get_by_entity_id/{id}', 'Trident\DefinitionController@getByEntityId');
@@ -37,6 +38,10 @@ Route::get('/entity_generate_feature/{id}', 'Trident\EntityController@generateFe
 Route::get('/entity_refresh_feature/{id}', 'Trident\EntityController@refreshFeature');
 Route::get('/view_generate/{id}', 'Trident\ViewController@generate');
 Route::get('/test_generate/{id}', 'Trident\TestController@generate');
+Route::get('/test_get_parents/{id?}', 'Trident\TestController@getParents');
+Route::get('/test_refresh/{id}', 'Trident\TestController@refresh');
+Route::get('/test_generate_feature/{id}', 'Trident\TestController@generateFeature');
+Route::get('/test_refresh_feature/{id}', 'Trident\TestController@refreshFeature');
 
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

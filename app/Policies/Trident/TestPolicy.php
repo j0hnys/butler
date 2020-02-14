@@ -106,4 +106,65 @@ class TestPolicy
 
 
 
+
+    /**
+     * Determine whether the user can permanently getParents the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\TestRepository $Test
+     * @return mixed
+     */
+    public function getParents(User $user, Test $test, int $id)
+    {
+        if ($id === 0) {
+            return \Auth::check();
+        }
+        return $user->id == $test->findOrFail($id)->user_id;
+    }
+
+
+
+
+    /**
+     * Determine whether the user can permanently refresh the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\TestRepository $Test
+     * @return mixed
+     */
+    public function refresh(User $user, Test $test, int $id)
+    {
+        return $user->id == $test->findOrFail($id)->user_id;
+    }
+
+
+    /**
+     * Determine whether the user can permanently generateFeature the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\TestRepository $Test
+     * @return mixed
+     */
+    public function generateFeature(User $user, Test $test, int $id)
+    {
+        return $user->id == $test->findOrFail($id)->user_id;
+    }
+
+
+
+
+    /**
+     * Determine whether the user can permanently refreshFeature the trident super_test.
+     *
+     * @param  \App\User  $user
+     * @param  App\Trident\Workflows\Repositories\TestRepository $Test
+     * @return mixed
+     */
+    public function refreshFeature(User $user, Test $test, int $id)
+    {
+        return $user->id == $test->findOrFail($id)->user_id;
+    }
+
+
+
 }

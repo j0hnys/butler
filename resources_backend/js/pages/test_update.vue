@@ -1,27 +1,6 @@
 <style scoped>
-    .index {
-        width: 100%;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        text-align: center;
-    }
-        .index h1 {
-            height: 150px;
-        }
-            .index h1 img {
-                height: 100%;
-            }
-        .index h2 {
-            color: #666;
-            margin-bottom: 200px;
-        }
-            .index h2 p {
-                margin: 0 0 50px;
-            }
-    .ivu-row-flex {
-        height: 100%;
+    .test_update {
+        height: 100vh;
     }
 </style>
 <template>
@@ -51,16 +30,26 @@
                     <FormItem></FormItem>
 
                     <h1>
+                        Functionality
+                    </h1>
+                    <Divider />
+                    <FormItem label="db_table_name">
+                        <Select v-model="functionality_data.model.db_name" style="width:200px" :loading="loading_models" loading-text="loading..." @on-open-change="onModelSelectClicked" placeholder="-select db table-">
+                            <Option v-for="item in database_tables" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                        </Select>
+                    </FormItem>
+
+                    <FormItem></FormItem>
+
+                    <h1>
                         Request
                         <Tooltip content="" max-width="600">
                             <Icon type="ios-information-circle" style="font-size:0.7em;" />
                             <div slot="content">
-                                <strong>T::*</strong>
-                                <p><i>where `*` is `string()`, `integer()`, `bool()`, `nullable()`, 
-                        `array()`, `float()`, `double()` </i></p>
-                                <br>
-                                <strong>laravel_validation_rule_string</strong>
-                                <p><i>is the native laravel validation string. e.x. "required | string"  </i></p>
+                                <strong>Property Type</strong>
+                                <p><i>values: `default`, `auto_id` </i></p>
+                                <strong>Value</strong>
+                                <p><i>string or integer</i></p>
                             </div>
                         </Tooltip>
                         <Button type="primary" ghost @click="onAddPropertyButtonClicked('request_table')">Add property</Button>
@@ -102,9 +91,10 @@
                         <Tooltip content="" max-width="600">
                             <Icon type="ios-information-circle" style="font-size:0.7em;" />
                             <div slot="content">
-                                <strong>T::*</strong>
-                                <p><i>where `*` is `string()`, `integer()`, `bool()`, `nullable()`, 
-                        `array()`, `float()`, `double()` </i></p>
+                                <strong>Property Type</strong>
+                                <p><i>values: `default`, `auto_id` </i></p>
+                                <strong>Value</strong>
+                                <p><i>string or integer</i></p>
                             </div>
                         </Tooltip>
                         <Button type="primary" ghost @click="onAddPropertyButtonClicked('response_table')">Add property</Button>
@@ -157,6 +147,7 @@
                 cascader_entity: [],
                 project_definitions_entities: [],
                 loading_models: true,
+                database_tables: [],
                 request_table: {
                     edit: {
                         index: -1,
@@ -220,7 +211,12 @@
                         }
                     ],
                     data: []
-                }                
+                },
+                functionality_data: {
+                    model: {
+                        db_name: '',
+                    }
+                }
             }
 
             var state = {
@@ -305,7 +301,7 @@
                 var self = this;
                 return {
                     getProjectsWithDefinitionsEntities() {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_get_with_definitions_entities' ).then(({ data }) => {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/project_get_with_definitions_entities' ).then(({ data }) => {
                             let tmp_data = [];
                             for (const i in data) {
                                 if (data.hasOwnProperty(i)) {
@@ -360,7 +356,7 @@
                         });
                     },
                     get(id='') {
-                        window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/test/'+id ).then(({ data }) => {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/trident/resource/test/'+id ).then(({ data }) => {
                             self.formValidate = data;
 
                             self.cascader_entity = [
@@ -369,6 +365,7 @@
                                 data.entity_id,
                             ];
 
+                            self.functionality_data = JSON.parse(data.functionality_data);
                             self.request_table.data = JSON.parse(data.request_data);
                             self.response_table.data = JSON.parse(data.response_data);
                         }).catch(error => {
@@ -408,6 +405,11 @@
                             console.log(error);
                         });
                     },
+                    getDatabaseTables(definition_id) {
+                        return window.axios.get( process.env.MIX_BASE_RELATIVE_URL_BACKEND+'/definition_get_database_tables/'+definition_id ).catch(error => {
+                            console.log(error);
+                        });
+                    },
                 }
             },
             onAddPropertyButtonClicked(table_name) {
@@ -430,6 +432,7 @@
                     if (valid) {
 
                         var formValidate = this.formValidate;
+                        formValidate.functionality_data = JSON.stringify(this.functionality_data);
                         formValidate.request_data = JSON.stringify(this.request_table.data);
                         formValidate.response_data = JSON.stringify(this.response_table.data);
 
@@ -446,6 +449,16 @@
                 ).then(({data}) => {
                     this.request_table.data = data.tests_request_table_data;
                     this.response_table.data = data.tests_response_table_data;
+                });
+            },
+            onModelSelectClicked() {
+                this.loading_models = true;
+
+                this.ajax().getDatabaseTables(
+                    this.formValidate.definition_id,
+                ).then(({data}) => {
+                    this.database_tables = data.table_names;
+                    this.loading_models = false;
                 });
             },
             requestTableHandleEdit (row, index) {
@@ -481,8 +494,11 @@
         },
         mounted() {
             
-            this.ajax().getProjectsWithDefinitionsEntities();
-            this.ajax().get(this.$route.params.id);
+            this.ajax().getProjectsWithDefinitionsEntities().then(() => {
+                return this.ajax().get(this.$route.params.id);
+            }).then(() => {
+                this.onModelSelectClicked();
+            });
 
         },
     }

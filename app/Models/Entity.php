@@ -46,4 +46,10 @@ class Entity extends Model
         return $this->belongsTo(\App\Models\Definition::class, 'definition_id', 'id');
     }
 
+
+    public function tests()
+    {
+        return $this->hasMany(\App\Models\Test::class, 'entity_id', 'id');
+    }
+
 }

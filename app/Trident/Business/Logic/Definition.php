@@ -39,11 +39,11 @@ class Definition implements DefinitionInterface
         $presentation_schema_definition = app()->make($presentation_schema_namespace);
         $presentation_schema = $presentation_schema_definition->get();
         
-        $tests_request_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Tests'][0]);
+        $tests_request_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Tests'][1]);
         $tests_request_schema_definition = app()->make($tests_request_schema_namespace);
         $tests_request_schema = $tests_request_schema_definition->get();
 
-        $tests_response_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Tests'][1]);
+        $tests_response_schema_namespace = str_replace('@', '', $schema_hierarchy['hierarchy']['trident-vista']['{{entity_name}}']['Tests'][2]);
         $tests_response_schema_definition = app()->make($tests_response_schema_namespace);
         $tests_response_schema = $tests_response_schema_definition->get();
 

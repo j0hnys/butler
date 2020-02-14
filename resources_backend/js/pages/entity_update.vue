@@ -136,7 +136,6 @@
 <script>
     export default {
         data() {
-
             var local = {
                 model: '',
                 cascader_definition: [],

@@ -2,7 +2,7 @@
 
 namespace App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Tests;
 
-use App\Trident\Base\Typed\Definitions\Definition;
+use j0hnys\Definitions\Definition;
 
 final class Response extends Definition
 {
@@ -21,7 +21,7 @@ final class Response extends Definition
     ];
     const entity_property = 'T::string()';
     const property_type = [
-        'default', 'auto_id'
+        'default', 'auto_id', 'relation_id'
     ];
 }
 

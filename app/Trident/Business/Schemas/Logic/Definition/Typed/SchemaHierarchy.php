@@ -2,7 +2,7 @@
 
 namespace App\Trident\Business\Schemas\Logic\Definition\Typed;
 
-use App\Trident\Base\Typed\Definitions\Definition;
+use j0hnys\Definitions\Definition;
 
 final class SchemaHierarchy extends Definition
 {
@@ -26,6 +26,7 @@ final class SchemaHierarchy extends Definition
                     ]
                 ],
                 'Tests' => [
+                    '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Tests\Functionality',
                     '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Tests\Request',
                     '@\App\Trident\Business\Schemas\Logic\Definition\Typed\Trident\Tests\Response',
                 ]
