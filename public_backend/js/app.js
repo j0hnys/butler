@@ -3583,6 +3583,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     parent_id: {
@@ -3866,7 +3869,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     onGenerateDefaultValuesClicked: function onGenerateDefaultValuesClicked() {
       var _this2 = this;
 
-      this.ajax().getDefaultValues(this.formValidate.definition_id, this.formValidate.db_table_name).then(function (_ref3) {
+      this.ajax().getDefaultValues(this.formValidate.definition_id, this.functionality_data.model.db_name).then(function (_ref3) {
         var data = _ref3.data;
         _this2.request_table.data = data.request_table_data;
         _this2.response_table.data = data.response_table_data;
@@ -91132,6 +91135,21 @@ var render = function() {
                           expression: "formValidate.name"
                         }
                       })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "FormItem",
+                    [
+                      _c(
+                        "Button",
+                        {
+                          attrs: { type: "primary" },
+                          on: { click: _vm.onGenerateDefaultValuesClicked }
+                        },
+                        [_vm._v("Generate Default Values")]
+                      )
                     ],
                     1
                   ),

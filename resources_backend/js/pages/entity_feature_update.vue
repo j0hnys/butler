@@ -19,7 +19,10 @@
                         <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
                     </FormItem>
 
-                    
+                    <FormItem>
+                        <Button type="primary" @click="onGenerateDefaultValuesClicked">Generate Default Values</Button>
+                    </FormItem>
+
                     <h1>
                         Functionality
                         <Tooltip content="" max-width="600">
@@ -470,7 +473,7 @@
             onGenerateDefaultValuesClicked() {
                 this.ajax().getDefaultValues(
                     this.formValidate.definition_id,
-                    this.formValidate.db_table_name
+                    this.functionality_data.model.db_name
                 ).then(({data}) => {
                     this.request_table.data = data.request_table_data;
                     this.response_table.data = data.response_table_data;
