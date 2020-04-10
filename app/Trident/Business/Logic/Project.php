@@ -29,8 +29,8 @@ class Project implements ProjectInterface
 
         //change .env.example with projects root folder name
         $env_example_contents = \file_get_contents($data['root_folder'].'/.env.example');
-        $env_example_contents = \str_replace('trident-vista-project', \pathinfo($data['root_folder'])['basename'], $env_example_contents);
         $env_example_contents = \str_replace('laravel', $data['db_connection_name'], $env_example_contents);
+        $env_example_contents = \str_replace('trident-vista-project', \pathinfo($data['root_folder'])['basename'], $env_example_contents);
         \file_put_contents($data['root_folder'].'/.env.example', $env_example_contents);
         \file_put_contents($data['root_folder'].'/.env', $env_example_contents);
 
@@ -38,6 +38,11 @@ class Project implements ProjectInterface
         $webpack_mix_contents = \file_get_contents($data['root_folder'].'/webpack.mix.js');
         $webpack_mix_contents = \str_replace('trident-vista-project', \pathinfo($data['root_folder'])['basename'], $webpack_mix_contents);
         \file_put_contents($data['root_folder'].'/webpack.mix.js', $webpack_mix_contents);
+
+        //change store.js with projects root folder name
+        $store_js_contents = \file_get_contents($data['root_folder'].'/resources_backend/js/store.js');
+        $store_js_contents = \str_replace('trident-vista-project', \pathinfo($data['root_folder'])['basename'], $store_js_contents);
+        \file_put_contents($data['root_folder'].'/resources_backend/js/store.js', $store_js_contents);
 
     }
 
