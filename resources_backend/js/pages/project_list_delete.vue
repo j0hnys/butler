@@ -5,6 +5,12 @@
     .table-filters {
         margin-bottom: 20px;
     }
+        .table-filters-slot-prefix {
+            padding-right: 200px;
+        }
+            .table-filters-slot-prefix > strong {
+                margin-bottom: 2px;
+            }
 </style>
 <template>
     <div class="project_list_delete">
@@ -29,7 +35,7 @@
                     <Col>
                         <div class="table-filters">
                             <Select v-model="filters.name.selected" @on-change="onFilterSelected('name')" multiple style="width:260px" placeholder="--nothing selected--">
-                                <div slot="prefix"><strong style="margin-bottom: 2px;">name: </strong></div>
+                                <div slot="prefix" class="table-filters-slot-prefix"><strong>name: </strong></div>
                                 <Option v-for="item in filters.name.data" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>
                         </div>
