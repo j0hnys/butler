@@ -74,6 +74,11 @@ abstract class DbRepository implements DbRepositoryInterface {
     {
         return $this->model->all();
     }
+
+    public function get(array $columns = ['*'])
+    {
+        return $this->model->get($columns);
+    }
     
     // save a new record in the database
     public function save()
@@ -118,8 +123,12 @@ abstract class DbRepository implements DbRepositoryInterface {
      * @param $id
      * @return mixed
      */
-    public function delete($id) {
-        return $this->model->destroy($id);
+    public function delete() {
+        return $this->model->delete();
+    }
+
+    public function destroy($ids) {
+        return $this->model->destroy($ids);
     }
  
     /**
@@ -139,6 +148,10 @@ abstract class DbRepository implements DbRepositoryInterface {
      */
     public function findBy($attribute, $value, $columns = array('*')) {
         return $this->model->where($attribute, '=', $value)->first($columns);
+    }
+
+    public function findOrFail($id, array $columns = ['*']) {
+        return $this->model->findOrFail($id, $columns);
     }
 
     /**

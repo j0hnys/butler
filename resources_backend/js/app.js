@@ -7,26 +7,27 @@
 
 require('./bootstrap');
 
-import iView from 'iview';
+import ViewUI from 'view-design';
 import VueRouter from 'vue-router';
 import store from './store';
 import App from './app.vue';
 import Routers from './router.js';
 import TypedComponentData from './types/TypedComponentData.js';
 import locale from 'iview/dist/locale/en-US';
+// import 'view-design/dist/styles/iview.css';
 
 window.Vue = require('vue');
-window.iView = require('iview');
+window.ViewUI = require('view-design');
 
 Vue.use(VueRouter);
-Vue.use(iView, {locale});
+Vue.use(ViewUI);
 Vue.use(TypedComponentData);
 
 //
 //tmp
 var util = {};
 util.title = function (title) {
-    title = title ? title + ' - Home' : 'iView project';
+    title = title ? title + ' - Home' : 'ViewUI project';
     window.document.title = title;
 };
 //
@@ -45,13 +46,13 @@ const router = new VueRouter(RouterConfig);
 
 //set intial states
 router.beforeEach((to, from, next) => {
-    iView.LoadingBar.start();
+    ViewUI.LoadingBar.start();
     util.title(to.meta.title);
     next();
 });
 
 router.afterEach((to, from, next) => {
-    iView.LoadingBar.finish();
+    ViewUI.LoadingBar.finish();
     window.scrollTo(0, 0);
 });
 
