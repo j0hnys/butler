@@ -2489,6 +2489,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _this = this;
@@ -4073,6 +4079,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -5011,6 +5023,12 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6773,6 +6791,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -7839,6 +7863,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _this = this;
@@ -8572,7 +8602,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.demo-spin-icon-load[data-v-2891affe]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-2891affe] {\n    margin-bottom: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.demo-spin-icon-load[data-v-2891affe]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-2891affe] {\n    margin-bottom: 20px;\n}\n.table-filters-slot-prefix[data-v-2891affe] {\n        padding-right: 200px;\n}\n.table-filters-slot-prefix > strong[data-v-2891affe] {\n            margin-bottom: 2px;\n}\n", ""]);
 
 // exports
 
@@ -8629,7 +8659,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.demo-spin-icon-load[data-v-2077bce4]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-2077bce4] {\n    margin-bottom: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.demo-spin-icon-load[data-v-2077bce4]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-2077bce4] {\n    margin-bottom: 20px;\n}\n.table-filters-slot-prefix[data-v-2077bce4] {\n        padding-right: 200px;\n}\n.table-filters-slot-prefix > strong[data-v-2077bce4] {\n            margin-bottom: 2px;\n}\n", ""]);
 
 // exports
 
@@ -8686,7 +8716,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.demo-spin-icon-load[data-v-11211fb8]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-11211fb8] {\n    margin-bottom: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.demo-spin-icon-load[data-v-11211fb8]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-11211fb8] {\n    margin-bottom: 20px;\n}\n.table-filters-slot-prefix[data-v-11211fb8] {\n        padding-right: 200px;\n}\n.table-filters-slot-prefix > strong[data-v-11211fb8] {\n            margin-bottom: 2px;\n}\n", ""]);
 
 // exports
 
@@ -8743,7 +8773,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.demo-spin-icon-load[data-v-14bd45bd]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-14bd45bd] {\n    margin-bottom: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.demo-spin-icon-load[data-v-14bd45bd]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-14bd45bd] {\n    margin-bottom: 20px;\n}\n.table-filters-slot-prefix[data-v-14bd45bd] {\n        padding-right: 200px;\n}\n.table-filters-slot-prefix > strong[data-v-14bd45bd] {\n            margin-bottom: 2px;\n}\n", ""]);
 
 // exports
 
@@ -8781,7 +8811,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.demo-spin-icon-load[data-v-4cadb5d0]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-4cadb5d0] {\n    margin-bottom: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.demo-spin-icon-load[data-v-4cadb5d0]{\n    -webkit-animation: ani-demo-spin 1s linear infinite;\n            animation: ani-demo-spin 1s linear infinite;\n}\n.table-filters[data-v-4cadb5d0] {\n    margin-bottom: 20px;\n}\n.table-filters-slot-prefix[data-v-4cadb5d0] {\n        padding-right: 200px;\n}\n.table-filters-slot-prefix > strong[data-v-4cadb5d0] {\n            margin-bottom: 2px;\n}\n", ""]);
 
 // exports
 
@@ -76133,14 +76163,12 @@ var render = function() {
                           [
                             _c(
                               "div",
-                              { attrs: { slot: "prefix" }, slot: "prefix" },
-                              [
-                                _c(
-                                  "strong",
-                                  { staticStyle: { "margin-bottom": "2px" } },
-                                  [_vm._v("project_name: ")]
-                                )
-                              ]
+                              {
+                                staticClass: "table-filters-slot-prefix",
+                                attrs: { slot: "prefix" },
+                                slot: "prefix"
+                              },
+                              [_c("strong", [_vm._v("project_name: ")])]
                             ),
                             _vm._v(" "),
                             _vm._l(_vm.filters.project_name.data, function(
@@ -77631,14 +77659,12 @@ var render = function() {
                           [
                             _c(
                               "div",
-                              { attrs: { slot: "prefix" }, slot: "prefix" },
-                              [
-                                _c(
-                                  "strong",
-                                  { staticStyle: { "margin-bottom": "2px" } },
-                                  [_vm._v("project_name: ")]
-                                )
-                              ]
+                              {
+                                staticClass: "table-filters-slot-prefix",
+                                attrs: { slot: "prefix" },
+                                slot: "prefix"
+                              },
+                              [_c("strong", [_vm._v("project_name: ")])]
                             ),
                             _vm._v(" "),
                             _vm._l(_vm.filters.project_name.data, function(
@@ -77681,14 +77707,12 @@ var render = function() {
                           [
                             _c(
                               "div",
-                              { attrs: { slot: "prefix" }, slot: "prefix" },
-                              [
-                                _c(
-                                  "strong",
-                                  { staticStyle: { "margin-bottom": "2px" } },
-                                  [_vm._v("name: ")]
-                                )
-                              ]
+                              {
+                                staticClass: "table-filters-slot-prefix",
+                                attrs: { slot: "prefix" },
+                                slot: "prefix"
+                              },
+                              [_c("strong", [_vm._v("name: ")])]
                             ),
                             _vm._v(" "),
                             _vm._l(_vm.filters.name.data, function(item) {
@@ -78752,14 +78776,12 @@ var render = function() {
                           [
                             _c(
                               "div",
-                              { attrs: { slot: "prefix" }, slot: "prefix" },
-                              [
-                                _c(
-                                  "strong",
-                                  { staticStyle: { "margin-bottom": "2px" } },
-                                  [_vm._v("name: ")]
-                                )
-                              ]
+                              {
+                                staticClass: "table-filters-slot-prefix",
+                                attrs: { slot: "prefix" },
+                                slot: "prefix"
+                              },
+                              [_c("strong", [_vm._v("name: ")])]
                             ),
                             _vm._v(" "),
                             _vm._l(_vm.filters.name.data, function(item) {
@@ -80337,14 +80359,12 @@ var render = function() {
                           [
                             _c(
                               "div",
-                              { attrs: { slot: "prefix" }, slot: "prefix" },
-                              [
-                                _c(
-                                  "strong",
-                                  { staticStyle: { "margin-bottom": "2px" } },
-                                  [_vm._v("project_name: ")]
-                                )
-                              ]
+                              {
+                                staticClass: "table-filters-slot-prefix",
+                                attrs: { slot: "prefix" },
+                                slot: "prefix"
+                              },
+                              [_c("strong", [_vm._v("project_name: ")])]
                             ),
                             _vm._v(" "),
                             _vm._l(_vm.filters.project_name.data, function(
@@ -80391,14 +80411,12 @@ var render = function() {
                           [
                             _c(
                               "div",
-                              { attrs: { slot: "prefix" }, slot: "prefix" },
-                              [
-                                _c(
-                                  "strong",
-                                  { staticStyle: { "margin-bottom": "2px" } },
-                                  [_vm._v("name: ")]
-                                )
-                              ]
+                              {
+                                staticClass: "table-filters-slot-prefix",
+                                attrs: { slot: "prefix" },
+                                slot: "prefix"
+                              },
+                              [_c("strong", [_vm._v("name: ")])]
                             ),
                             _vm._v(" "),
                             _vm._l(_vm.filters.entity_name.data, function(
@@ -81503,14 +81521,12 @@ var render = function() {
                           [
                             _c(
                               "div",
-                              { attrs: { slot: "prefix" }, slot: "prefix" },
-                              [
-                                _c(
-                                  "strong",
-                                  { staticStyle: { "margin-bottom": "2px" } },
-                                  [_vm._v("project_name: ")]
-                                )
-                              ]
+                              {
+                                staticClass: "table-filters-slot-prefix",
+                                attrs: { slot: "prefix" },
+                                slot: "prefix"
+                              },
+                              [_c("strong", [_vm._v("project_name: ")])]
                             ),
                             _vm._v(" "),
                             _vm._l(_vm.filters.project_name.data, function(
