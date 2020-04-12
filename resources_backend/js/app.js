@@ -13,7 +13,6 @@ import store from './store';
 import App from './app.vue';
 import Routers from './router.js';
 import TypedComponentData from './types/TypedComponentData.js';
-import locale from 'iview/dist/locale/en-US';
 // import 'view-design/dist/styles/iview.css';
 
 window.Vue = require('vue');
