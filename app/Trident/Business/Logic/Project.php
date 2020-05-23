@@ -40,9 +40,9 @@ class Project implements ProjectInterface
         \file_put_contents($data['root_folder'].'/webpack.mix.js', $webpack_mix_contents);
 
         //change store.js with projects root folder name
-        $store_js_contents = \file_get_contents($data['root_folder'].'/resources_backend/js/store.js');
+        $store_js_contents = \file_get_contents($data['root_folder'].'/resources_backend/client_app/application/store.js');
         $store_js_contents = \str_replace('trident-vista-project', \pathinfo($data['root_folder'])['basename'], $store_js_contents);
-        \file_put_contents($data['root_folder'].'/resources_backend/js/store.js', $store_js_contents);
+        \file_put_contents($data['root_folder'].'/resources_backend/client_app/application/store.js', $store_js_contents);
 
     }
 
