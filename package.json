@@ -19,7 +19,7 @@
         "vuex-persistedstate": "2.5.4"
     },
     "devDependencies": {
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "bootstrap": "^4.4.1",
         "cross-env": "^7.0",
         "laravel-mix": "^5.0.1",
